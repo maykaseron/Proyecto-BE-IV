@@ -1,19 +1,13 @@
  body {
-  
      background-color : F7F2E0;
 	 text-align: center;
-  
-  
   }
   
   h1 {
-  
        color : #8A2048;
 	   font-family : Impact, Charcoal, sans-serif;
 	   text-align : center;
 	   font-weight: normal;
-  
-  
   }
   
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -24,30 +18,22 @@
 	   font-weight: normal;
 }
   
- 
-  
   option{
-  
      text-align: center;
 		  color : #8A2048;
 	   font-family : Impact, Charcoal, sans-serif;
 	   text-align : center;
 	   font-weight: normal;
-  
   }
   
   a {
-
          color : #8A2048;
 	   font-family :  sans-serif;
          text-align : center;
 		 font-family : Impact, Charcoal, sans-serif;
-
-
 }
 
 div.divempresa{
-
     width:500px;
     margin: margin-left;
     border: 3px solid #ffe6f9;
@@ -55,9 +41,6 @@ div.divempresa{
 	   font-family : Impact, Charcoal, sans-serif;
 	   text-align : center;
 	   font-weight: normal;
-
-
-
 }
   
   
