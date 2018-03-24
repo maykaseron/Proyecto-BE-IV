@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2018 4:14:33 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="bolsaempleo" name="entidades.Empresa" optimistic-lock="version" table="empresa">
+    <id name="idEmp" type="java.lang.Integer">
+      <column name="idEmp"/>
+      <generator class="identity"/>
+    </id>
+    <property name="nombreEmp" type="string">
+      <column length="20" name="nombreEmp"/>
+    </property>
+    <property name="ubicacionEmp" type="string">
+      <column length="20" name="ubicacionEmp"/>
+    </property>
+    <property name="descripcionEmp" type="string">
+      <column length="20" name="descripcionEmp"/>
+    </property>
+    <property name="correoEmp" type="string">
+      <column length="20" name="correoEmp"/>
+    </property>
+    <property name="fechaRegistro" type="date">
+      <column length="10" name="fechaRegistro"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="puestosPublicadoses" table="puestos_publicados">
+      <key>
+        <column name="idEmp" not-null="true"/>
+      </key>
+      <one-to-many class="entidades.PuestosPublicados"/>
+    </set>
+  </class>
+</hibernate-mapping>

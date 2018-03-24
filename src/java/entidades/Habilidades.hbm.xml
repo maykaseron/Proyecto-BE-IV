@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2018 4:14:33 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="bolsaempleo" name="entidades.Habilidades" optimistic-lock="version" table="habilidades">
+    <composite-id class="entidades.HabilidadesId" name="id">
+      <key-property name="idHabilidad" type="int">
+        <column name="idHabilidad"/>
+      </key-property>
+      <key-property name="nombreHabilidad" type="string">
+        <column length="10" name="nombreHabilidad"/>
+      </key-property>
+    </composite-id>
+    <property name="areaTrabajo" type="string">
+      <column length="20" name="areaTrabajo"/>
+    </property>
+    <property name="especializacion" type="string">
+      <column length="10" name="especializacion"/>
+    </property>
+  </class>
+</hibernate-mapping>

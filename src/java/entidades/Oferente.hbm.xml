@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2018 4:14:33 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="bolsaempleo" name="entidades.Oferente" optimistic-lock="version" table="oferente">
+    <id name="cedulaOferente" type="string">
+      <column length="15" name="cedulaOferente"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombreOferente" type="string">
+      <column length="10" name="nombreOferente"/>
+    </property>
+    <property name="primerApellido" type="string">
+      <column length="10" name="primerApellido"/>
+    </property>
+    <property name="segundoApellido" type="string">
+      <column length="10" name="segundoApellido"/>
+    </property>
+    <property name="celular" type="string">
+      <column length="12" name="celular"/>
+    </property>
+    <property name="nacionalidad" type="string">
+      <column length="10" name="nacionalidad"/>
+    </property>
+    <property name="correoOferente" type="string">
+      <column length="15" name="correoOferente"/>
+    </property>
+    <property name="ubicacion" type="string">
+      <column length="10" name="ubicacion"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="aplicados" table="aplicado">
+      <key>
+        <column length="15" name="cedulaOferente" not-null="true"/>
+      </key>
+      <one-to-many class="entidades.Aplicado"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="serviciosPublicadoses" table="servicios_publicados">
+      <key>
+        <column length="15" name="cedulaOferente" not-null="true"/>
+      </key>
+      <one-to-many class="entidades.ServiciosPublicados"/>
+    </set>
+  </class>
+</hibernate-mapping>
