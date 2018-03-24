@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import entidades.Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,22 +13,61 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author anderson
- */
-@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AdministrarEmpresa"})
-public class AdministrarEmpresa extends HttpServlet {
+ */ 
+
+                /* POR AHORA ESTE NOMBRE     */
+@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente"})
+public class Registros extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8"); creado por netbeans
          switch(request.getServletPath()){ 
-            
+             case "/AddEmpresa":
+                 this.doAddEmpresa(request, response);
+                 break;
+             case "AddOferente":
+                 this.doAddOferente(request, response); 
+                 break;
         }
     }
 
+protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+    try{
+        HttpSession s =  request.getSession( true);
+        String nombreempresa = request.getParameter("nombreempresa");
+        String email = request.getParameter("email");
+        String contrasena = request.getParameter("contrasena");
+        String telefono = request.getParameter("telefono");
+        String descripcion = request.getParameter("descripcion");
+        
+        Empresa emp = new Empresa();
+        emp.setNombreEmp(nombreempresa);
+        emp.setCorreoEmp(email);
+        emp.setCorreoEmp(contrasena);
+        emp.setTeléfono(telefono);
+        emp.setDescripcionEmp(descripcion);
+        
+    }
+    catch(Exception e){
+        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+    }		
+}  	    
+
+protected void doAddOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    try{
+        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+    }
+    catch(Exception e){
+        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+    }	
+}
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -66,5 +106,4 @@ public class AdministrarEmpresa extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

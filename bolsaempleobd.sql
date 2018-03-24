@@ -59,8 +59,8 @@ CREATE TABLE HABILIDADES_INCLUIDAS (    /**/
 CREATE TABLE EMPRESA (
 		nombreEmp varchar(20) not null,
 		ubicacionEmp varchar(60) not null,
-		latitud varchar (20) not null,
-		longitud varchar (20) not null,
+		latitud varchar (20) ,
+		longitud varchar (20) ,
 		descripcionEmp varchar(20) not null,
 		correoEmp varchar(20) not null,
 		telefono varchar(20)not null,
@@ -122,7 +122,7 @@ CREATE TABLE APLICADO  (
 	   CONSTRAINT FK_AP2 FOREIGN KEY (idPuesto) REFERENCES PUESTOS (idPuesto)
 );
 
-insert into EMPRESA (nombreEmp,ubicacionEmp,latitud,longitud,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','90','90','nada','ama@gm.com','86546');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','nada','ama@gm.com','86546');
 	
 
 
