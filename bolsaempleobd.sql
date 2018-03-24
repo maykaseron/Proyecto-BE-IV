@@ -43,7 +43,7 @@ CREATE TABLE SERVICIOS_PUBLICADOS  (
     CONSTRAINT FK_SP2 FOREIGN KEY (idServicio) REFERENCES SERVICIOS (idServicio)
 );
 
-CREATE TABLE HABILIDADES_INCLUIDAS (
+CREATE TABLE HABILIDADES_INCLUIDAS (    /**/
    idServicio int,
    idHabilidad int,
    fecha_Inclusion date,
@@ -54,6 +54,23 @@ CREATE TABLE HABILIDADES_INCLUIDAS (
    CONSTRAINT FK_HI2 FOREIGN KEY (idHabilidad ) REFERENCES 
    HABILIDADES (idHabilidad),
 );
+
+
+CREATE TABLE EMPRESA (
+	nombreEmp varchar(20) not null,
+	ubicacionEmp varchar(60) not null,
+	latitud varchar (20) not null,
+	longitud varchar (20) not null,
+	descripcionEmp varchar(20) not null,
+	correoEmp varchar(20) not null,
+	telefono varchar(20)not null,
+	idEmp  int AUTO_INCREMENT,
+	/*
+	fechaRegistro date,
+	*/
+	CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
+);
+
 
 CREATE TABLE PUESTOS (
 	nombrePuesto varchar(10),
@@ -73,7 +90,7 @@ CREATE TABLE CARACTERISTICAS (
    CONSTRAINT PK_Caracteriticas PRIMARY KEY (idCAracteristica)
 );
 
-CREATE TABLE CARACTERISTICAS_INCLUIDOS (
+CREATE TABLE CARACTERISTICAS_INCLUIDOS (    /*		*/
    idPuesto int,
    idCaracteristica varchar(5),
    fecha_Inclusion date,
@@ -105,23 +122,22 @@ CREATE TABLE APLICADO  (
    CONSTRAINT FK_AP2 FOREIGN KEY (idPuesto) REFERENCES PUESTOS (idPuesto)
 )
 
+insert into EMPRESA (nombreEmp,ubicacionEmp,latitud,longitud,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','90','90','nada','ama@gm.com','86546');
+	/*
+	
 CREATE TABLE EMPRESA (
-	nombreEmp varchar(20),
-	ubicacionEmp varchar(60),
-	latitud varchar (20),
-	longitud varchar (20),
-	descripcionEmp varchar(20), 
-	correoEmp varchar(20), 
-	telefono varchar(9);
-	idEmp  int AUTO_INCREMENT,
-/*	fechaRegistro date,*/
+	nombreEmp varchar(20) not null,
+	ubicacionEmp varchar(60) not null,
+	latitud varchar (20) not null,
+	longitud varchar (20) not null,
+	descripcionEmp varchar(20) not null,
+	correoEmp varchar(20) not null,
+	telefono varchar(20)not null,
+	idEmp  integer auto_increment not null,
+	fechaRegistro date,
 	
-	CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
-);
-/*
-insert into EMPRESA ( idEmp,  nombreEmp,  ubicacionEmp,  latitud,  longitud,  descripcionEmp, correoEmp,  telefono) 
-						   value ('0', 'amazon' , 'San jose', '90', '90', 'nada espe', 'ama@gm.com', '86546');*/
-	
+	Primary key (idEmp)
+);*/
 
 
 
