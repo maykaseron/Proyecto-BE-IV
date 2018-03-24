@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/BolsaEmpleo"/>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<context>
+<Resource name="_ds" auth="Container" type="javax.sql.DataSource"
+               maxActive="128" maxIdle="32" username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://127.0.0.1:3306/bolsaempleo"/>
+</context>
