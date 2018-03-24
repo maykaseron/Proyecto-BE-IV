@@ -55,25 +55,11 @@ CREATE TABLE HABILIDADES_INCLUIDAS (
    HABILIDADES (idHabilidad),
 );
 
-CREATE TABLE EMPRESA (
-	nombreEmp varchar(20),
-	ubicacionEmp varchar(60),
-	latitud varchar (20),
-	longitud varchar (20),
-	descripcionEmp varchar(20), 
-	correoEmp varchar(20), 
-	idEmp  int AUTO_INCREMENT,
-	fechaRegistro date,
-	
-	CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
-);
-
 CREATE TABLE PUESTOS (
 	nombrePuesto varchar(10),
 	salario float,
 	 descripcionPuesto varchar(10) , 
 	ubicacion varchar(10), 
-
 	idPuesto int AUTO_INCREMENT,
 
 	CONSTRAINT PK_PUESTO PRIMARY KEY(idPuesto)
@@ -99,7 +85,6 @@ CREATE TABLE CARACTERISTICAS_INCLUIDOS (
    CARACTERISTICA (idCaracteristica)
 );
 
-
 CREATE TABLE PUESTOS_PUBLICADOS  (
     idEmp int,
     idPuesto int,
@@ -109,7 +94,6 @@ CREATE TABLE PUESTOS_PUBLICADOS  (
     CONSTRAINT FK_PP1 FOREIGN KEY (idEmp) REFERENCES EMPRESA (idEmp),
     CONSTRAINT FK_PP2 FOREIGN KEY (idPuesto) REFERENCES PUESTOS (idPuesto)
 );
-
 
 CREATE TABLE APLICADO  (
   fechaAplicacion date,
@@ -121,6 +105,23 @@ CREATE TABLE APLICADO  (
    CONSTRAINT FK_AP2 FOREIGN KEY (idPuesto) REFERENCES PUESTOS (idPuesto)
 )
 
+CREATE TABLE EMPRESA (
+	nombreEmp varchar(20),
+	ubicacionEmp varchar(60),
+	latitud varchar (20),
+	longitud varchar (20),
+	descripcionEmp varchar(20), 
+	correoEmp varchar(20), 
+	telefono varchar(9);
+	idEmp  int AUTO_INCREMENT,
+/*	fechaRegistro date,*/
+	
+	CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
+);
+
+insert into EMPRESA ( idEmp,  nombreEmp,  ubicacionEmp,  latitud,  longitud,  descripcionEmp, correoEmp,  telefono) 
+						   value ('0', 'amazon' , 'San jose', '90', '90', 'nada espe', 'ama@gm.com', '86546');
+	
 
 
 
