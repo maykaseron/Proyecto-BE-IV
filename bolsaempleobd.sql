@@ -118,9 +118,9 @@ CREATE TABLE EMPRESA (
 	
 	CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
 );
-
+/*
 insert into EMPRESA ( idEmp,  nombreEmp,  ubicacionEmp,  latitud,  longitud,  descripcionEmp, correoEmp,  telefono) 
-						   value ('0', 'amazon' , 'San jose', '90', '90', 'nada espe', 'ama@gm.com', '86546');
+						   value ('0', 'amazon' , 'San jose', '90', '90', 'nada espe', 'ama@gm.com', '86546');*/
 	
 
 
