@@ -332,10 +332,4 @@ public class Model {
        public Collection<Aplicado> getAllAplicado() throws Exception{
          return  dao.AplicadoGetAll();
     }
-
-
-
-    
-    
-    
 }

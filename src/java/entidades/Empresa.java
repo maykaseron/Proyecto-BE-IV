@@ -19,13 +19,17 @@ public class Empresa  implements java.io.Serializable {
      private String longitud;
      private String descripcionEmp;
      private String correoEmp;
+     private String telefono;
+
+    
      private Date fechaRegistro;
      private Set<PuestosPublicados> puestosPublicadoses = new HashSet<PuestosPublicados>(0);
 
     public Empresa() {
     }
 
-    public Empresa(Integer idEmp, String nombreEmp, String ubicacionEmp, String latitud, String longitud, String descripcionEmp, String correoEmp, Date fechaRegistro) {
+    public Empresa(Integer idEmp, String nombreEmp, String ubicacionEmp, String latitud, String longitud, String descripcionEmp, 
+            String correoEmp, String telefono, Date fechaRegistro) {
         this.idEmp = idEmp;
         this.nombreEmp = nombreEmp;
         this.ubicacionEmp = ubicacionEmp;
@@ -33,6 +37,7 @@ public class Empresa  implements java.io.Serializable {
         this.longitud = longitud;
         this.descripcionEmp = descripcionEmp;
         this.correoEmp = correoEmp;
+        this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
     }
 
@@ -89,6 +94,15 @@ public class Empresa  implements java.io.Serializable {
     public void setCorreoEmp(String correoEmp) {
         this.correoEmp = correoEmp;
     }
+    
+    public String getTeléfono() {
+        return telefono;
+    }
+
+    public void setTeléfono(String telefono) {
+        this.telefono = telefono;
+    }
+    
     public Date getFechaRegistro() {
         return this.fechaRegistro;
     }
