@@ -33,11 +33,10 @@ import java.util.Vector;
  */
 public class Dao {
     
-      RelDatabase db= new RelDatabase();;
+    RelDatabase db;  
     
     public Dao() throws ClassNotFoundException, SQLException, IOException{
         db= new RelDatabase();
-        
     }
     
     
@@ -665,7 +664,7 @@ public class Dao {
     
     /***********************************************************************/
      
-     private Empresa empresa(ResultSet rs){
+    private Empresa empresa(ResultSet rs){
         try {
             Empresa ec= new Empresa();
           
@@ -705,10 +704,14 @@ public class Dao {
     }
     
         
-      public void EmpresaAdd(Empresa p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
+    public void EmpresaAdd(Empresa p) throws Exception{
+        String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono)"
+                + " values ('%s','%s','%s','%s','%s');";
+       sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(), 
+                p.getCorreoEmp(), p.getTeléfono() );
+        db.executeUpdate(sql);
+        
+        /*System.out.println("en oferenteAdd");
         String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp , latitud , longitud, descripcionEmp, correoEmp ) "+
                 "values(? ,? ,? ,? ,? ,?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
@@ -724,7 +727,7 @@ public class Dao {
                 
       
        preparedStmt.execute();
-       
+       */
     }
       
       

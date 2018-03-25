@@ -17,7 +17,7 @@
 <body> 
     <h1>REGISTRAR EMPRESAS</h1>
   
-    <form class = "formempresa" action=""> <%-- action para darle una ccion a type="submit" value="Agregar" --%>
+    <form class = "formempresa" action="AddEmpresa"> <%-- action para darle una ccion a type="submit" value="Agregar" --%>
         <div class = "divempresa">
             <input type="text" placeholder = "Nombre" name="nombreempresa"><br><br>
 

@@ -14,11 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-/**
- *
- * @author anderson
- */ 
+import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
 @WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente"})
@@ -31,7 +27,7 @@ public class Registros extends HttpServlet {
              case "/AddEmpresa":
                  this.doAddEmpresa(request, response);
                  break;
-             case "AddOferente":
+             case "/AddOferente":
                  this.doAddOferente(request, response); 
                  break;
         }
@@ -49,22 +45,25 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
         Empresa emp = new Empresa();
         emp.setNombreEmp(nombreempresa);
         emp.setCorreoEmp(email);
-        emp.setCorreoEmp(contrasena);
+        emp.setCorreoEmp(contrasena); 
         emp.setTeléfono(telefono);
         emp.setDescripcionEmp(descripcion);
+        emp.setUbicacionEmp("Por defecto");
         
+        Model.instance().addEmpresa(emp);
+        request.getRequestDispatcher("principal.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+        request.getRequestDispatcher("index.xhtml").forward( request, response);
     }		
 }  	    
 
 protected void doAddOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try{
-        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
+        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }	
 }
     
