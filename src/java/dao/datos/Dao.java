@@ -705,29 +705,26 @@ public class Dao {
     
         
     public void EmpresaAdd(Empresa p) throws Exception{
-        String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono)"
+       /* String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono)"
                 + " values ('%s','%s','%s','%s','%s');";
        sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(), 
                 p.getCorreoEmp(), p.getTeléfono() );
-        db.executeUpdate(sql);
+        db.executeUpdate(sql);      */
         
-        /*System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp , latitud , longitud, descripcionEmp, correoEmp ) "+
-                "values(? ,? ,? ,? ,? ,?)";
+       System.out.println("en oferenteAdd");
+        String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
+                "values(? ,? ,? ,? ,?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
         System.out.println("despues de prepared" );
         preparedStmt.setString(1, p.getNombreEmp());
         preparedStmt.setString (2, p.getUbicacionEmp());
-        preparedStmt.setString (3, p.getLatitud());
-        preparedStmt.setString (4, p.getLongitud());
-        preparedStmt.setString (5, p.getDescripcionEmp());
-        preparedStmt.setString (6, p.getCorreoEmp());
-                
+        preparedStmt.setString (3, p.getDescripcionEmp());
+        preparedStmt.setString (4, p.getCorreoEmp());
+        preparedStmt.setString (5, p.getTeléfono() );
       
        preparedStmt.execute();
-       */
     }
       
       

@@ -6,6 +6,7 @@
 package Servlets;
 
 import entidades.Empresa;
+import entidades.Oferente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -35,7 +36,6 @@ public class Registros extends HttpServlet {
 
 protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
     try{
-        HttpSession s =  request.getSession( true);
         String nombreempresa = request.getParameter("nombreempresa");
         String email = request.getParameter("email");
         String contrasena = request.getParameter("contrasena");
@@ -60,10 +60,21 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
 
 protected void doAddOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try{
+        String primernombre = request.getParameter("primernombre");
+        String apellidos = request.getParameter("apellidos");
+        String email = request.getParameter("email");
+        String contrasena = request.getParameter("contrasena");
+        String puesto = request.getParameter("puesto");
+
+        Oferente ofe = new Oferente();
+        ofe.setNombreOferente(primernombre);
+        ofe.setPrimerApellido(apellidos);
+        ofe.setCorreoOferente(email);
+        
         request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
+        request.getRequestDispatcher("index.jsp").forward( request, response);
     }	
 }
     
