@@ -23,10 +23,10 @@ public class NewClass {
           
        //   Oferente of = new Oferente("23333333", "Juan" , "Perez" , "Zeledon" , "83737373" , "CR" , "jpz@hmail.com" , "HER" );
           
-       Oferente of = new Oferente("343426666", "Jon" , "Paz" , "Zel" , "45323455" , "CR" , "ccc@hmail.com" , "CAR" );
+       //Oferente of = new Oferente("343426666", "Jon" , "Paz" , "Zel" , "45323455" , "CR" , "ccc@hmail.com" , "CAR" );
           
         //d.OferenteAdd(of);
-        d.OferenteDelete(of);
+       // d.OferenteDelete(of);
           
           
           

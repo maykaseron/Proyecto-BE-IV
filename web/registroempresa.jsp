@@ -7,9 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-<head ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel = "stylesheet" href = "registroempresa.css">
     <title>Registro Empresa</title>
 </head>
@@ -17,7 +16,7 @@
 <body> 
     <h1>REGISTRAR EMPRESAS</h1>
   
-    <form class = "formempresa" action="AddEmpresa"> <%-- action para darle una ccion a type="submit" value="Agregar" --%>
+    <form class = "formempresa" action="AddEmpresa"> <%-- action para darle un evento a type="submit" value="Agregar" --%>
         <div class = "divempresa">
             <input type="text" placeholder = "Nombre" name="nombreempresa"><br><br>
 
@@ -44,7 +43,7 @@
 	  
     <center>
         <a href = "principal.jsp" target = "_self">Regresar</a>/<center>
-  
-     
+
 </body>
+        
 </html>

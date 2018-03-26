@@ -11,12 +11,11 @@ import java.util.Set;
 public class Oferente  implements java.io.Serializable {
 
 
-     private String cedulaOferente;
+     private String cedulaOferente; 
      private String nombreOferente;
      private String primerApellido;
-     private String segundoApellido;
-     private String celular;
-     private String nacionalidad;
+     private String celular; 
+     private String nacionalidad; 
      private String correoOferente;
      private String ubicacion;
      private Set<Aplicado> aplicados = new HashSet<Aplicado>(0);
@@ -29,11 +28,10 @@ public class Oferente  implements java.io.Serializable {
     public Oferente(String cedulaOferente) {
         this.cedulaOferente = cedulaOferente;
     }
-    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String segundoApellido, String celular, String nacionalidad, String correoOferente, String ubicacion, Set<Aplicado> aplicados, Set<ServiciosPublicados> serviciosPublicadoses) {
+    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion, Set<Aplicado> aplicados, Set<ServiciosPublicados> serviciosPublicadoses) {
        this.cedulaOferente = cedulaOferente;
        this.nombreOferente = nombreOferente;
        this.primerApellido = primerApellido;
-       this.segundoApellido = segundoApellido;
        this.celular = celular;
        this.nacionalidad = nacionalidad;
        this.correoOferente = correoOferente;
@@ -42,11 +40,10 @@ public class Oferente  implements java.io.Serializable {
        this.serviciosPublicadoses = serviciosPublicadoses;
     }
     
-      public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String segundoApellido, String celular, String nacionalidad, String correoOferente, String ubicacion) {
+      public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion) {
        this.cedulaOferente = cedulaOferente;
        this.nombreOferente = nombreOferente;
        this.primerApellido = primerApellido;
-       this.segundoApellido = segundoApellido;
        this.celular = celular;
        this.nacionalidad = nacionalidad;
        this.correoOferente = correoOferente;
@@ -75,13 +72,7 @@ public class Oferente  implements java.io.Serializable {
     public void setPrimerApellido(String primerApellido) {
         this.primerApellido = primerApellido;
     }
-    public String getSegundoApellido() {
-        return this.segundoApellido;
-    }
     
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
     public String getCelular() {
         return this.celular;
     }

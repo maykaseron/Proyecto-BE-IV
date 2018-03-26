@@ -61,17 +61,25 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
 protected void doAddOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try{
         String primernombre = request.getParameter("primernombre");
-        String apellidos = request.getParameter("apellidos");
+        String apellidos = request.getParameter("apellido");
+        String cedula = request.getParameter("cedula");
         String email = request.getParameter("email");
+        String celular = request.getParameter("celular");
+        String nacionalidad = request.getParameter("nacionalidad");
         String contrasena = request.getParameter("contrasena");
         String puesto = request.getParameter("puesto");
 
         Oferente ofe = new Oferente();
         ofe.setNombreOferente(primernombre);
         ofe.setPrimerApellido(apellidos);
+        ofe.setCedulaOferente(cedula);
         ofe.setCorreoOferente(email);
+        ofe.setCelular(celular);
+        ofe.setNacionalidad(nacionalidad);
+        ofe.setUbicacion("por defecto");
         
-        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
+        Model.instance().addOferente(ofe);
+        request.getRequestDispatcher("principal.jsp").forward( request, response);
     }
     catch(Exception e){
         request.getRequestDispatcher("index.jsp").forward( request, response);

@@ -14,7 +14,6 @@ CREATE TABLE OFERENTE (
 	  cedulaOferente varchar (15),
 	  nombreOferente varchar(10),
 	  primerApellido varchar(10),
-	  segundoApellido varchar(10),
 	  celular varchar(12),
 	  nacionalidad varchar (10),
 	  correoOferente varchar(15),
@@ -123,6 +122,7 @@ CREATE TABLE APLICADO  (
 );
 
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','nada','ama@gm.com','86546');
-	
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion)   
+	values ('111','Jacinto','BuenaVen','8888','Marte','jac@gm.com','PriCrater');
 
 

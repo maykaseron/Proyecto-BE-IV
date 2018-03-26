@@ -711,13 +711,13 @@ public class Dao {
                 p.getCorreoEmp(), p.getTeléfono() );
         db.executeUpdate(sql);      */
         
-       System.out.println("en oferenteAdd");
+       System.out.println("en EmpresaAdd");
         String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
                 "values(? ,? ,? ,? ,?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
+        System.out.println("listo" );
         preparedStmt.setString(1, p.getNombreEmp());
         preparedStmt.setString (2, p.getUbicacionEmp());
         preparedStmt.setString (3, p.getDescripcionEmp());
@@ -868,13 +868,22 @@ public class Dao {
         return estados;        
     }
        
-       
-        public void OferenteAdd(Oferente p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.oferente (cedulaOferente , nombreOferente , primerApellido , segundoApellido , celular, nacionalidad, correoOferente, ubicacion  ) "+
-                "values(? ,? ,? ,? ,?, ?, ?, ?)";
+       /* String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono)"
+                + " values ('%s','%s','%s','%s','%s');";
+       sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(), 
+                p.getCorreoEmp(), p.getTeléfono() );
+        db.executeUpdate(sql);      */
+    public void OferenteAdd(Oferente p) throws Exception {
+        String sql= "insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) "
+                + "values ('%s','%s','%s','%s','%s','%s','%s'); ";
+        sql=String.format( sql, p.getCedulaOferente(), p.getNombreOferente(), p.getPrimerApellido(), p.getCelular(), p.getNacionalidad(),
+                p.getCorreoOferente(), p.getUbicacion() );
+        db.executeUpdate(sql);  
+        
+        /*
+        System.out.println("en oferenteAdd");
+        String sql="insert into bolsaempleo.oferente (cedulaOferente , nombreOferente , primerApellido , celular, nacionalidad, correoOferente, ubicacion  ) "+
+                "values(? ,? ,? ,? ,?, ?, ?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
@@ -882,16 +891,12 @@ public class Dao {
         preparedStmt.setString (1, p.getCedulaOferente());
         preparedStmt.setString (2, p.getNombreOferente());
         preparedStmt.setString (3, p.getPrimerApellido());
-        preparedStmt.setString (4, p.getSegundoApellido());
-        preparedStmt.setString (5, p.getCelular());
-        preparedStmt.setString (6, p.getNacionalidad());
-        preparedStmt.setString (7, p.getCorreoOferente());
-        preparedStmt.setString (8, p.getUbicacion());
-        
-      
-      
-       preparedStmt.execute();
-       
+        preparedStmt.setString (4, p.getCelular());
+        preparedStmt.setString (5, p.getNacionalidad());
+        preparedStmt.setString (6, p.getCorreoOferente());
+        preparedStmt.setString (7, p.getUbicacion());
+
+        preparedStmt.execute();*/
     }
         
          public void OferenteDelete(Oferente p) throws Exception{
@@ -904,11 +909,11 @@ public class Dao {
         }
     }
          
-          public void OferenteUpdate(Oferente p) throws Exception{
+    public void OferenteUpdate(Oferente p) throws Exception {
         String sql="update bolsaempleo.oferente set  nombreOferente='%s', primerApellido='%s' , segundoApellido='%s' , celular='%s', nacionalidad='%s' , correoOferente='%s' , ubicacion='%s'"   +
                 "where cedulaOferente='%s'";
         sql=String.format(sql,p.getNombreOferente(),
-                p.getPrimerApellido(),p.getSegundoApellido(),p.getCelular() , p.getNacionalidad(), p.getCorreoOferente(), p.getUbicacion(), p.getCedulaOferente());
+                p.getPrimerApellido(),p.getCelular() , p.getNacionalidad(), p.getCorreoOferente(), p.getUbicacion(), p.getCedulaOferente());
         
         int count=db.executeUpdate(sql);
         if (count==0){
@@ -918,19 +923,16 @@ public class Dao {
       
     
       
-        private Oferente oferente(ResultSet rs){
+    private Oferente oferente(ResultSet rs) {
         try {
             Oferente ec= new Oferente();
-          
                 ec.setCedulaOferente(rs.getString("cedulaOferente"));
                 ec.setPrimerApellido(rs.getString("primerApellido"));
                 ec.setNombreOferente(rs.getString("nombreOferente"));
-                ec.setSegundoApellido(rs.getString("segundoApellido"));
                 ec.setNacionalidad(rs.getString("nacionalidad"));
                 ec.setCorreoOferente(rs.getString("correoOferente"));
                 ec.setUbicacion(rs.getString("ubicacion"));
-                   
-            
+
             return ec;
         } catch (SQLException ex) {
             return null;

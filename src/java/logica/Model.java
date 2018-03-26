@@ -87,6 +87,7 @@ public class Model {
        }
 
          public void addOferente(Oferente p) throws Exception{
+           System.out.println("en DAO oferenteAdd");
            dao.OferenteAdd(p);
        }
 
