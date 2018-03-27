@@ -1,26 +1,25 @@
 body {
     background-color : #F7F2E0;
     text-align: center; /* estaba en h1 ::placeholder option y div.divempresa, ahora solo aquí */ 
+    font-weight: normal;
   }
   
 h1 {
    color : #8A2048;
-   font-family : Impact, Charcoal, sans-serif;
    font-weight: normal;
+   font-family : Impact, Charcoal, sans-serif;
   }
   
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         text-align: center;
         color : #8A2048;
         font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-        font-weight: normal;
 }
   
 option{
     text-align: center;
     color : #8A2048;
     font-family : Impact, Charcoal, sans-serif;
-    font-weight: normal;
   }
   
 a {
@@ -35,7 +34,6 @@ div.divempresa{
     border: 3px solid #ffe6f9;
     color : #8A2048;
     font-family : Impact, Charcoal, sans-serif;
-    font-weight: normal;
 }
   
   
