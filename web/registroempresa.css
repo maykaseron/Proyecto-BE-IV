@@ -1,39 +1,28 @@
 body {
     background-color : #F7F2E0;
-    text-align: center; /* estaba en h1 ::placeholder option y div.divempresa, ahora solo aquí */ 
-    font-weight: normal;
+    text-align: center; /* estaba en h1 ::placeholder  y div.divempresa, ahora solo aquí */ 
+    font-weight: normal; 
+    font-family : Impact, Charcoal, sans-serif;
+    color : #8A2048;
   }
+
+body option,a,::placeholder {
+    color : #8A2048;
+}
   
 h1 {
-   color : #8A2048;
-   font-weight: normal;
-   font-family : Impact, Charcoal, sans-serif;
+   font-weight: lighter;
   }
   
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         text-align: center;
-        color : #8A2048;
         font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-}
-  
-option{
-    text-align: center;
-    color : #8A2048;
-    font-family : Impact, Charcoal, sans-serif;
-  }
-  
-a {
-    color : #8A2048;
-    font-family :  sans-serif;
-    font-family : Impact, Charcoal, sans-serif;
 }
 
 div.divempresa{
     width:500px;
     margin: auto;  /* centra  */
     border: 3px solid #ffe6f9;
-    color : #8A2048;
-    font-family : Impact, Charcoal, sans-serif;
 }
   
   

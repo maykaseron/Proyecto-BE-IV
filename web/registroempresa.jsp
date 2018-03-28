@@ -40,9 +40,8 @@
             <input type="submit" value="Agregar" >
         </div>
     </form><br><br>
-	  
-    <center>
-        <a href = "principal.jsp" target = "_self">Regresar</a>/<center>
+    
+    <a href = "principal.jsp" target = "_self">Regresar</a>
 
 </body>
         
