@@ -19,7 +19,7 @@ body option,a,::placeholder,h1 {
         font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-div.divempresa, div.divempresa{
+div.divempresa, div.divform{
     width:500px;
     margin: auto;  /* centra  */
     border: 3px solid #ffe6f9;
