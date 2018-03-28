@@ -1,4 +1,4 @@
-  body {
+body {
     background-color : #F7F2E0;
     text-align: center;
   }
@@ -6,43 +6,35 @@
 h1 {
     color : #8A2048;
     font-family : Impact, Charcoal, sans-serif;
-    text-align : center;
     font-weight: normal;
   }
    
- ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-           text-align: center;
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 	   color : #8A2048;
+           text-align : center;
 	   font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	   text-align : center;
 	   font-weight: normal;
 }
-  
-  div.divform{
-    width:500px;
-    margin: margin-left;
-    border: 3px solid #ffe6f9;
-    color : #8A2048;
-    font-family : Impact, Charcoal, sans-serif;
-    text-align : center;
-    font-weight: normal;
-  }
 
 a {
     color : #8A2048;
-    font-family :  sans-serif;
-    text-align : center;
     font-family : Impact, Charcoal, sans-serif;
 }
 
 option{
-    text-align: center;
     color : #8A2048;
     font-family : Impact, Charcoal, sans-serif;
-    text-align : center;
     font-weight: normal;
  }
  
+ div.divform{
+    width:500px;
+    margin: auto;
+    border: 3px solid #ffe6f9;
+    color : #8A2048;
+    font-family : Impact, Charcoal, sans-serif;
+    font-weight: normal;
+  }
  /* form.formoferente {
           color : #8A2048;
 	   font-family :  sans-serif;
