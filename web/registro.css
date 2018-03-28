@@ -1,0 +1,26 @@
+/* 
+        La idea sería usar solo un .css para 
+        registroempresa.jsp y registrooferente.jsp
+        y no tener dos q hacen lo mismo
+*/
+body {
+    background-color : #F7F2E0;
+    text-align: center; 
+}
+
+body option,a,::placeholder,h1 {
+    color : #8A2048; 
+    font-weight: normal; 
+    font-family : Impact, Charcoal, sans-serif;
+}
+  
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        text-align: center;
+        font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+div.divempresa, div.divempresa{
+    width:500px;
+    margin: auto;  /* centra  */
+    border: 3px solid #ffe6f9;
+}
