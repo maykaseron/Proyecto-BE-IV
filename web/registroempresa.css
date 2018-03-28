@@ -1,18 +1,13 @@
 body {
     background-color : #F7F2E0;
-    text-align: center; /* estaba en h1 ::placeholder  y div.divempresa, ahora solo aquí */ 
+    text-align: center; 
+}
+
+body option,a,::placeholder,h1 {
+    color : #8A2048; 
     font-weight: normal; 
     font-family : Impact, Charcoal, sans-serif;
-    color : #8A2048;
-  }
-
-body option,a,::placeholder {
-    color : #8A2048;
 }
-  
-h1 {
-   font-weight: lighter;
-  }
   
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         text-align: center;
@@ -24,9 +19,3 @@ div.divempresa{
     margin: auto;  /* centra  */
     border: 3px solid #ffe6f9;
 }
-  
-  
-  
-  
-  
-  
