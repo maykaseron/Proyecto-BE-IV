@@ -25,7 +25,7 @@ CREATE TABLE OFERENTE (
 CREATE TABLE SERVICIOS (
 	   idServicio int AUTO_INCREMENT,
 	   nombreServicio varchar(10),
-	  salarioEsperado float,
+	   salarioEsperado float,
 	   descripcionDescripcion varchar(10) , 
 
 CONSTRAINT PK_SERVICIO PRIMARY KEY(idServicio)
