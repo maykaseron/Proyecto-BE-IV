@@ -10,25 +10,43 @@ import java.util.Set;
  */
 public class Puestos  implements java.io.Serializable {
     private Integer idPuesto;
+    private Empresa empresa;
     private String nombrePuesto;
     private Float salario;
     private String descripcionPuesto;
-    private String ubicacion;
+    private Boolean tipoPublicacion; // true = publico. por el momento todos son publicos, 
+                                    //  cambiar en el dao (todo lo relacionado a esta clase), Cuando 
+                                    //  tengamos q dar la opcion de escoger entre privado o publico
+    
+//    private String ubicacion; HACE FALTA???
     private Set<PuestosPublicados> puestosPublicadoses = new HashSet<PuestosPublicados>(0);
     private Set<Aplicado> aplicados = new HashSet<Aplicado>(0);
-    private Set<CaracteristicasIncluidos> caracteristicasIncluidoses = new HashSet<CaracteristicasIncluidos>(0);
+    private Set<CaracteristicasPuestos> caracteristicasIncluidoses = new HashSet<CaracteristicasPuestos>(0);
 
     public Puestos() {
     }
 
-    public Puestos(String nombrePuesto, Float salario, String descripcionPuesto, String ubicacion, Set<PuestosPublicados> puestosPublicadoses, Set<Aplicado> aplicados, Set<CaracteristicasIncluidos> caracteristicasIncluidoses) {
-       this.nombrePuesto = nombrePuesto;
-       this.salario = salario;
-       this.descripcionPuesto = descripcionPuesto;
-       this.ubicacion = ubicacion;
-       this.puestosPublicadoses = puestosPublicadoses;
-       this.aplicados = aplicados;
-       this.caracteristicasIncluidoses = caracteristicasIncluidoses;
+    public Puestos(Integer idPuesto, Empresa empresa, String nombrePuesto, Float salario, String descripcionPuesto, Boolean tipoPublicacion) {
+        this.idPuesto = idPuesto;
+        this.empresa = empresa;
+        this.nombrePuesto = nombrePuesto;
+        this.salario = salario;
+        this.descripcionPuesto = descripcionPuesto;
+        this.tipoPublicacion = tipoPublicacion;
+    }
+
+    public Puestos(Integer idPuesto,Empresa empresa,String nombrePuesto,Float salario,String descripcionPuesto,Boolean tipoPublicacion, 
+            Set<PuestosPublicados> puestosPublicadoses, Set<Aplicado> aplicados, Set<CaracteristicasPuestos> caracteristicasIncluidoses) {
+        this.idPuesto = idPuesto;
+        this.empresa = empresa;
+        this.nombrePuesto = nombrePuesto;
+        this.salario = salario;
+        this.descripcionPuesto = descripcionPuesto;
+        this.tipoPublicacion = tipoPublicacion;
+//       this.ubicacion = ubicacion;
+        this.puestosPublicadoses = puestosPublicadoses;
+        this.aplicados = aplicados;
+        this.caracteristicasIncluidoses = caracteristicasIncluidoses;
     }
    
     public Integer getIdPuesto() {
@@ -38,6 +56,15 @@ public class Puestos  implements java.io.Serializable {
     public void setIdPuesto(Integer idPuesto) {
         this.idPuesto = idPuesto;
     }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+    
     public String getNombrePuesto() {
         return this.nombrePuesto;
     }
@@ -59,13 +86,15 @@ public class Puestos  implements java.io.Serializable {
     public void setDescripcionPuesto(String descripcionPuesto) {
         this.descripcionPuesto = descripcionPuesto;
     }
-    public String getUbicacion() {
-        return this.ubicacion;
+    
+    public Boolean getTipoPublicacion() {
+        return tipoPublicacion;
+    }
+
+    public void setTipoPublicacion(Boolean tipoPublicacion) {
+        this.tipoPublicacion = tipoPublicacion;
     }
     
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
     public Set<PuestosPublicados> getPuestosPublicadoses() {
         return this.puestosPublicadoses;
     }
@@ -80,11 +109,11 @@ public class Puestos  implements java.io.Serializable {
     public void setAplicados(Set<Aplicado> aplicados) {
         this.aplicados = aplicados;
     }
-    public Set<CaracteristicasIncluidos> getCaracteristicasIncluidoses() {
+    public Set<CaracteristicasPuestos> getCaracteristicasIncluidoses() {
         return this.caracteristicasIncluidoses;
     }
     
-    public void setCaracteristicasIncluidoses(Set<CaracteristicasIncluidos> caracteristicasIncluidoses) {
+    public void setCaracteristicasIncluidoses(Set<CaracteristicasPuestos> caracteristicasIncluidoses) {
         this.caracteristicasIncluidoses = caracteristicasIncluidoses;
     }
 

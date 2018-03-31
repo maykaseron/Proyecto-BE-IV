@@ -1,6 +1,85 @@
 CREATE DATABASE BOLSAEMPLEO;
 USE BOLSAEMPLEO;
 
+CREATE TABLE EMPRESA (
+        nombreEmp varchar(20) not null, /* el not null es para evitar q no ingresen datos null*/
+        ubicacionEmp varchar(60) not null,
+        latitud varchar (20) ,
+        longitud varchar (20) ,
+        descripcionEmp varchar(20) not null,
+        correoEmp varchar(20) not null,
+        telefono varchar(20)not null,
+        idEmp  int AUTO_INCREMENT,
+        /* fechaRegistro date, */
+        CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
+);
+
+CREATE TABLE OFERENTE (
+        cedulaOferente varchar (15),
+        nombreOferente varchar(10),
+        primerApellido varchar(10),
+        celular varchar(12),
+        nacionalidad varchar (10),
+        correoOferente varchar(15),
+        ubicacion varchar(60),
+ 
+  CONSTRAINT PK_OFERENTE PRIMARY KEY (cedulaOferente)
+);
+
+CREATE TABLE CARACTERISTICAS (
+        idCaracteristica integer auto_increment not null,
+        areaTrabajo varchar(20),
+        especializacion varchar (10),
+
+        CONSTRAINT PK_Caracteriticas PRIMARY KEY (idCAracteristica)
+);
+
+CREATE TABLE PUESTOS (
+        idPuesto int AUTO_INCREMENT,
+        idEmp int,
+        nombrePuesto varchar(10),
+        salario float,
+        descripcionPuesto varchar(10) , 
+        tipoPublicacion boolean,
+
+        CONSTRAINT PK_PUESTO PRIMARY KEY(idPuesto)
+);
+
+CREATE TABLE CARACTERISTICAS_PUESTOS (  /* CARACTERISTICAS_INCLUIDOS se llamaba así */
+        consecutivo integer auto_increment not null,
+        idPuesto int(10),
+        idCaracteristica int(10),
+        valor int,
+        fecha_Inclusion date,
+
+        CONSTRAINT PK_CARAC_PUESTOS PRIMARY KEY(consecutivo)
+);
+
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','nada','ama@gm.com','86546');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('dhl','San jose','nada','dhl@gm.com','5789');
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) values ('111','Jacinto','BuenaVen','8888','Marte','jac@gm.com','PriCrater');
+
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('inge', 100, 'progra', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Desa Web', 200, 'progra', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Traductor', 300, 'progra', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Pro Web', 200, 'progra', true, 2);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('inge', 50, 'progra', true, 2);
+
+
+insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Lenguaje de Progr','Java');
+insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Lenguaje de Progr','HTML');
+insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Lenguaje de Progr','C++');
+insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Idiomas','Ingles');
+
+
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,1,80);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,3,80);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,2,90);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (3,4,95);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (4,2,90);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (5,3,80);
+
+/*
 CREATE TABLE HABILIDADES (
 	   idHabilidad int AUTO_INCREMENT ,
 	   nombreHabilidad varchar(10) ,
@@ -42,7 +121,7 @@ CREATE TABLE SERVICIOS_PUBLICADOS  (
 	    CONSTRAINT FK_SP2 FOREIGN KEY (idServicio) REFERENCES SERVICIOS (idServicio)
 );
 
-CREATE TABLE HABILIDADES_INCLUIDAS (    /**/
+CREATE TABLE HABILIDADES_INCLUIDAS (    
 	   idServicio int,
 	   idHabilidad int,
 	   fecha_Inclusion date,
@@ -56,26 +135,27 @@ CREATE TABLE HABILIDADES_INCLUIDAS (    /**/
 
 
 CREATE TABLE EMPRESA (
-		nombreEmp varchar(20) not null,
-		ubicacionEmp varchar(60) not null,
+		nombreEmp varchar(20) not null,*/ /* el not null es para evitar q no ingresen datos null*/
+		/*ubicacionEmp varchar(60) not null,
 		latitud varchar (20) ,
 		longitud varchar (20) ,
 		descripcionEmp varchar(20) not null,
 		correoEmp varchar(20) not null,
 		telefono varchar(20)not null,
 		idEmp  int AUTO_INCREMENT,
+*/
 		/*
 		fechaRegistro date,
 		*/
-		CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
+/*		CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
 );
 
 
 CREATE TABLE PUESTOS (
 		nombrePuesto varchar(10),
 		salario float,
-		 descripcionPuesto varchar(10) , 
-		ubicacion varchar(10), 
+		descripcionPuesto varchar(10) , 
+		tipoPublicacion boolean,
 		idPuesto int AUTO_INCREMENT,
 
 		CONSTRAINT PK_PUESTO PRIMARY KEY(idPuesto)
@@ -89,7 +169,7 @@ CREATE TABLE CARACTERISTICAS (
 	   CONSTRAINT PK_Caracteriticas PRIMARY KEY (idCAracteristica)
 );
 
-CREATE TABLE CARACTERISTICAS_INCLUIDOS (    /*		*/
+CREATE TABLE CARACTERISTICAS_INCLUIDOS (    
 	   idPuesto int,
 	   idCaracteristica varchar(5),
 	   fecha_Inclusion date,
@@ -120,9 +200,4 @@ CREATE TABLE APLICADO  (
 	  CONSTRAINT FK_AP1 FOREIGN KEY (cedulaOferente) REFERENCES OFERENTE (cedulaOferente),
 	   CONSTRAINT FK_AP2 FOREIGN KEY (idPuesto) REFERENCES PUESTOS (idPuesto)
 );
-
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','nada','ama@gm.com','86546');
-insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion)   
-	values ('111','Jacinto','BuenaVen','8888','Marte','jac@gm.com','PriCrater');
-
-
+*/

@@ -7,8 +7,10 @@ package Servlets;
 
 import entidades.Empresa;
 import entidades.Oferente;
+import entidades.Puestos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,19 +20,22 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
-@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente"})
+@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5"})
 public class Registros extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8"); creado por netbeans
          switch(request.getServletPath()){ 
-             case "/AddEmpresa":
+            case "/AddEmpresa":
                  this.doAddEmpresa(request, response);
                  break;
-             case "/AddOferente":
+            case "/AddOferente":
                  this.doAddOferente(request, response); 
                  break;
+            case "/Top5":
+                this.doTop5(request, response); 
+                break;
         }
     }
 
@@ -85,6 +90,19 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         request.getRequestDispatcher("index.jsp").forward( request, response);
     }	
 }
+
+    private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        try{
+            List<Puestos> puestos = Model.instance().sugerenciaListTop5();
+            request.setAttribute("sugerencias",puestos);
+            request.getRequestDispatcher("principal.jsp").forward( request, response);
+          }
+        catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",error);
+                request.getRequestDispatcher("Error.jsp").forward( request, response);
+          }		
+    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -124,4 +142,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 }
