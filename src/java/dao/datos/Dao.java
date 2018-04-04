@@ -23,7 +23,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -206,16 +210,15 @@ public class Dao {
     }
     
     /*********************************************************************/
-    
+    int keyCarPuesCar;
     private CaracteristicasPuestos caracteristicasPuestos(ResultSet rs){
         try {
             CaracteristicasPuestos ec= new CaracteristicasPuestos();
                 
                 ec.setConsecutivo( rs.getInt("consecutivo") );
                 ec.setValor( rs.getInt("valor") );
-                ec.setCaracteristicas( this.caracteristicas(rs) );
-                ec.setPuesto( this.puestos(rs) );
-                ec.setFechaInclusion( rs.getDate("fechaInclusion") );
+                keyCarPuesCar = rs.getInt( "idCaracteristica" );
+                ec.setFechaInclusion( rs.getDate("fecha_Inclusion") );
 
                 return ec;
         } catch (SQLException ex) {
@@ -249,9 +252,9 @@ public class Dao {
         preparedStmt.execute();
     }
             
-    public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo, int codigo2) throws Exception{
-        String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d and idCaracteristica=%d";
-        sql = String.format(sql,codigo,codigo2);
+    public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
+        String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
+        sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
         if (rs.next()) {
             return caracteristicasPuestos(rs);
@@ -260,7 +263,7 @@ public class Dao {
             throw new Exception ("servicio no ha sido publicado");
         }
     }
-        
+    
     public Collection<CaracteristicasPuestos> CaracteristicasPuestosGetAll(){
         Vector<CaracteristicasPuestos> estados=new Vector<CaracteristicasPuestos>();
         try {
@@ -272,6 +275,79 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
+    
+    public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
+       try { // este metodo busca CaracteristicasPuestos q tengan el id del puesto
+            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
+            sql = String.format(sql,codigo);
+            ResultSet rs =  db.executeQuery(sql);
+            CaracteristicasPuestos c;
+            while ( rs.next() ) {
+                c = caracteristicasPuestos(rs); // encotro uno
+                c.setPuesto(p); // setea el atributo de puesto
+                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) ); // obtengo la caracteristica
+                ListTop5.add(c); // lo agrego a lista magica, para agregarlo en puesto
+            }
+        } catch (SQLException ex) { }
+    }    
+    
+    
+    List<CaracteristicasPuestos> ListTop5 = new ArrayList<>();
+    public List<Puestos> ListTop5 () throws Exception {
+        List<Puestos> ListPuest = new ArrayList();
+        CaracteristicasPuestos c;
+           try {
+            String sql="select * from Puestos p order by p.idPuesto desc limit 5;";
+            ResultSet rs =  db.executeQuery(sql);
+             Puestos p;
+            while ( rs.next() ) {
+                ListTop5 = new ArrayList(); // limpio la lista de la busqueda anterior
+                p = this.puestos(rs); // obtengo puestos
+                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) ); // obtengo la empresa asociada al puesto
+                this.CaracteristicasPuestosIDpuesto ( p.getIdPuesto(), p ); // busca CaracteristicasPuestos q tengan el id del puesto
+                p.setCaracteristicasPuestos ( ListTop5 ); // agrego la lista CaracteristicasPuestos aL puesto
+                ListPuest.add(p); // lo agrego a lista magica
+            }
+        } catch (SQLException ex) { }
+        return ListPuest;
+    }
+    
+    // 1_PuestosPorCaracteristicas trae puetosXpuesto, cada vez q tiene uno "setea" atributo empresa.luego 2_CaracteristicasPuestosIDpuestoAll
+    // ,este busca en los CARACTERISTICAS_PUESTOS quien tiene el mismo idPuesto. Ahora tiene construido a puesto,empresa 
+    // y construye a CARACTERISTICAS_PUESTOS, depues por medio de su atributo idCaracteristica trae a CARACTERISTICA y lo compara 
+    // con el q tengo por parametro, si es? entonces lo agrega a puetosAll. 
+    List<CaracteristicasPuestos> puetosAll = new ArrayList<>();
+    public List<CaracteristicasPuestos> PuestosPorCaracteristicas ( String especializacion ) throws Exception {
+        List<CaracteristicasPuestos> resultado = new ArrayList<>();
+        puetosAll = new ArrayList<>(); // lo limpia de la busqueda pasada
+        try {
+            String sql="select * from Puestos;";
+            ResultSet rs =  db.executeQuery(sql);
+            Puestos p;
+            while ( rs.next() ) {
+                p = this.puestos(rs);
+                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) );
+                CaracteristicasPuestosIDpuestoAll ( p.getIdPuesto(), p, especializacion );
+            }
+        } catch (SQLException ex) { }
+        return puetosAll;
+    }
+    
+    public void CaracteristicasPuestosIDpuestoAll(int codigo, Puestos p, String especializacion ) throws Exception{
+       try {
+            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
+            sql = String.format(sql,codigo);
+            ResultSet rs =  db.executeQuery(sql);
+            CaracteristicasPuestos c;
+            while ( rs.next() ) {
+                c = caracteristicasPuestos(rs);
+                c.setPuesto(p);
+                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) );
+                if ( especializacion.equals( c.getCaracteristicas().getEspecializacion() ))
+                    puetosAll.add(c);
+            }
+        } catch (SQLException ex) { }
+    }    
     
     /************************************************************************/
     
@@ -438,11 +514,9 @@ public class Dao {
     
     
     /*********************************************************************/
-
     private Caracteristicas caracteristicas(ResultSet rs){
         try {
             Caracteristicas ec= new Caracteristicas();
-          
                 ec.setIdCaracteristica( rs.getInt("idCaracteristica") );
                 ec.setAreaTrabajo( rs.getString("areaTrabajo") );
                 ec.setEspecializacion( rs.getString("especializacion") );
@@ -494,7 +568,7 @@ public class Dao {
     public Caracteristicas CaracteristicasGet(int codigo) throws Exception{
         String sql="select * from caracteristicas where idCaracteristica=%d";
         sql = String.format(sql,codigo);
-        ResultSet rs =  db.executeQuery(sql);
+        ResultSet rs =  db.executeQuery(sql); 
         if (rs.next()) {
             return caracteristicas(rs);
         }
@@ -502,9 +576,41 @@ public class Dao {
             throw new Exception ("puesto no Existe");
         }
     }
-        
+    
+    // busca por areaTrabajo
+    public List<Caracteristicas> CaracteristicasEspecializ(String areaTrabajo) throws Exception{
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        Caracteristicas aux;
+        try {
+            String sql="select * from caracteristicas";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                aux = caracteristicas(rs);
+                if ( areaTrabajo.equals( aux.getAreaTrabajo() ) )
+                    estados.add( aux );
+            }
+        } catch (SQLException ex) { }
+        return estados;  
+    }
+    
+    public List<Caracteristicas> CaracteristicasAreaTrabajo( ) throws Exception{
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        Caracteristicas aux; String areaTrabajo = "as";
+        try {
+            String sql="select * from caracteristicas";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                aux = caracteristicas(rs);
+                if ( !areaTrabajo.equals( aux.getAreaTrabajo() ) ) 
+                    estados.add( aux );
+                areaTrabajo = aux.getAreaTrabajo();
+            }
+        } catch (SQLException ex) { }
+        return estados;  
+    }
+    
     public Collection<Caracteristicas> CaracteristicasGetAll(){
-        Vector<Caracteristicas> estados=new Vector<Caracteristicas>();
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
         try {
             String sql="select * from caracteristicas";
             ResultSet rs =  db.executeQuery(sql);
@@ -514,14 +620,14 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
-
+    
     /**********************************************************************/
     
     private Puestos puestos(ResultSet rs) {
         try {
             Puestos ec= new Puestos();
                 ec.setIdPuesto(rs.getInt("idPuesto"));
-                ec.setEmpresa( this.empresa(rs) );
+                // ec.setEmpresa( this.empresa(rs) );
                 ec.setNombrePuesto(rs.getString("nombrePuesto"));
                 ec.setSalario(rs.getFloat("salario"));
                 ec.setDescripcionPuesto(rs.getString("descripcionPuesto"));
@@ -544,7 +650,6 @@ public class Dao {
             throw new Exception("puestos no existe");
         }
     }
-              
               
     public void PuestosDelete(Puestos p) throws Exception {
         String sql="delete from bolsaempleo.puestos where idPuesto='%s'";
@@ -571,8 +676,8 @@ public class Dao {
        preparedStmt.execute();
     }
       
-    public Puestos PuestosGet(String codigo) throws Exception {
-        String sql="select * from puestos where idPuesto='%s'";
+    public Puestos PuestosGet(int codigo) throws Exception {
+        String sql="select * from puestos where idPuesto=%d";
         sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
         if (rs.next()) {
@@ -594,33 +699,38 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
-    
+    /*
     public List<Puestos> ListTop5 () throws Exception {
         List<Puestos> resultado = new ArrayList<>();
            try {
-            String sql="select * from "+
-                    "Puestos p inner join CARACTERISTICAS_PUESTOS c on c.idPuesto=c.consecutivo "+   
-                    "order by c.idPuesto desc limit 5";
+            String sql="select * from Puestos p inner join CARACTERISTICAS_PUESTOS c on p.idPuesto=c.consecutivo order "
+                    + "by p.idPuesto desc limit 5;";
             ResultSet rs =  db.executeQuery(sql);
+            Puestos p;
+            CaracteristicasPuestos c;
             while (rs.next()) {
+                p = puestos(rs);
+                //c = this.caracteristicasPuestos(rs);
                 
+                //p.setEmpresa(empresa(rs));
+                resultado.add(p);
             }
         } catch (SQLException ex) { }
         return resultado;
     }
-    
+    */
     
     /***********************************************************************/
      
     private Empresa empresa(ResultSet rs){
         try {
             Empresa ec= new Empresa();
-                ec.setNombreEmp(rs.getString("nombreEmpresa"));
-                ec.setUbicacionEmp(rs.getString("ubicacionEmpresa"));
-                ec.setDescripcionEmp(rs.getString("descripcionEmpresa"));
-                ec.setCorreoEmp(rs.getString("correoEmpresa"));
+                ec.setNombreEmp(rs.getString("nombreEmp"));
+                ec.setUbicacionEmp(rs.getString("ubicacionEmp"));
+                ec.setDescripcionEmp(rs.getString("descripcionEmp"));
+                ec.setCorreoEmp(rs.getString("correoEmp"));
                 ec.setTeléfono( rs.getString("telefono") );
-                ec.setIdEmp(rs.getInt("idEmpresa"));
+                ec.setIdEmp(rs.getInt("idEmp"));
         
             return ec;
         } catch (SQLException ex) {
@@ -664,7 +774,6 @@ public class Dao {
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("listo" );
         preparedStmt.setString(1, p.getNombreEmp());
         preparedStmt.setString (2, p.getUbicacionEmp());
         preparedStmt.setString (3, p.getDescripcionEmp());
@@ -675,12 +784,12 @@ public class Dao {
     }
       
       
-    public Empresa EmpresaGet(String codigo) throws Exception{
+    public Empresa EmpresaGet(int codigo) throws Exception{
         String sql="select * from empresa where idEmp=%d";
         sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
         if (rs.next()) {
-            return empresa(rs);
+            return empresa(rs); 
         }
         else{
             throw new Exception ("Habilidad no Existe");

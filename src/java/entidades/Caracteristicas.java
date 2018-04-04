@@ -45,8 +45,11 @@ public class Caracteristicas  implements java.io.Serializable {
     public void setEspecializacion(String especializacion) {
         this.especializacion = especializacion;
     }
-
-
+    // usado para  el hashmap del PuestosCaracteristicas.jsp T.T
+    @Override
+    public String toString () {
+        return areaTrabajo;
+    }
 
 
 }

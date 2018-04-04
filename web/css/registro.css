@@ -1,3 +1,13 @@
+/* 
+        La idea sería usar solo un .css para 
+        registroempresa.jsp y registrooferente.jsp
+        y no tener dos q hacen lo mismo
+*/
+
+body {
+    background-color : #F7F2E0; text-align: center; 
+}
+
 body {
     background-color : #F7F2E0;
     text-align: center; 
@@ -14,8 +24,8 @@ body option,a,::placeholder,h1 {
         font-family : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-div.divempresa{
+div.divempresa, div.divform{
     width:500px;
     margin: auto;  /* centra  */
-    border: 3px solid #ffe6f9;
+    border: 3px solid #ffe6f9; background-color : #F7F2E0;
 }

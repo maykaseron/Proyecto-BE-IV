@@ -9,7 +9,6 @@ import entidades.Empresa;
 import entidades.Oferente;
 import entidades.Puestos;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +21,11 @@ import logica.Model;
                 /* POR AHORA ESTE NOMBRE     */
 @WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5"})
 public class Registros extends HttpServlet {
-
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8"); creado por netbeans
-         switch(request.getServletPath()){ 
+        switch(request.getServletPath()){ 
             case "/AddEmpresa":
                  this.doAddEmpresa(request, response);
                  break;
@@ -40,31 +39,38 @@ public class Registros extends HttpServlet {
     }
 
 protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+    int a=5;Empresa em;
     try{
+        HttpSession s =  request.getSession( true);
         String nombreempresa = request.getParameter("nombreempresa");
         String email = request.getParameter("email");
         String contrasena = request.getParameter("contrasena");
         String telefono = request.getParameter("telefono");
         String descripcion = request.getParameter("descripcion");
-        
+        String ubicacion = request.getParameter( "provincia" );
+       
         Empresa emp = new Empresa();
         emp.setNombreEmp(nombreempresa);
         emp.setCorreoEmp(email);
         emp.setCorreoEmp(contrasena); 
         emp.setTeléfono(telefono);
         emp.setDescripcionEmp(descripcion);
-        emp.setUbicacionEmp("Por defecto");
-        
+        emp.setUbicacionEmp(ubicacion);
+        request.setAttribute("Emp", emp);
+        // edd empresa le quite algo para ver si funciona
         Model.instance().addEmpresa(emp);
+        
         request.getRequestDispatcher("principal.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("index.xhtml").forward( request, response);
+       // request.setAttribute("Emp", em);
+        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
     }		
 }  	    
 
 protected void doAddOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try{
+        HttpSession s =  request.getSession( true);
         String primernombre = request.getParameter("primernombre");
         String apellidos = request.getParameter("apellido");
         String cedula = request.getParameter("cedula");
@@ -72,7 +78,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         String celular = request.getParameter("celular");
         String nacionalidad = request.getParameter("nacionalidad");
         String contrasena = request.getParameter("contrasena");
-        String puesto = request.getParameter("puesto");
+        String ubicacion = request.getParameter( "provincia" );
 
         Oferente ofe = new Oferente();
         ofe.setNombreOferente(primernombre);
@@ -81,26 +87,27 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         ofe.setCorreoOferente(email);
         ofe.setCelular(celular);
         ofe.setNacionalidad(nacionalidad);
-        ofe.setUbicacion("por defecto");
-        
+        ofe.setUbicacion(ubicacion);
+        request.setAttribute("Ofe", ofe);
         Model.instance().addOferente(ofe);
         request.getRequestDispatcher("principal.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("index.jsp").forward( request, response);
+        request.getRequestDispatcher("registrooferente").forward( request, response);
     }	
 }
 
     private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         try{
-            List<Puestos> puestos = Model.instance().sugerenciaListTop5();
-            request.setAttribute("sugerencias",puestos);
+            
+            List<Puestos> puestos = Model.instance().ListTop5();
+            request.setAttribute("Top5puestos",puestos);
             request.getRequestDispatcher("principal.jsp").forward( request, response);
           }
         catch(Exception e){
                 String error = e.getMessage(); 	
                 request.setAttribute("error",error);
-                request.getRequestDispatcher("Error.jsp").forward( request, response);
+                request.getRequestDispatcher("principal.jsp").forward( request, response);
           }		
     }
     

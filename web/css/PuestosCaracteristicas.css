@@ -1,0 +1,65 @@
+
+body {
+    background-color: #e0e0d1;
+    float:left;
+}
+
+.areaTrabajo table { border-collapse: collapse; text-align: center; width: 100%; } 
+
+.areaTrabajo {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; 
+          overflow: hidden; 
+          border: 1px solid #36752D;  
+          width: 50%; background: #fff; margin: auto;   }
+
+.areaTrabajo table td { padding: 3px 10px; 
+                     color: #275420; 
+                     font-size: 12px; 
+                     border-bottom: 1px solid #E1EEF4;
+                     font-weight: bold;
+} 
+
+ .especializacion table { border-collapse: collapse; text-align: center; width: 100%; } 
+
+.especializacion {
+    font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff;
+    overflow: hidden; 
+    border: 1px solid #36752D; 
+    width: 50%; background: #fff; margin: auto;   }
+
+.especializacion table td { padding: 3px 10px; 
+                     color: #275420; 
+                     font-size: 12px; 
+                     border-bottom: 1px solid #E1EEF4;
+                     font-weight: bold;
+} 
+
+
+.grid table caption  {
+    color: #275420; 
+}
+ .grid table { border-collapse: collapse; text-align: center; width: 100%; } 
+
+.grid {
+    font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff;
+    overflow: hidden; 
+    border: 1px solid #36752D; 
+    width: 100%; background: #fff; margin: auto;   }
+
+.grid table td { padding: 3px 10px; 
+                     color: #275420; 
+                     font-size: 12px; 
+                     border-bottom: 1px solid #E1EEF4;
+                     font-weight: bold;
+} 
+
+
+div.grid {
+    width: 100%;
+    margin: auto;
+   /* background-color: #ffff00;*/
+}
+
+
+.grid table, .grid thead, .grid tbody {
+   /* background-color: #ff00ff;*/
+}

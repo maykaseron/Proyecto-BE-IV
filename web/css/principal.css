@@ -1,0 +1,38 @@
+body {
+    background-color: #ededed;
+}
+
+div.carousel-inner div.item h2 {
+    width: 120px;
+    margin: auto;
+}
+
+table.TableTop {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  border: 2px solid #79A81E;
+  /*background-color: #FFFFFF;*/
+  width: 50%;
+  height: 50px;
+  text-align: center;
+  margin: auto;
+}
+table.TableTop td, table.TableTop th {
+  border: 1px solid #31871E;
+  padding: 2px 5px;
+}
+table.TableTop tbody td {
+  font-size: 13px;
+  color: #275420;
+}
+
+table.TableTop thead {
+  /*background: #FFFFFF;*/
+  border-bottom: 2px solid #36752D;
+}
+table.TableTop thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #275420;
+  text-align: center;
+  border-left: 1px solid #31871E;
+}
