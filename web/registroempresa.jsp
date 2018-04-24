@@ -16,21 +16,29 @@
 </head>
 
 <body> 
-    <h1>REGISTRAR EMPRESAS</h1>
+    <div class="Div_Top"> <p> ImaJobs </p> </div>
+    
+    <br>
+    
+    
     <jsp:useBean id="Emp" scope="request" type="Empresa" beanName="entidades.Empresa"/>
     
     <form class = "formempresa" action="AddEmpresa"> <%-- action para darle un evento a type="submit" value="Agregar" --%>
         <div class = "divempresa">
-            <input type="text" placeholder = "Nombre" name="nombreempresa" value=<%= Emp.getNombreEmp() %> ><br><br>
+            
+            <h1>REGISTRAR EMPRESAS</h1>
+            
+            <label>Nombre </label> <input type="text" name="nombreempresa" value=<%= Emp.getNombreEmp() %> ><br><br>
 
-            <input type="email" placeholder = "e-mail" name="email" value=<%= Emp.getCorreoEmp() %> ><br><br>
+            <label>E-mail </label> <input type="email" name="email" value=<%= Emp.getCorreoEmp() %> ><br><br>
 
-            <input type="password" placeholder = "password" name="contrasena"><br><br>
+            <label>Password </label> <input type="password" name="contrasena"><br><br>
 
-            <input type="tel" placeholder = "telefono" name="telefono" value=<%= Emp.getTeléfono() %>><br><br>
+            <label>Telefono </label> <input type="tel" name="telefono" value=<%= Emp.getTeléfono() %>><br><br>
 
-            <input type="text" placeholder = "descripcion" name="descripcion" value=<%= Emp.getDescripcionEmp() %>><br><br>
-
+            <label>Descripcion </label> <input type="text" name="descripcion" value=<%= Emp.getDescripcionEmp() %>><br><br>
+            
+            <label>Provincia</label>
             <select name="provincia" >
                 <option value="heredia">Heredia</option>
                 <option value="alajuela">Alajuela</option>

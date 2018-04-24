@@ -22,6 +22,13 @@ public class Oferente  implements java.io.Serializable {
      private Set<ServiciosPublicados> serviciosPublicadoses = new HashSet<ServiciosPublicados>(0);
 
     public Oferente() {
+       this.cedulaOferente = "";
+       this.nombreOferente = "";
+       this.primerApellido = "";
+       this.celular = "";
+       this.nacionalidad = "";
+       this.correoOferente = "";
+       this.ubicacion = "";
     }
 
 	

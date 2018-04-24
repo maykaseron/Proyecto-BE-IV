@@ -99,7 +99,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
 
     private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         try{
-            
             List<Puestos> puestos = Model.instance().ListTop5();
             request.setAttribute("Top5puestos",puestos);
             request.getRequestDispatcher("principal.jsp").forward( request, response);

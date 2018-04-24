@@ -1,5 +1,18 @@
 body {
-    background-color: #ededed;
+    background-color: #f3ecff;
+}
+
+div.Div_Top p{
+    background-color: #6600cc;
+    font-size:220%; /* tam letra */
+    color:white;  
+    text-align: left;
+    height: 28px;
+    width: 150%;
+    margin-left: 1px;
+    padding-top: 9px;
+    padding-left: 6px;
+    font-family :"Bernard MT Condensed";
 }
 
 div.carousel-inner div.item h2 {

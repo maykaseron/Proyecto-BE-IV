@@ -13,30 +13,39 @@
   <%--  <link rel = "stylesheet" href = "registrooferente.css">  --%>
     <link rel = "stylesheet" href = "css/registro.css">
     <title>Registro oferente</title>
+    
+    
+    
 </head>
   
 <body>
-    <h1>REGISTRO OFERENTES</h1>
+    <div class="Div_Top"> <p> ImaJobs </p> </div>
+    
+    <br>
+
     
     <jsp:useBean id="Ofe" scope="request" type="Oferente" beanName="entidades.Oferente"/>
     
     <form class = "formoferente" action="AddOferente"> <%-- action para darle un evento a type="submit" value="Agregar" --%>
         <div class = "divform">
-            <input type="text" placeholder = "Nombre" name="primernombre" value=<%= Ofe.getNombreOferente() %> ><br><br>
             
-            <input type="text" placeholder = "Apellido" name="apellido"value=<%= Ofe.getPrimerApellido() %>><br><br>
+            <h1>REGISTRAR OFERENTES</h1>
+            
+            <label>Nombre </label> <input type="text" name="primernombre" value=<%= Ofe.getNombreOferente() %> ><br><br>
+            
+            <label>Apellido </label> <input type="text" name="apellido"value=<%= Ofe.getPrimerApellido() %>><br><br>
 
-            <input type="text" placeholder = "Cédula" name="cedula" value=<%= Ofe.getCedulaOferente() %>><br><br>
+            <label>Cédula </label> <input type="text" name="cedula" value=<%= Ofe.getCedulaOferente() %>><br><br>
 
-            <input type="email" placeholder = "e-mail" name="email" value=<%= Ofe.getCorreoOferente() %> ><br><br>
+            <label>E-mail </label> <input type="email" name="email" value=<%= Ofe.getCorreoOferente() %> ><br><br>
 
-            <input type="text" placeholder = "Celular" name="celular" value=<%= Ofe.getCelular() %> ><br><br>
+            <label>Celular </label> <input type="text" name="celular" value=<%= Ofe.getCelular() %> ><br><br>
 
-            <input type="text" placeholder = "Nacionalidad" name="nacionalidad" value=<%= Ofe.getNacionalidad() %> ><br><br>
+            <label>Nacionalidad </label> <input type="text" name="nacionalidad" value=<%= Ofe.getNacionalidad() %> ><br><br>
 
-            <input type="password" placeholder = "Contrasena" name="contrasena"><br><br>
+            <label>Contraseña </label> <input type="password" name="contrasena"><br><br>
 
-
+            <label>Provincia </label>
             <select name="provincia">
                 <option value="heredia">Heredia</option>
                 <option value="alajuela">Alajuela</option>
@@ -46,7 +55,7 @@
                 <option value="puntarenas">Puntarenas</option>
                 <option value="guanacaste">Guanacaste</option>
             </select>
-            <input type="submit" value="Continuar" >
+            <input type="submit" value="Agregar" >
         </div>
     </form><br><br>
     

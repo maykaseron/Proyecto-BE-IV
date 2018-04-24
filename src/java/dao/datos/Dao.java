@@ -767,8 +767,9 @@ public class Dao {
        sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(), 
                 p.getCorreoEmp(), p.getTeléfono() );
         db.executeUpdate(sql);      */
-        
        System.out.println("en EmpresaAdd");
+       if ( this.compararVacio(p) )
+           System.out.println("vacioooooooooooo");
         String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
                 "values(? ,? ,? ,? ,?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
@@ -809,6 +810,14 @@ public class Dao {
         return estados;        
     }
     
+    public boolean compararVacio (Empresa e) {
+        Empresa aux = new Empresa();
+        return aux.equals(e);
+        /*
+        return e.getNombreEmp().equals("") || e.getTeléfono().equals("") 
+                || e.getCorreoEmp().equals("") || e.getDescripcionEmp().equals("");*/
+    }
+    
     /********************************************************************/
     
                 public void HabilidadesUpdate(Habilidades p) throws Exception{
@@ -835,7 +844,6 @@ public class Dao {
       public void HabilidadesAdd(Habilidades p) throws Exception{
            
             
-            System.out.println("en oferenteAdd");
         String sql="insert into bolsaempleo.habilidades (idHabilidad , nombreHabilidad , areaTrabajo , especializacion ) "+
                 "values(? ,? ,? ,?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");

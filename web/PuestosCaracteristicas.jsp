@@ -21,7 +21,10 @@
     </head>
     
     <body>
-        <h1> Puestos Ofrecidos por Caracteristicas:  </h1>
+        
+        <div class="Div_Top"> <p> ImaJobs </p> </div>
+        
+        <h1> Puestos Ofrecidos por Caracteristicas  </h1>
         
         <form method="post" action="BuscarCaracterAreaTrabajo" >
             <label> Elija un área de Trabajo: </label> 

@@ -25,9 +25,8 @@
 </head>
   
 <body>
-    <div>
-       <h1> Bolsa Empleo </h1>
-    </div>
+    <div class="Div_Top"> <p> ImaJobs </p> </div>
+    
     
     <div class="reg">
         <ul>
