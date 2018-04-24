@@ -28,15 +28,15 @@
             
             <h1>REGISTRAR EMPRESAS</h1>
             
-            <label>Nombre </label> <input type="text" name="nombreempresa" value=<%= Emp.getNombreEmp() %> ><br><br>
+            <label>Nombre </label> <input type="text" required name="nombreempresa" value=<%= Emp.getNombreEmp() %> ><br><br>
 
             <label>E-mail </label> <input type="email" name="email" value=<%= Emp.getCorreoEmp() %> ><br><br>
 
             <label>Password </label> <input type="password" name="contrasena"><br><br>
 
-            <label>Telefono </label> <input type="tel" name="telefono" value=<%= Emp.getTeléfono() %>><br><br>
+            <label>Telefono </label> <input type="tel" required name="telefono" value=<%= Emp.getTeléfono() %>><br><br>
 
-            <label>Descripcion </label> <input type="text" name="descripcion" value=<%= Emp.getDescripcionEmp() %>><br><br>
+            <label>Descripcion </label> <input type="text" required name="descripcion" value=<%= Emp.getDescripcionEmp() %>><br><br>
             
             <label>Provincia</label>
             <select name="provincia" >

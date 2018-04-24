@@ -108,7 +108,7 @@ public class Empresa  implements java.io.Serializable {
     public void setPuestosPublicadoses(Set<PuestosPublicados> puestosPublicadoses) {
         this.puestosPublicadoses = puestosPublicadoses;
     }
-
+    
 }
 
 

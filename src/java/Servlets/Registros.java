@@ -57,7 +57,6 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
         emp.setDescripcionEmp(descripcion);
         emp.setUbicacionEmp(ubicacion);
         request.setAttribute("Emp", emp);
-        // edd empresa le quite algo para ver si funciona
         Model.instance().addEmpresa(emp);
         
         request.getRequestDispatcher("principal.jsp").forward( request, response);

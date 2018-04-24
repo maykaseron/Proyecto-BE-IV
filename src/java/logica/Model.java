@@ -78,32 +78,28 @@ public class Model {
     
     /*********************Oferente********************************/
     
-           public void updateOferente(Oferente p) throws Exception{
+    public void updateOferente(Oferente p) throws Exception{
+        dao.OferenteUpdate(p);
+    }
 
-                    dao.OferenteUpdate(p);
-       }
+    public void deleteOferente(Oferente p) throws Exception{
+        dao.OferenteDelete(p);
+    }
 
-        public void deleteOferente(Oferente p) throws Exception{
+    public void addOferente(Oferente p) throws Exception{
+        dao.OferenteAdd(p);
+    }
 
-            dao.OferenteDelete(p);
-       }
+    public Oferente getOferente(String id1) throws Exception{
+        return dao.OferenteGet(id1);
+    }
 
-         public void addOferente(Oferente p) throws Exception{
-           System.out.println("en DAO oferenteAdd");
-           dao.OferenteAdd(p);
-       }
+    public Collection<Oferente> getAllOferente() throws Exception{
+        return  dao.OferenteGetAll();
+    }
 
-          public Oferente getOferente(String id1) throws Exception{
-           return dao.OferenteGet(id1);
-       }
 
-           public Collection<Oferente> getAllOferente() throws Exception{
-            return  dao.OferenteGetAll();
-    
-           }
-    
-    
-    
+
     
      /*********************Habilidades********************************/
     

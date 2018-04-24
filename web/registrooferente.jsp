@@ -31,17 +31,17 @@
             
             <h1>REGISTRAR OFERENTES</h1>
             
-            <label>Nombre </label> <input type="text" name="primernombre" value=<%= Ofe.getNombreOferente() %> ><br><br>
+            <label>Nombre </label> <input type="text" required name="primernombre" value=<%= Ofe.getNombreOferente() %> ><br><br>
             
-            <label>Apellido </label> <input type="text" name="apellido"value=<%= Ofe.getPrimerApellido() %>><br><br>
+            <label>Apellido </label> <input type="text" required name="apellido"value=<%= Ofe.getPrimerApellido() %>><br><br>
 
-            <label>Cédula </label> <input type="text" name="cedula" value=<%= Ofe.getCedulaOferente() %>><br><br>
+            <label>Cédula </label> <input type="text" required name="cedula" value=<%= Ofe.getCedulaOferente() %>><br><br>
 
             <label>E-mail </label> <input type="email" name="email" value=<%= Ofe.getCorreoOferente() %> ><br><br>
 
-            <label>Celular </label> <input type="text" name="celular" value=<%= Ofe.getCelular() %> ><br><br>
+            <label>Celular </label> <input type="text" required name="celular" value=<%= Ofe.getCelular() %> ><br><br>
 
-            <label>Nacionalidad </label> <input type="text" name="nacionalidad" value=<%= Ofe.getNacionalidad() %> ><br><br>
+            <label>Nacionalidad </label> <input type="text" required name="nacionalidad" value=<%= Ofe.getNacionalidad() %> ><br><br>
 
             <label>Contraseña </label> <input type="password" name="contrasena"><br><br>
 
