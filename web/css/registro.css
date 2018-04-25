@@ -66,3 +66,9 @@ div select {
     height: 30px;
     width: 75px;
 }
+
+form.formoferente div.divform label.Msj_error,form.formempresa div.divempresa label.Msj_error  {
+    color: red;
+    width: 100%; 
+    text-align: center;
+}

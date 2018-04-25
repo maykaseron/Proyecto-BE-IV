@@ -57,12 +57,13 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
         emp.setDescripcionEmp(descripcion);
         emp.setUbicacionEmp(ubicacion);
         request.setAttribute("Emp", emp);
+        request.setAttribute("error", "Gracias por usar el sistema ImaJobs");
         Model.instance().addEmpresa(emp);
         
-        request.getRequestDispatcher("principal.jsp").forward( request, response);
+        request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
     }
     catch(Exception e){
-       // request.setAttribute("Emp", em);
+        request.setAttribute("error", e.getMessage());
         request.getRequestDispatcher("registroempresa.jsp").forward( request, response);
     }		
 }  	    
@@ -89,10 +90,12 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         ofe.setUbicacion(ubicacion);
         request.setAttribute("Ofe", ofe);
         Model.instance().addOferente(ofe);
-        request.getRequestDispatcher("principal.jsp").forward( request, response);
+        request.setAttribute("error", "Gracias por usar el sistema ImaJobs");
+        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }
     catch(Exception e){
-        request.getRequestDispatcher("registrooferente").forward( request, response);
+        request.setAttribute("error", e.getMessage());
+        request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }	
 }
 

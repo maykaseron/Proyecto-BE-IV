@@ -39,11 +39,12 @@ div.Div_Top p{
     border: 1px solid #36752D; 
     width: 50%; background: #fff; margin: auto;   }
 
-.especializacion table td { padding: 3px 10px; 
-                     color: #275420; 
-                     font-size: 12px; 
-                     border-bottom: 1px solid #E1EEF4;
-                     font-weight: bold;
+.especializacion table td { 
+    padding: 3px 10px; 
+    color: #275420; 
+    font-size: 12px; 
+    border-bottom: 1px solid #E1EEF4;
+    font-weight: bold;
 } 
 
 

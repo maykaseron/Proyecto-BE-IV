@@ -13,11 +13,11 @@ public class Caracteristicas  implements java.io.Serializable {
 
     public Caracteristicas() {
     }
-
 	
     public Caracteristicas(Integer idCaracteristica) {
         this.idCaracteristica = idCaracteristica;
     }
+    
     public Caracteristicas(Integer idCaracteristica, String areaTrabajo, String especializacion) {
        this.idCaracteristica = idCaracteristica;
        this.areaTrabajo = areaTrabajo;
@@ -45,13 +45,6 @@ public class Caracteristicas  implements java.io.Serializable {
     public void setEspecializacion(String especializacion) {
         this.especializacion = especializacion;
     }
-    // usado para  el hashmap del PuestosCaracteristicas.jsp T.T
-    @Override
-    public String toString () {
-        return areaTrabajo;
-    }
-
-
 }
 
 

@@ -17,17 +17,12 @@ import entidades.PuestosPublicados;
 import entidades.Servicios;
 import entidades.ServiciosPublicados;
 import java.io.IOException;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 
@@ -44,8 +39,6 @@ public class Dao {
     public Dao() throws ClassNotFoundException, SQLException, IOException{
         db= new RelDatabase();
     }
-    
-    
       private Aplicado aplicado(ResultSet rs){
         try {
             Aplicado ec= new Aplicado();
@@ -295,11 +288,11 @@ public class Dao {
     List<CaracteristicasPuestos> ListTop5 = new ArrayList<>();
     public List<Puestos> ListTop5 () throws Exception {
         List<Puestos> ListPuest = new ArrayList();
-        CaracteristicasPuestos c;
+        CaracteristicasPuestos c; // borrarlo
            try {
             String sql="select * from Puestos p order by p.idPuesto desc limit 5;";
             ResultSet rs =  db.executeQuery(sql);
-             Puestos p;
+            Puestos p;
             while ( rs.next() ) {
                 ListTop5 = new ArrayList(); // limpio la lista de la busqueda anterior
                 p = this.puestos(rs); // obtengo puestos
@@ -762,27 +755,30 @@ public class Dao {
     
         
     public void EmpresaAdd(Empresa p) throws Exception{
-       /* String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono)"
-                + " values ('%s','%s','%s','%s','%s');";
-       sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(), 
-                p.getCorreoEmp(), p.getTeléfono() );
-        db.executeUpdate(sql);      */
-       if ( this.compararEmpresaVacio(p) ) {  //  add si no hay espacios vacios agrega
-           String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
+        /*if ( this.compararEmpresaVacio(p) ) {
+            String sql="insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('%s','%s','%s','%s','%s');";
+            sql=String.format( sql,p.getNombreEmp(), p.getUbicacionEmp(), p.getDescripcionEmp(),p.getCorreoEmp(), p.getTeléfono() );
+            int count = db.executeUpdate(sql);  
+            if (count ==0 ){ throw new Exception ("Existe una cuenta con el nombre de esta empresa"); }}
+        */
+        if ( this.compararEmpresaVacio(p) ) {//  add si no hay espacios vacios agrega
+            if ( this.EmpresaGetNombre( p.getNombreEmp() ) == null ) {  // add si no hay empresa cn el mismo nombre
+                String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
                 "values(? ,? ,? ,? ,?)";
-            //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-            db.getConnection();
-            PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-            preparedStmt.setString(1, p.getNombreEmp());
-            preparedStmt.setString (2, p.getUbicacionEmp());
-            preparedStmt.setString (3, p.getDescripcionEmp());
-            preparedStmt.setString (4, p.getCorreoEmp());
-            preparedStmt.setString (5, p.getTeléfono() );
+                //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+                db.getConnection();
+                PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
+                preparedStmt.setString(1, p.getNombreEmp());
+                preparedStmt.setString (2, p.getUbicacionEmp());
+                preparedStmt.setString (3, p.getDescripcionEmp());
+                preparedStmt.setString (4, p.getCorreoEmp());
+                preparedStmt.setString (5, p.getTeléfono() );
 
-           preparedStmt.execute();
+                preparedStmt.execute();
+            }
+            else { throw new Exception ("Existe una cuenta con el nombre de esta empresa"); }
        }
     }
-      
       
     public Empresa EmpresaGet(int codigo) throws Exception{
         String sql="select * from empresa where idEmp=%d";
@@ -792,7 +788,7 @@ public class Dao {
             return empresa(rs); 
         }
         else{
-            throw new Exception ("Habilidad no Existe");
+            throw new Exception ("Existe");
             
         }
     }
@@ -812,6 +808,16 @@ public class Dao {
     public boolean compararEmpresaVacio (Empresa e) { 
         return ! ( e.getNombreEmp().equals("") || e.getTeléfono().equals("") 
                 || e.getCorreoEmp().equals("") || e.getDescripcionEmp().equals("") );  // no hay espacios vacios
+    }
+    
+    public Empresa EmpresaGetNombre(String codigo) throws Exception{ // busqueda por nombre
+        String sql="select * from empresa where nombreEmp='%s'";
+        sql = String.format(sql,codigo);
+        ResultSet rs =  db.executeQuery(sql);
+        if (rs.next()) {
+            return empresa(rs); 
+        }
+        else { return null; }
     }
     
     /********************************************************************/
@@ -930,7 +936,10 @@ public class Dao {
                 + "values ('%s','%s','%s','%s','%s','%s','%s'); ";
             sql=String.format( sql, p.getCedulaOferente(), p.getNombreOferente(), p.getPrimerApellido(), p.getCelular(), p.getNacionalidad(),
                     p.getCorreoOferente(), p.getUbicacion() );
-            db.executeUpdate(sql);  
+            int count=db.executeUpdate(sql);
+            if (count ==0 ){ // 0 == existe
+                throw new Exception("Existe una cuenta con la misma cédula");
+            }
         }
         /*
         System.out.println("en oferenteAdd");

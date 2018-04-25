@@ -72,10 +72,6 @@ public class Model {
     
            }
     
-    
-    
-    
-    
     /*********************Oferente********************************/
     
     public void updateOferente(Oferente p) throws Exception{

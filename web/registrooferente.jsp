@@ -25,6 +25,7 @@
 
     
     <jsp:useBean id="Ofe" scope="request" type="Oferente" beanName="entidades.Oferente"/>
+    <jsp:useBean id="error" scope="request" type="java.lang.String" class="java.lang.String"/>
     
     <form class = "formoferente" action="AddOferente"> <%-- action para darle un evento a type="submit" value="Agregar" --%>
         <div class = "divform">
@@ -56,6 +57,7 @@
                 <option value="guanacaste">Guanacaste</option>
             </select>
             <input type="submit" value="Agregar" >
+            <label class="Msj_error"> <%= error %> </label>
         </div>
     </form><br><br>
     

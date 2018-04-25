@@ -22,7 +22,8 @@
     
     
     <jsp:useBean id="Emp" scope="request" type="Empresa" beanName="entidades.Empresa"/>
-    
+    <jsp:useBean id="error" scope="request" type="java.lang.String" class="java.lang.String"/>
+     
     <form class = "formempresa" action="AddEmpresa"> <%-- action para darle un evento a type="submit" value="Agregar" --%>
         <div class = "divempresa">
             
@@ -49,6 +50,9 @@
                 <option value="guanacaste">Guanacaste</option>
             </select>
             <input type="submit" value="Agregar" >
+            
+            <br>
+            <label class="Msj_error"> <%= error %> </label>
         </div>
     </form><br><br>
     

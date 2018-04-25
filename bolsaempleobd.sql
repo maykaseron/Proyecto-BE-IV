@@ -11,7 +11,8 @@ CREATE TABLE EMPRESA (
         telefono varchar(20)not null,
         idEmp  int AUTO_INCREMENT,
         /* fechaRegistro date, */
-        CONSTRAINT PK_EMP PRIMARY KEY (idEmp)
+        CONSTRAINT PK_EMP PRIMARY KEY (idEmp,nombreEmp)
+		
 );
 
 CREATE TABLE OFERENTE (
