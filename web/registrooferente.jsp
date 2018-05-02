@@ -38,7 +38,7 @@
 
             <label>Cédula </label> <input type="text" required name="cedula" value=<%= Ofe.getCedulaOferente() %>><br><br>
 
-            <label>E-mail </label> <input type="email" name="email" value=<%= Ofe.getCorreoOferente() %> ><br><br>
+            <label>Correo </label> <input type="email" name="email" value=<%= Ofe.getCorreoOferente() %> ><br><br>
 
             <label>Celular </label> <input type="text" required name="celular" value=<%= Ofe.getCelular() %> ><br><br>
 

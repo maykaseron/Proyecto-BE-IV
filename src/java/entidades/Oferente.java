@@ -18,8 +18,6 @@ public class Oferente  implements java.io.Serializable {
      private String nacionalidad; 
      private String correoOferente;
      private String ubicacion;
-     private Set<Aplicado> aplicados = new HashSet<Aplicado>(0);
-     private Set<ServiciosPublicados> serviciosPublicadoses = new HashSet<ServiciosPublicados>(0);
 
     public Oferente() {
        this.cedulaOferente = "";
@@ -35,7 +33,7 @@ public class Oferente  implements java.io.Serializable {
     public Oferente(String cedulaOferente) {
         this.cedulaOferente = cedulaOferente;
     }
-    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion, Set<Aplicado> aplicados, Set<ServiciosPublicados> serviciosPublicadoses) {
+    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion) {
        this.cedulaOferente = cedulaOferente;
        this.nombreOferente = nombreOferente;
        this.primerApellido = primerApellido;
@@ -43,19 +41,6 @@ public class Oferente  implements java.io.Serializable {
        this.nacionalidad = nacionalidad;
        this.correoOferente = correoOferente;
        this.ubicacion = ubicacion;
-       this.aplicados = aplicados;
-       this.serviciosPublicadoses = serviciosPublicadoses;
-    }
-    
-      public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion) {
-       this.cedulaOferente = cedulaOferente;
-       this.nombreOferente = nombreOferente;
-       this.primerApellido = primerApellido;
-       this.celular = celular;
-       this.nacionalidad = nacionalidad;
-       this.correoOferente = correoOferente;
-       this.ubicacion = ubicacion;
-       
     }
    
     public String getCedulaOferente() {
@@ -108,24 +93,6 @@ public class Oferente  implements java.io.Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    public Set<Aplicado> getAplicados() {
-        return this.aplicados;
-    }
-    
-    public void setAplicados(Set<Aplicado> aplicados) {
-        this.aplicados = aplicados;
-    }
-    public Set<ServiciosPublicados> getServiciosPublicadoses() {
-        return this.serviciosPublicadoses;
-    }
-    
-    public void setServiciosPublicadoses(Set<ServiciosPublicados> serviciosPublicadoses) {
-        this.serviciosPublicadoses = serviciosPublicadoses;
-    }
-
-
-
-
 }
 
 

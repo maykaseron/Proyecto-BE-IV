@@ -1,0 +1,37 @@
+<% if ( listaPuestos !=null || !listaPuestos.isEmpty() ) { %>
+        <div class="grid">  
+            <table>
+                <caption>Puestos disponibles</caption>
+                <thead><tr><td>Nombre empresa</td><td>Puesto</td><td>Salario</td><td>AreaTrabajo</td><td>Especializacion</td>
+                           <td>Dominio</td>
+                        </tr>
+                </thead>
+                <tbody style="height: 250px;">
+                    <% Puestos  puesto = new Puestos (); %>
+                    <% for(CaracteristicasPuestos p: listaPuestos){   %>
+                        <tr> 
+                        <%--    Detalles Puesto      --%>
+                            <% if ( p.getPuesto().getIdPuesto() != puesto.getIdPuesto() ) {%>
+                            <td><%= p.getPuesto().getEmpresa().getNombreEmp() %></td> 
+                            <td> <%= p.getPuesto().getNombrePuesto() %> </td>
+                            <td> <%= p.getPuesto().getSalario() %> </td> 
+                                 <% puesto.setIdPuesto( p.getPuesto().getIdPuesto() ); %>
+                            <% } else { %> 
+                                    <td>  </td> 
+                                    <td>  </td>
+                                    <td>  </td> 
+                            <%}%> 
+                           
+                        <!--    Detalles Caracteris  -->   
+                        <%--    <td> <%= p.getCaracteristicas().getAreaTrabajo() %> </td>
+                            <td> <%= p.getCaracteristicas().getEspecializacion() %> </td>  
+                        
+
+                        <!--    Detalles Nivel de espc  -->   
+                            <td> <%= p.getValor() %> </td>  --%>
+                       </tr>
+                    <% } %> 
+                </tbody>
+            </table> 
+        </div>      
+        <% } %>

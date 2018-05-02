@@ -6,22 +6,15 @@
 package logica;
 
 import dao.datos.Dao;
-import entidades.Aplicado;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasPuestos;
 import entidades.Empresa;
-import entidades.Habilidades;
-import entidades.HabilidadesIncluidas;
 import entidades.Oferente;
 import entidades.Puestos;
-import entidades.PuestosPublicados;
-import entidades.Servicios;
-import entidades.ServiciosPublicados;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 //import java.util.Collections;
 
 /**
@@ -45,33 +38,31 @@ public class Model {
          dao = new Dao();
     }
     
+    /*********************Empresa********************************/
     
-    
-       /*********************Servicio********************************/
-    
-      public void updateServicios(Servicios p) throws Exception{
+    public void updateEmpresa(Empresa p) throws Exception{
+        dao.EmpresaUpdate(p);
+    }
 
-                    dao.ServiciosUpdate(p);
-       }
+    public void deleteEmpresa(Empresa p) throws Exception{
+        dao.EmpresaDelete(p);
+    }
 
-        public void deleteServicios(Servicios p) throws Exception{
+    public void addEmpresa(Empresa p) throws Exception{
+        dao.EmpresaAdd(p);
+    }
 
-            dao.ServiciosDelete(p);
-       }
+    public Empresa getEmpresa(int id1) throws Exception{
+        return dao.EmpresaGet(id1);
+    }
 
-         public void addServicios(Servicios p) throws Exception{
-           dao.ServiciosAdd(p);
-       }
-
-          public Servicios getServicios(String id1) throws Exception{
-           return dao.ServicioGet(id1);
-       }
-
-           public Collection<Servicios> getAllServicios() throws Exception{
-            return  dao.ServiciosGetAll();
-    
-           }
-    
+    public List<Empresa> getAllEmpresa() throws Exception{
+        return  dao.EmpresaGetAll();
+    }
+       
+    public Empresa getEmpresaLogin( Empresa e ) throws Exception{
+        return dao.EmpresaLogin( e );
+    }
     /*********************Oferente********************************/
     
     public void updateOferente(Oferente p) throws Exception{
@@ -90,61 +81,47 @@ public class Model {
         return dao.OferenteGet(id1);
     }
 
-    public Collection<Oferente> getAllOferente() throws Exception{
+    public List<Oferente> getAllOferente() throws Exception{
         return  dao.OferenteGetAll();
     }
-
-
-
     
-     /*********************Habilidades********************************/
-    
-   
-    public void updateHabilidades(Habilidades p) throws Exception{
-
-                    dao.HabilidadesUpdate(p);
-       }
-
-        public void deleteHabilidades(Habilidades p) throws Exception{
-
-            dao.HabilidadesDelete(p);
-       }
-
-         public void addHabilidades(Habilidades p) throws Exception{
-           dao.HabilidadesAdd(p);
-       }
-
-          public Habilidades getHabilidades(String id1) throws Exception{
-           return dao.HabilidadesGet(id1);
-       }
-
-           public Collection<Habilidades> getAllHabilidades() throws Exception{
-            return  dao.HabilidadesGetAll();
-       }
-    
-    
-    
-    
-      /*********************Empresa********************************/
-    
-    public void updateEmpresa(Empresa p) throws Exception{
-        dao.EmpresaUpdate(p);
+    /*********************CARACTERISTICAS********************************/
+/*
+    public void updateCaracteristicas(Caracteristicas p) throws Exception{
+        dao.CaracteristicasUpdate(p);
     }
-
-    public void deleteEmpresa(Empresa p) throws Exception{
-        dao.EmpresaDelete(p);
+*/
+    public void deleteCaracteristicas(Caracteristicas p) throws Exception{
+        dao.CaracteristicasDelete(p);
     }
-
-    public void addEmpresa(Empresa p) throws Exception{
-        dao.EmpresaAdd(p);
+/*
+    public void addCaracteristicas(Caracteristicas p) throws Exception{
+        dao.CaracteristicasAdd(p);
     }
-
-    public Empresa getEmpresa(int id1) throws Exception{
-        return dao.EmpresaGet(id1);
+*/
+    public Caracteristicas getCaracteristicas(int id1) throws Exception{
+        return dao.CaracteristicasGet(id1);
     }
-
-    public Collection<Empresa> getAllEmpresa() throws Exception{
-        return  dao.EmpresaGetAll();
+    /*
+     // busca por areaTrabajo 
+    public List<Caracteristicas> getCaracteristicasEspecializ(String id1) throws Exception{
+        return dao.CaracteristicasEspecializ(id1);
+    }
+    
+    public List<Caracteristicas> getCaracteristicasAreaTrabajo( ) throws Exception{
+        return dao.CaracteristicasAreaTrabajo(  );
+    }
+    */
+    public List<Caracteristicas> getAllCaracteristicas() throws Exception{
+        return  dao.CaracteristicasGetAll();
+    }
+    // los padres o raiz
+    public List<Caracteristicas> getAllCaracteristicasPadres() throws Exception{ // los raiz
+        return  dao.AllCaracteristicasPadres();
+    }
+    
+    public List<Caracteristicas> getBuscarCaracteristicas(int idP) throws Exception{ // los hijos de un padre del árlbol
+        return  dao.BuscarCaracteristicas(idP);
     }
     
     /*********************PUESTOS********************************/
@@ -165,7 +142,7 @@ public class Model {
         return dao.PuestosGet(id1);
     }
 
-    public Collection<Puestos> getAllPuestos() throws Exception {
+    public List<Puestos> getAllPuestos() throws Exception {
         return  dao.PuestosGetAll();
     }
     /*
@@ -174,81 +151,8 @@ public class Model {
     }
     */
       
-    /*********************CARACTERISTICAS********************************/
-
-    public void updateCaracteristicas(Caracteristicas p) throws Exception{
-        dao.CaracteristicasUpdate(p);
-    }
-
-    public void deleteCaracteristicas(Caracteristicas p) throws Exception{
-        dao.CaracteristicasDelete(p);
-    }
-
-    public void addCaracteristicas(Caracteristicas p) throws Exception{
-        dao.CaracteristicasAdd(p);
-    }
-
-    public Caracteristicas getCaracteristicas(int id1) throws Exception{
-        return dao.CaracteristicasGet(id1);
-    }
-     // busca por areaTrabajo 
-    public List<Caracteristicas> getCaracteristicasEspecializ(String id1) throws Exception{
-        return dao.CaracteristicasEspecializ(id1);
-    }
     
-    public List<Caracteristicas> getCaracteristicasAreaTrabajo( ) throws Exception{
-        return dao.CaracteristicasAreaTrabajo(  );
-    }
-    
-    public Collection<Caracteristicas> getAllCaracteristicas() throws Exception{
-        return  dao.CaracteristicasGetAll();
-    }
-    
-    
-    
-    /*********************SERVICIOS PUBLICADOS********************************/
-    
-         public void updateServiciosPublicados(ServiciosPublicados p) throws Exception{
-        dao.ServiciosPublicadosUpdate(p);
-    }
-    
-     public void deleteServiciosPublicados(ServiciosPublicados p) throws Exception{
-        dao.ServiciosPublicadosDelete(p);
-    }
-
-      public void addServiciosPublicados(ServiciosPublicados p) throws Exception{
-        dao.ServiciosPublicadosAdd(p);
-    }
-      
-       public ServiciosPublicados getServiciosPublicados(String id1, int id2) throws Exception{
-        return dao.ServiciosPublicadosGet(id1, id2);
-    }
-       
-        public Collection<ServiciosPublicados> getAllServiciosPublicados() throws Exception{
-         return  dao.ServiciosPublicadosGetAll();
-    }
-    
-    
-      /*********************HABILIDADES INCLUIDAS********************************/
-    
-    
-        public void deleteHabilidadesIncluidas(HabilidadesIncluidas p) throws Exception{
-        dao.HabilidadesIncluidasDelete(p);
-    }
-
-      public void addHabilidadesIncluidas(HabilidadesIncluidas p) throws Exception{
-        dao.HabilidadesIncluidasAdd(p);
-    }
-      
-       public HabilidadesIncluidas getHabilidadesIncluidas(String id1, int id2) throws Exception{
-        return dao.HabilidadesIncluidasGet(id1, id2);
-    }
-       
-        public Collection<HabilidadesIncluidas> getAllHabilidadesIncluidas() throws Exception{
-         return  dao.HabilidadesIncluidasGetAll();
-    }
-     
-        /*********************CARACTERISTICAS PUESTOS********************************/
+    /*********************CARACTERISTICAS PUESTOS********************************/
     
     public void deleteCaracteristicasPuestos (CaracteristicasPuestos p) throws Exception{
         dao.CaracteristicasPuestosDelete(p);
@@ -262,55 +166,17 @@ public class Model {
         return dao.CaracteristicasPuestosGet(id1);
     }
        
-    public Collection<CaracteristicasPuestos> getAllCaracteristicasPuestos () throws Exception{
+    public List<CaracteristicasPuestos> getAllCaracteristicasPuestos () throws Exception{
         return  dao.CaracteristicasPuestosGetAll();
     }
     
     public List<Puestos> ListTop5() throws Exception{
         return dao.ListTop5();
     }
-    
+    /*
     public List<CaracteristicasPuestos> getPuestosPorCaracteristicas( String especializacion ) throws Exception{
         return dao.PuestosPorCaracteristicas( especializacion );
-    }
-    /************************PUESTOS PUBLICADOS********************************/
+    }*/
     
-     public void updatePuestosPublicados(PuestosPublicados p) throws Exception{
-        dao.PuestosPublicadosUpdate(p);
-    }
     
-     public void deletePuestosPublicados(PuestosPublicados p) throws Exception{
-        dao.PuestosPublicadosDelete(p);
-    }
-
-      public void addPuestosPublicados(PuestosPublicados p) throws Exception{
-        dao.PuestosPublicadosAdd(p);
-    }
-      
-       public PuestosPublicados getPuestosPublicados(int id1, int id2) throws Exception{
-        return dao.PuestosPublicadosGet(id1, id2);
-    }
-       
-        public Collection<PuestosPublicados> getAllPuestosPublicados() throws Exception{
-         return  dao.PuestosPublicadosGetAll();
-    }
-     
-    
-    /********************************* APLICADO********************************/
-    
-    public void deleteAplicado(Aplicado p) throws Exception{
-        dao.AplicadoDelete(p);
-    }
-
-     public void addAplicado(Aplicado p) throws Exception{
-        dao.AplicadoAdd(p);
-    }
-     
-      public Aplicado getAplicado(String id1, int id2) throws Exception{
-        return dao.AplicadoGet(id1, id2);
-    }
-      
-       public Collection<Aplicado> getAllAplicado() throws Exception{
-         return  dao.AplicadoGetAll();
-    }
 }

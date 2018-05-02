@@ -19,6 +19,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/principal.css" rel="stylesheet" >
+    <script type="text/javascript" src="js/ajax.js"></script>   
     <%-- <link rel = "stylesheet" href = "principal.css"> --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -40,7 +41,7 @@
             <li>
                 <a href="#">Busqueda</a>
                 <ul>
-                    <li><a href="ListarCaracteristicas">Puestos Por Caracteristicas</a></li>
+                    <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
                 </ul>
             </li>
         </ul>
@@ -67,36 +68,22 @@
                 <div class="active item"> <br><br><br><br><br><br><br><br>
                     <h2> Top 5 </h2> </div>
                 
-                <%  %>
                 <% for(Puestos p: Top5puestos) {   %>  <!-- empieza for Top5puestos-->
                 
                 <div class="item">  <br><br><br><br><br><br><br><br>
                     <%--<h2> centrar </h2> --%>
-                    <table class="TableTop">
-                        <thead>
-                            <tr>
-                                <th>Nombre Empesa</th>
-                                <th>Nombre Puesto</th>
-                                <th>Salario</th>
-                                <th>Area Trabajo</th>
-                                <th>Especializacion</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td> <%= p.getEmpresa().getNombreEmp() %> </td>
-                            <td> <%= p.getNombrePuesto() %> </td>
-                            <td> <%= p.getSalario() %> </td>
+                   <%-- <table class="TableTop">--%>
+                            <p>Nombre Empesa: <%= p.getEmpresa().getNombreEmp() %> </p> 
+                            <p>Nombre Puesto: <%= p.getNombrePuesto() %></p>
+                            <p>Salario: <%= p.getSalario() %></p>     
                             <!--  LCP lista CaracteristicasPuestos  -->  
                             <% for(CaracteristicasPuestos LCP: p.getCaracteristicasPuestos()) { %> <!-- empieza for LCP-->
-                            <td> <%= LCP.getCaracteristicas().getAreaTrabajo() %>  </td>
-                            <td> <%= LCP.getCaracteristicas().getEspecializacion() %></td>
-                            <td> <%= LCP.getValor() %> </td> 
+                            <%--    <td> <%= LCP.getCaracteristicas().getAreaTrabajo() %>  </td>
+                            <td> <%= LCP.getCaracteristicas().getEspecializacion() %></td>  --%>
+                            <p>Habilidad: <%= LCP.getCaracteristicas().getHabilidad() %> 
+                               Nivel de conocimiento: <%= LCP.getValor() %> </p> 
                             <% } %>  <!-- termina for LCP-->
-                        </tr>
-                        </tbody>
-                    </table> 
+                 <%--   </table> --%>
                 </div>
                 
                 <% } %>  <!-- termina for Top5puestos-->
@@ -106,14 +93,54 @@
               <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
               <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
         </div>
+            
+        <div id="login" class="login">
+            <form method="POST" name="formulario" id="formulario" action="javascript:login();">
+                <label>Correo </label> <input type="text" required name="correo" id="correo">
+                <label>Contraseña </label> <input type="password" required name="contraseña" id="contraseña"> <br>
+                <table> 
+                    <tr> 
+                        <td><label>Empresa </label> </td> 
+                        <td><input type="radio" name="elegir" id="empresa" value="Empresa" required> </td> 
+                        <td><label>Oferente </label> </td> 
+                        <td><input type="radio" name="elegir" id="oferente" value="Oferente" required> </td> 
+                    </tr>
+                </table>
+                <input type="submit" value="Iniciar sesión" >
+            </form>
+        </div>
     </div>
- 
+    
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
             $('.myCarousel').carousel()
         });
+        
+        function login () {
+            if ( document.getElementById("empresa").checked ) {                
+                
+                empresa = {
+                    correoEmp:document.getElementById("correo").value,
+                    contrasena:document.getElementById("contraseña").value,
+                };
+                 ajax ( { "method": "POST", 
+                         "url":"LoginEmpresa", 
+                         "data": empresa, 
+
+                         "error": function(status) {
+                             window.alert("Error");
+                         }                    
+                      }
+                 );
+                this.window.window.location.href = "loginEmpresa.jsp";
+            }
+            if ( document.getElementById("oferente").checked ) {
+                document.getElementById("z").value = "oferente"; 
+            }
+            
+        }
     </script>
 </body>
 </html>

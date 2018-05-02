@@ -9,8 +9,8 @@ CREATE TABLE EMPRESA (
         descripcionEmp varchar(20) not null,
         correoEmp varchar(20) not null,
         telefono varchar(20)not null,
+		contrasena varchar(10) not null,
         idEmp  int AUTO_INCREMENT,
-        /* fechaRegistro date, */
         CONSTRAINT PK_EMP PRIMARY KEY (idEmp,nombreEmp)
 		
 );
@@ -23,14 +23,19 @@ CREATE TABLE OFERENTE (
         nacionalidad varchar (10),
         correoOferente varchar(15),
         ubicacion varchar(60),
+		contrasena varchar(10) not null,
  
   CONSTRAINT PK_OFERENTE PRIMARY KEY (cedulaOferente)
 );
 
 CREATE TABLE CARACTERISTICAS (
-        idCaracteristica integer auto_increment not null,
         areaTrabajo varchar(20),
         especializacion varchar (10),
+		
+		idCaracteristica integer auto_increment not null,
+		idPadre integer,
+		habilidad varchar(20),
+		ifPadre boolean,
 
         CONSTRAINT PK_Caracteriticas PRIMARY KEY (idCAracteristica)
 );
@@ -49,7 +54,7 @@ CREATE TABLE PUESTOS (
 CREATE TABLE CARACTERISTICAS_PUESTOS (  /* CARACTERISTICAS_INCLUIDOS se llamaba así */
         consecutivo integer auto_increment not null,
         valor int,
-		 fecha_Inclusion date,
+		fecha_Inclusion date,
 		idPuesto int(10),
         idCaracteristica int(10),
        
@@ -57,33 +62,50 @@ CREATE TABLE CARACTERISTICAS_PUESTOS (  /* CARACTERISTICAS_INCLUIDOS se llamaba 
         CONSTRAINT PK_CARAC_PUESTOS PRIMARY KEY(consecutivo)
 );
 
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('amazon','San jose','Oportunidades','ama@gm.com','86546');
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789');
-insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) values ('111','Jacinto','BuenaVen','8888','Nicaragua','jac@gm.com','PriCrater');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','ama@gm.com','86546','1');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('Pali','San jose','Oportunidades','pp','86546','1');
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVen','8888','Nicaragua','jac@gm.com','PriCrater','1');
 
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('inge', 100, 'desa pro', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Progra', 100, 'desa pro', true, 1);
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Desa Web ', 200, 'Cretividad', true, 1);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Traduc', 300, 'Social', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Pro Apli', 300, 'Social', true, 1);
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Pro Web' , 200, 'progra', true, 2);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('inge ', 50, 'progra', true, 2);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Act Doblaje', 1003 ,'Barrie', true, 1);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Miner Dts', 50, 'progra', true, 2);
 
-
+/* antes 
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Programacion','Java');
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Programacion','HTML');
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Programacion','C++');
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Idiomas','Ingles');
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Tec Salud','Doctor');
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Chef','Artesanal');
+*/
+/*  DESPUES */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Ing Siste',null,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('Len Progra',1,false); /*  2 */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('HTML',2,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('C++',2,false);  /* 4 */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java',2,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Datos',1,false);  /*  6  */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Desarro',6,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Admi',6,false);   /*   8    */
+
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Cocina saludable',null,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Artesanal',9,false); /*  10 */ 
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Tropical',9,false);
+
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java GUI',5,false);
 
 
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,1,80);
+
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,4,80);
 insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,3,80);
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,2,90);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,5,90);
 insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (3,4,95);
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (4,2,90);
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (5,3,80);
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (6,4,50);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (4,3,90);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (5,8,80);
+insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (5,7,50);
 
 /*
 CREATE TABLE HABILIDADES (

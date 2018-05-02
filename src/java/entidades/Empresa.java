@@ -18,9 +18,7 @@ public class Empresa  implements java.io.Serializable {
     private String descripcionEmp;
     private String correoEmp;
     private String telefono;
-    
-    private Date fechaRegistro;
-    private Set<PuestosPublicados> puestosPublicadoses = new HashSet<PuestosPublicados>(0);
+    private String contrasena;
 
     public Empresa() {
         this.nombreEmp = "";
@@ -30,7 +28,7 @@ public class Empresa  implements java.io.Serializable {
     }
 
     public Empresa(Integer idEmp, String nombreEmp, String ubicacionEmp, String latitud, String longitud, String descripcionEmp, 
-            String correoEmp, String telefono) {
+            String correoEmp, String telefono, String contrasena) {
         this.idEmp = idEmp;
         this.nombreEmp = nombreEmp;
         this.ubicacionEmp = ubicacionEmp;
@@ -39,6 +37,7 @@ public class Empresa  implements java.io.Serializable {
         this.descripcionEmp = descripcionEmp;
         this.correoEmp = correoEmp;
         this.telefono = telefono;
+        this.contrasena = contrasena;
     }
 
     public String getLatitud() {
@@ -100,13 +99,13 @@ public class Empresa  implements java.io.Serializable {
     public void setTeléfono(String telefono) {
         this.telefono = telefono;
     }
- 
-    public Set<PuestosPublicados> getPuestosPublicadoses() {
-        return this.puestosPublicadoses;
+
+    public String getContrasena() {
+        return contrasena;
     }
-    
-    public void setPuestosPublicadoses(Set<PuestosPublicados> puestosPublicadoses) {
-        this.puestosPublicadoses = puestosPublicadoses;
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
     
 }

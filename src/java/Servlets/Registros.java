@@ -5,10 +5,13 @@
  */
 package Servlets;
 
+import com.google.gson.Gson;
 import entidades.Empresa;
 import entidades.Oferente;
 import entidades.Puestos;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
-@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5"})
+@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5", "/LoginEmpresa"})
 public class Registros extends HttpServlet {
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +37,9 @@ public class Registros extends HttpServlet {
                  break;
             case "/Top5":
                 this.doTop5(request, response); 
+                break;
+            case "/LoginEmpresa":
+                this.doLoginEmpresa (request, response); 
                 break;
         }
     }
@@ -52,7 +58,7 @@ protected void doAddEmpresa(HttpServletRequest request, HttpServletResponse resp
         Empresa emp = new Empresa();
         emp.setNombreEmp(nombreempresa);
         emp.setCorreoEmp(email);
-        emp.setCorreoEmp(contrasena); 
+        emp.setContrasena(contrasena); 
         emp.setTeléfono(telefono);
         emp.setDescripcionEmp(descripcion);
         emp.setUbicacionEmp(ubicacion);
@@ -90,7 +96,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         ofe.setUbicacion(ubicacion);
         request.setAttribute("Ofe", ofe);
         Model.instance().addOferente(ofe);
-        request.setAttribute("error", "Gracias por usar el sistema ImaJobs");
         request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }
     catch(Exception e){
@@ -111,6 +116,29 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
                 request.getRequestDispatcher("principal.jsp").forward( request, response);
           }		
     }
+    
+    private void doLoginEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            HttpSession s =  request.getSession( true );
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson();
+            Empresa empresa = gson.fromJson(reader, Empresa.class);
+            PrintWriter out = response.getWriter(); 
+            empresa = Model.instance().getEmpresaLogin( empresa ); 
+            s.setAttribute("Login_empresa", empresa);
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(empresa)); 
+            request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
+      }
+      catch(Exception e){	
+          System.out.println("eror");
+          response.setStatus(401); //Bad request
+      }	
+    }
+    
+    
+
+    
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -151,5 +179,4 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         return "Short description";
     }// </editor-fold>
 
-    
 }

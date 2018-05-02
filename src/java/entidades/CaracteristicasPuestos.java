@@ -4,11 +4,11 @@ package entidades;
 import java.sql.Date;
 
 public class CaracteristicasPuestos  implements java.io.Serializable {
-        private Integer consecutivo;
-        private Puestos puesto;
-        private Caracteristicas caracteristicas;
-        private int valor;
-        private Date fechaInclusion;
+    private Integer consecutivo;
+    private Puestos puesto;
+    private Caracteristicas caracteristicas;
+    private int valor;
+    private Date fechaInclusion;
 
     public CaracteristicasPuestos() {
     }

@@ -31,7 +31,7 @@
             
             <label>Nombre </label> <input type="text" required name="nombreempresa" value=<%= Emp.getNombreEmp() %> ><br><br>
 
-            <label>E-mail </label> <input type="email" name="email" value=<%= Emp.getCorreoEmp() %> ><br><br>
+            <label>Correo </label> <input type="email" name="email" value=<%= Emp.getCorreoEmp() %> ><br><br>
 
             <label>Password </label> <input type="password" name="contrasena"><br><br>
 

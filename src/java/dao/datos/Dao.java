@@ -5,17 +5,11 @@
  */
 package dao.datos;
 
-import entidades.Aplicado;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasPuestos;
 import entidades.Empresa;
-import entidades.Habilidades;
-import entidades.HabilidadesIncluidas;
 import entidades.Oferente;
 import entidades.Puestos;
-import entidades.PuestosPublicados;
-import entidades.Servicios;
-import entidades.ServiciosPublicados;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,696 +33,20 @@ public class Dao {
     public Dao() throws ClassNotFoundException, SQLException, IOException{
         db= new RelDatabase();
     }
-      private Aplicado aplicado(ResultSet rs){
-        try {
-            Aplicado ec= new Aplicado();
-          
-                ec.setFechaAplicacion(rs.getDate("fechaAplicacion"));
-                ec.setIdOferente(rs.getString("idOferente"));
-                ec.setIdPuestos(rs.getInt("idPuestos"));
-               
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
+    
+    /*********************Empresa********************************/
      
-      
-              
-              
-                 public void AplicadoDelete(Aplicado p) throws Exception{
-        String sql="delete from bolsaempleo.Aplicado where cedulaOferente='%s' and idPuesto='%s' ";
-        sql = String.format(sql,p.getIdOferente(), p.getIdPuestos());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puesto buscado inexistente");
-        }
-    }
-    
-        
-      public void AplicadoAdd(Aplicado p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.Aplicado (fechaAplicacion , cedulaOferente , idPuesto ) "+
-                "values(? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setDate(1, p.getFechaAplicacion());
-        preparedStmt.setString (2, p.getIdOferente());
-        preparedStmt.setInt(3, p.getIdPuestos());
-        
-      
-       preparedStmt.execute();
-       
-    }
-      
-      
-        public Aplicado AplicadoGet(String codigo, int codigo2) throws Exception{
-        String sql="select * from aplicado where cedulaOferente='%s' and idPuesto='%s'";
-        sql = String.format(sql,codigo, codigo2);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return aplicado(rs);
-        }
-        else{
-            throw new Exception ("aplicacion no Existe");
-            
-        }
-    }
-        
-            public Collection<Aplicado> AplicadoGetAll(){
-        Vector<Aplicado> estados=new Vector<Aplicado>();
-        try {
-            String sql="select * from Aplicado";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(aplicado(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    
-    
-    
-    
-    /********************************************************************/
-      
-    
-     private PuestosPublicados puestosPublicados(ResultSet rs){
-        try {
-            PuestosPublicados ec= new PuestosPublicados();
-          
-                ec.setEmpresa(rs.getInt("idEmpresa"));
-                ec.setEstadoPuesto(rs.getBoolean("estadoPuestos"));
-                ec.setidPuestos(rs.getInt("idPuestos"));
-               
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-     
-              public void PuestosPublicadosUpdate(PuestosPublicados p) throws Exception{
-        String sql="update bolsaempleo.puestos_publicados set estadoPuesto='%s'"   +
-                "where idEmp='%s' and idPuesto='%s'";
-        sql=String.format(sql,p.getEstadoPuesto(),
-                p.getidEmpresa(),p.getidPuestos());
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puesto buscado inexistente");
-        }
-    }
-              
-              
-                 public void PuestosPublicadosDelete(PuestosPublicados p) throws Exception{
-        String sql="delete from bolsaempleo.puestos_publicados where idEmp='%s' and idPuesto='%s' ";
-        sql = String.format(sql,p.getidEmpresa(), p.getidPuestos());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puesto buscado inexistente");
-        }
-    }
-    
-        
-      public void PuestosPublicadosAdd(PuestosPublicados p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.puestos_publicados (idEmp , idPuesto , estadoPuesto ) "+
-                "values(? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt(1, p.getidEmpresa());
-        preparedStmt.setInt (2, p.getidPuestos());
-        preparedStmt.setBoolean(3, p.getEstadoPuesto());
-        
-      
-       preparedStmt.execute();
-       
-    }
-      
-      
-        public PuestosPublicados PuestosPublicadosGet(int codigo, int codigo2) throws Exception{
-        String sql="select * from puestos_publicados where idEmp='%s' and idPuesto='%s'";
-        sql = String.format(sql,codigo, codigo2);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return puestosPublicados(rs);
-        }
-        else{
-            throw new Exception ("puesto no Existe");
-            
-        }
-    }
-        
-            public Collection<PuestosPublicados> PuestosPublicadosGetAll(){
-        Vector<PuestosPublicados> estados=new Vector<PuestosPublicados>();
-        try {
-            String sql="select * from puestos_publicados";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(puestosPublicados(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    /*********************************************************************/
-    int keyCarPuesCar;
-    private CaracteristicasPuestos caracteristicasPuestos(ResultSet rs){
-        try {
-            CaracteristicasPuestos ec= new CaracteristicasPuestos();
-                
-                ec.setConsecutivo( rs.getInt("consecutivo") );
-                ec.setValor( rs.getInt("valor") );
-                keyCarPuesCar = rs.getInt( "idCaracteristica" );
-                ec.setFechaInclusion( rs.getDate("fecha_Inclusion") );
+    private Empresa empresa(ResultSet rs) throws Exception{
+        Empresa ec= new Empresa();
 
-                return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-              
-    public void CaracteristicasPuestosDelete(CaracteristicasPuestos p) throws Exception{
-        String sql="delete from bolsaempleo.CARACTERISTICAS_PUESTOS where consecutivo=%d";
-        sql = String.format(sql,p.getConsecutivo() );
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("caracteristica no ha sido incluida");
-        }
-    }
-    
-        
-    public void CaracteristicasPuestosAdd(CaracteristicasPuestos p) throws Exception{
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.CARACTERISTICAS_PUESTOS (consecutivo , caracteristica , idPuesto,idCaracteristica, "
-                + "valor ) values(?, ?, ?, ? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt( 1, p.getConsecutivo() );
-        preparedStmt.setInt ( 2,  p.getCaracteristicas().getIdCaracteristica() );
-        preparedStmt.setInt ( 3,  p.getPuesto().getIdPuesto() );
-        preparedStmt.setInt( 4,  p.getValor() );
-      
-        preparedStmt.execute();
-    }
-            
-    public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
-        String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
-        sql = String.format(sql,codigo);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return caracteristicasPuestos(rs);
-        }
-        else{
-            throw new Exception ("servicio no ha sido publicado");
-        }
-    }
-    
-    public Collection<CaracteristicasPuestos> CaracteristicasPuestosGetAll(){
-        Vector<CaracteristicasPuestos> estados=new Vector<CaracteristicasPuestos>();
-        try {
-            String sql="select * from CARACTERISTICAS_PUESTOS";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(caracteristicasPuestos(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
-       try { // este metodo busca CaracteristicasPuestos q tengan el id del puesto
-            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
-            sql = String.format(sql,codigo);
-            ResultSet rs =  db.executeQuery(sql);
-            CaracteristicasPuestos c;
-            while ( rs.next() ) {
-                c = caracteristicasPuestos(rs); // encotro uno
-                c.setPuesto(p); // setea el atributo de puesto
-                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) ); // obtengo la caracteristica
-                ListTop5.add(c); // lo agrego a lista magica, para agregarlo en puesto
-            }
-        } catch (SQLException ex) { }
-    }    
-    
-    
-    List<CaracteristicasPuestos> ListTop5 = new ArrayList<>();
-    public List<Puestos> ListTop5 () throws Exception {
-        List<Puestos> ListPuest = new ArrayList();
-        CaracteristicasPuestos c; // borrarlo
-           try {
-            String sql="select * from Puestos p order by p.idPuesto desc limit 5;";
-            ResultSet rs =  db.executeQuery(sql);
-            Puestos p;
-            while ( rs.next() ) {
-                ListTop5 = new ArrayList(); // limpio la lista de la busqueda anterior
-                p = this.puestos(rs); // obtengo puestos
-                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) ); // obtengo la empresa asociada al puesto
-                this.CaracteristicasPuestosIDpuesto ( p.getIdPuesto(), p ); // busca CaracteristicasPuestos q tengan el id del puesto
-                p.setCaracteristicasPuestos ( ListTop5 ); // agrego la lista CaracteristicasPuestos aL puesto
-                ListPuest.add(p); // lo agrego a lista magica
-            }
-        } catch (SQLException ex) { }
-        return ListPuest;
-    }
-    
-    // 1_PuestosPorCaracteristicas trae puetosXpuesto, cada vez q tiene uno "setea" atributo empresa.luego 2_CaracteristicasPuestosIDpuestoAll
-    // ,este busca en los CARACTERISTICAS_PUESTOS quien tiene el mismo idPuesto. Ahora tiene construido a puesto,empresa 
-    // y construye a CARACTERISTICAS_PUESTOS, depues por medio de su atributo idCaracteristica trae a CARACTERISTICA y lo compara 
-    // con el q tengo por parametro, si es? entonces lo agrega a puetosAll. 
-    List<CaracteristicasPuestos> puetosAll = new ArrayList<>();
-    public List<CaracteristicasPuestos> PuestosPorCaracteristicas ( String especializacion ) throws Exception {
-        List<CaracteristicasPuestos> resultado = new ArrayList<>();
-        puetosAll = new ArrayList<>(); // lo limpia de la busqueda pasada
-        try {
-            String sql="select * from Puestos;";
-            ResultSet rs =  db.executeQuery(sql);
-            Puestos p;
-            while ( rs.next() ) {
-                p = this.puestos(rs);
-                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) );
-                CaracteristicasPuestosIDpuestoAll ( p.getIdPuesto(), p, especializacion );
-            }
-        } catch (SQLException ex) { }
-        return puetosAll;
-    }
-    
-    public void CaracteristicasPuestosIDpuestoAll(int codigo, Puestos p, String especializacion ) throws Exception{
-       try {
-            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
-            sql = String.format(sql,codigo);
-            ResultSet rs =  db.executeQuery(sql);
-            CaracteristicasPuestos c;
-            while ( rs.next() ) {
-                c = caracteristicasPuestos(rs);
-                c.setPuesto(p);
-                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) );
-                if ( especializacion.equals( c.getCaracteristicas().getEspecializacion() ))
-                    puetosAll.add(c);
-            }
-        } catch (SQLException ex) { }
-    }    
-    
-    /************************************************************************/
-    
-     private HabilidadesIncluidas habilidadesIncluidas(ResultSet rs){
-        try {
-            HabilidadesIncluidas ec= new HabilidadesIncluidas();
-          
-                ec.setFechaInclusion(rs.getDate("fechaInclusion"));
-                ec.setIdHabilidad(rs.getInt("idHabilidad"));
-                ec.setServicios(rs.getInt("idServicio"));
-       
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-     
-      
-              
-              
-                 public void HabilidadesIncluidasDelete(HabilidadesIncluidas p) throws Exception{
-        String sql="delete from bolsaempleo.habilidades_incluidas where idServicio='%s' and idHabilidad='%s'";
-        sql = String.format(sql,p.getidServicios(), p.getIdHabilidad());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("habilidad no ha sido incluida");
-        }
-    }
-    
-        
-      public void HabilidadesIncluidasAdd(HabilidadesIncluidas p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.habilidades_incluidas (idServicio , idHabilidad , fecha_Inclusion ) "+
-                "values(? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt(1, p.getidServicios());
-        preparedStmt.setInt (2, p.getIdHabilidad());
-        preparedStmt.setDate(3, p.getFechaInclusion());
-        
-      
-       preparedStmt.execute();
-       
-    }
-      
-      
-        public HabilidadesIncluidas HabilidadesIncluidasGet(String codigo, int codigo2) throws Exception{
-        String sql="select * from habilidades_incluidas where idServicio='%s' and idHabilidad='%s'";
-        sql = String.format(sql,codigo,codigo2);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return habilidadesIncluidas(rs);
-        }
-        else{
-            throw new Exception ("habilidad no ha sido incluida");
-            
-        }
-    }
-        
-            public Collection<HabilidadesIncluidas> HabilidadesIncluidasGetAll(){
-        Vector<HabilidadesIncluidas> estados=new Vector<HabilidadesIncluidas>();
-        try {
-            String sql="select * from habilidades_incluidas";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(habilidadesIncluidas(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    /**********************************************************************/
-    
-      private ServiciosPublicados serviciosPublicados(ResultSet rs){
-        try {
-            ServiciosPublicados ec= new ServiciosPublicados();
-          
-                ec.setCedulaOferente(rs.getString("cedulaOferente"));
-                ec.setEstadoServicio(rs.getBoolean("estadoServicios"));
-                ec.setIdServicio(rs.getInt("idServicio"));
-                
-               
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-     
-              public void ServiciosPublicadosUpdate(ServiciosPublicados p) throws Exception{
-        String sql="update bolsaempleo.servios_publicados set estadoServicio='%s'"   +
-                "where cedulaOferente='%s' and idServicio='%s'";
-        sql=String.format(sql,p.getEstadoServicio(),
-                p.getCedulaOferente(),p.getIdServicio());
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("servicio no ha sido publicado");
-        }
-    }
-              
-              
-                 public void ServiciosPublicadosDelete(ServiciosPublicados p) throws Exception{
-        String sql="delete from bolsaempleo.servios_publicados where cedulaOferente='%s' and idServicio='%s'";
-        sql = String.format(sql,p.getCedulaOferente(), p.getIdServicio());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("servicio no ha sido publicado");
-        }
-    }
-    
-        
-      public void ServiciosPublicadosAdd(ServiciosPublicados p) throws Exception{
-           
-            
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.servios_publicados (cedulaOferente , idServicio , estadoServicio ) "+
-                "values(? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setString(1, p.getCedulaOferente());
-        preparedStmt.setInt (2, p.getIdServicio());
-        preparedStmt.setBoolean(3, p.getEstadoServicio());
-        
-      
-       preparedStmt.execute();
-       
-    }
-      
-      
-        public ServiciosPublicados ServiciosPublicadosGet(String codigo, int codigo2) throws Exception{
-        String sql="select * from servios_publicados where cedulaOferente='%s' and idServicio='%s'";
-        sql = String.format(sql,codigo,codigo2);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return serviciosPublicados(rs);
-        }
-        else{
-            throw new Exception ("servicio no ha sido publicado");
-            
-        }
-    }
-        
-            public Collection<ServiciosPublicados> ServiciosPublicadosGetAll(){
-        Vector<ServiciosPublicados> estados=new Vector<ServiciosPublicados>();
-        try {
-            String sql="select * from servios_publicados";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(serviciosPublicados(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    
-    
-    
-    
-    /*********************************************************************/
-    private Caracteristicas caracteristicas(ResultSet rs){
-        try {
-            Caracteristicas ec= new Caracteristicas();
-                ec.setIdCaracteristica( rs.getInt("idCaracteristica") );
-                ec.setAreaTrabajo( rs.getString("areaTrabajo") );
-                ec.setEspecializacion( rs.getString("especializacion") );
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-     
-    public void CaracteristicasUpdate(Caracteristicas p) throws Exception{
-        String sql="update bolsaempleo.caracteristicas set areaTrabajo='%s', especializacion='%s'"   +
-                " where idCaracteristica='%s'";
-        sql=String.format(sql,p.getAreaTrabajo(),
-                p.getEspecializacion(),p.getIdCaracteristica());
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("caracteristica no existe");
-        }
-    }
-              
-    public void CaracteristicasDelete(Caracteristicas p) throws Exception{
-        String sql="delete from bolsaempleo.caracteristicas where idCaracteristica=%d";
-        sql = String.format(sql,p.getIdCaracteristica());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puesto no existe");
-        }
-    }
-    
-        
-    public void CaracteristicasAdd(Caracteristicas p) throws Exception{
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.caracteristicas (idCaracteristica , areaTrabajo , especializacion ) "+
-                "values(? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt( 1, p.getIdCaracteristica() );
-        preparedStmt.setString ( 2, p.getAreaTrabajo() );
-        preparedStmt.setString ( 3, p.getEspecializacion() );
-      
-       preparedStmt.execute();
-    }
-      
-      
-    public Caracteristicas CaracteristicasGet(int codigo) throws Exception{
-        String sql="select * from caracteristicas where idCaracteristica=%d";
-        sql = String.format(sql,codigo);
-        ResultSet rs =  db.executeQuery(sql); 
-        if (rs.next()) {
-            return caracteristicas(rs);
-        }
-        else{
-            throw new Exception ("puesto no Existe");
-        }
-    }
-    
-    // busca por areaTrabajo
-    public List<Caracteristicas> CaracteristicasEspecializ(String areaTrabajo) throws Exception{
-        List<Caracteristicas> estados=new Vector<Caracteristicas>();
-        Caracteristicas aux;
-        try {
-            String sql="select * from caracteristicas";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                aux = caracteristicas(rs);
-                if ( areaTrabajo.equals( aux.getAreaTrabajo() ) )
-                    estados.add( aux );
-            }
-        } catch (SQLException ex) { }
-        return estados;  
-    }
-    
-    public List<Caracteristicas> CaracteristicasAreaTrabajo( ) throws Exception{
-        List<Caracteristicas> estados=new Vector<Caracteristicas>();
-        Caracteristicas aux; String areaTrabajo = "as";
-        try {
-            String sql="select * from caracteristicas";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                aux = caracteristicas(rs);
-                if ( !areaTrabajo.equals( aux.getAreaTrabajo() ) ) 
-                    estados.add( aux );
-                areaTrabajo = aux.getAreaTrabajo();
-            }
-        } catch (SQLException ex) { }
-        return estados;  
-    }
-    
-    public Collection<Caracteristicas> CaracteristicasGetAll(){
-        List<Caracteristicas> estados=new Vector<Caracteristicas>();
-        try {
-            String sql="select * from caracteristicas";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(caracteristicas(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    
-    /**********************************************************************/
-    
-    private Puestos puestos(ResultSet rs) {
-        try {
-            Puestos ec= new Puestos();
-                ec.setIdPuesto(rs.getInt("idPuesto"));
-                // ec.setEmpresa( this.empresa(rs) );
-                ec.setNombrePuesto(rs.getString("nombrePuesto"));
-                ec.setSalario(rs.getFloat("salario"));
-                ec.setDescripcionPuesto(rs.getString("descripcionPuesto"));
-                ec.setTipoPublicacion( rs.getBoolean("tipoPublicacion") );
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-     
-    public void PuestosUpdate(Puestos p) throws Exception {
-        String sql="update bolsaempleo.puestos set nombrePuesto='%s', idEmp='%s', salario='%s' , descripcionPuesto='%s', "
-                + "tipoPublicacion=%b where idPuesto='%s'";
-        sql=String.format(sql,p.getNombrePuesto(), p.getEmpresa().getIdEmp(),
-                p.getSalario(),p.getDescripcionPuesto(), p.getIdPuesto(), p.getTipoPublicacion() );
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puestos no existe");
-        }
-    }
-              
-    public void PuestosDelete(Puestos p) throws Exception {
-        String sql="delete from bolsaempleo.puestos where idPuesto='%s'";
-        sql = String.format(sql,p.getIdPuesto());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("puesto no existe");
-        }
-    }
-        
-    public void PuestosAdd(Puestos p) throws Exception {
-            System.out.println("en oferenteAdd");
-        String sql="insert into bolsaempleo.puestos (nombrePuesto, idEmp, salario, descripcionPuesto, tipoPublicacion ) "+
-                "values(?, ?, ?, ?, ?)";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setString(1, p.getNombrePuesto());
-        preparedStmt.setFloat (2, p.getSalario());
-        preparedStmt.setString (3, p.getDescripcionPuesto());
-        preparedStmt.setBoolean(4, p.getTipoPublicacion() );
-        
-       preparedStmt.execute();
-    }
-      
-    public Puestos PuestosGet(int codigo) throws Exception {
-        String sql="select * from puestos where idPuesto=%d";
-        sql = String.format(sql,codigo);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return puestos(rs);
-        }
-        else{
-            throw new Exception ("puesto no Existe");
-        }
-    }
-        
-    public Collection<Puestos> PuestosGetAll() {
-        Vector<Puestos> estados=new Vector<Puestos>();
-        try {
-            String sql="select * from puestos";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(puestos(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-    /*
-    public List<Puestos> ListTop5 () throws Exception {
-        List<Puestos> resultado = new ArrayList<>();
-           try {
-            String sql="select * from Puestos p inner join CARACTERISTICAS_PUESTOS c on p.idPuesto=c.consecutivo order "
-                    + "by p.idPuesto desc limit 5;";
-            ResultSet rs =  db.executeQuery(sql);
-            Puestos p;
-            CaracteristicasPuestos c;
-            while (rs.next()) {
-                p = puestos(rs);
-                //c = this.caracteristicasPuestos(rs);
-                
-                //p.setEmpresa(empresa(rs));
-                resultado.add(p);
-            }
-        } catch (SQLException ex) { }
-        return resultado;
-    }
-    */
-    
-    /***********************************************************************/
-     
-    private Empresa empresa(ResultSet rs){
-        try {
-            Empresa ec= new Empresa();
-                ec.setNombreEmp(rs.getString("nombreEmp"));
-                ec.setUbicacionEmp(rs.getString("ubicacionEmp"));
-                ec.setDescripcionEmp(rs.getString("descripcionEmp"));
-                ec.setCorreoEmp(rs.getString("correoEmp"));
-                ec.setTeléfono( rs.getString("telefono") );
-                ec.setIdEmp(rs.getInt("idEmp"));
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
+            ec.setNombreEmp(rs.getString("nombreEmp"));
+            ec.setUbicacionEmp(rs.getString("ubicacionEmp"));
+            ec.setDescripcionEmp(rs.getString("descripcionEmp"));
+            ec.setCorreoEmp(rs.getString("correoEmp"));
+            ec.setTeléfono( rs.getString("telefono") );
+            ec.setContrasena( rs.getString("contrasena") );
+            ec.setIdEmp(rs.getInt("idEmp"));
+        return ec;
     }
      
     public void EmpresaUpdate(Empresa p) throws Exception{
@@ -793,7 +111,7 @@ public class Dao {
         }
     }
         
-    public Collection<Empresa> EmpresaGetAll(){
+    public List<Empresa> EmpresaGetAll()  throws Exception{
         Vector<Empresa> estados=new Vector<Empresa>();
         try {
             String sql="select * from empresa";
@@ -820,90 +138,14 @@ public class Dao {
         else { return null; }
     }
     
-    /********************************************************************/
-    
-                public void HabilidadesUpdate(Habilidades p) throws Exception{
-        String sql="update bolsaempleo.habilidades set  nombreHabilidad='%s', areaTrabajo='%s' , especializacion='%s'"   +
-                "where idHabilidad='%s'";
-        sql=String.format(sql,p.getNombreHabilidad(),
-                p.getAreaTrabajo(),p.getEspecializacion(), p.getIdHabilidad());
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("habilidad no existe");
-        }
-    }
-    
-          public void HabilidadesDelete(Habilidades p) throws Exception{
-        String sql="delete from bolsaempleo.habilidades where idHabilidad='%s'";
-        sql = String.format(sql,p.getIdHabilidad());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("Habilidad no existe");
-        }
-    }
-    
-      public void HabilidadesAdd(Habilidades p) throws Exception{
-           
-            
-        String sql="insert into bolsaempleo.habilidades (idHabilidad , nombreHabilidad , areaTrabajo , especializacion ) "+
-                "values(? ,? ,? ,?)";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt(1, p.getIdHabilidad());
-        preparedStmt.setString (2, p.getNombreHabilidad());
-        preparedStmt.setString (3, p.getAreaTrabajo());
-        preparedStmt.setString (4, p.getEspecializacion());
-      
-       preparedStmt.execute();
-       
-    }
-    
-    public Habilidades HabilidadesGet(String codigo) throws Exception{
-        String sql="select * from habilidades where idHabilidad='%s'";
-        sql = String.format(sql,codigo);
+    public Empresa EmpresaLogin (Empresa e) throws Exception{ // busqueda por nombre
+        String sql="select * from Empresa e where e.correoEmp='%s' and e.contrasena='%s'";
+        sql = String.format( sql,e.getCorreoEmp(), e.getContrasena() );
         ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return habilidades(rs);
-        }
-        else{
-            throw new Exception ("Habilidad no Existe");
-            
-        }
+        rs.next();
+        return empresa(rs); 
     }
-    
-      public Collection<Habilidades> HabilidadesGetAll(){
-        Vector<Habilidades> estados=new Vector<Habilidades>();
-        try {
-            String sql="select * from habilidades";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(habilidades(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-       
-    
-    
-     private Habilidades habilidades(ResultSet rs){
-        try {
-            Habilidades ec= new Habilidades();
-          
-                ec.setAreaTrabajo(rs.getString("areaTrabajo"));
-                ec.setEspecializacion(rs.getString("especializacion"));
-                ec.setIdHabilidad(rs.getInt("idHabilidad"));
-                ec.setNombreHabilidad(rs.getString("nombreHabilidad"));
-        
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
-    
-    /***************************************************************************/
+    /*********************Oferente********************************/
     
       public Oferente OferenteGet(String codigo) throws Exception{
         String sql="select * from oferente where cedulaOferente='%s'";
@@ -918,7 +160,7 @@ public class Dao {
         }
     }
       
-       public Collection<Oferente> OferenteGetAll(){
+       public List<Oferente> OferenteGetAll(){
         Vector<Oferente> estados=new Vector<Oferente>();
         try {
             String sql="select * from oferente";
@@ -1003,95 +245,387 @@ public class Dao {
         
     }
     
-  /*************************************************************************************************************************/      
-        
-         public Servicios ServicioGet(String codigo) throws Exception{
-        String sql="select * from servicios  where idServicio='%s'";
-        sql = String.format(sql,codigo);
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return servicios(rs);
-        }
-        else{
-            throw new Exception ("Servicio no Existe");
-            
-        }
-    }
-         
-         
-         public Collection<Servicios> ServiciosGetAll(){
-        Vector<Servicios> estados=new Vector<Servicios>();
+    /*********************CARACTERISTICAS********************************/
+// el dilema recursivo = si hago esta llamada ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );
+// en caracteristicas, va ocurrir una recursiivdad o lago parecido, por eso voy hacer un metodo 
+// q cosntruye al padre inmediato
+    private Caracteristicas caracteristicas(ResultSet rs) throws Exception{
         try {
-            String sql="select * from servicios";
-            ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                estados.add(servicios(rs));
-            }
-        } catch (SQLException ex) { }
-        return estados;        
-    }
-         
-         
-            public void ServiciosAdd(Servicios p) throws Exception{
-           
+            Caracteristicas ec= new Caracteristicas();
             
-            System.out.println("en ServiciosAdd");
-        String sql="insert into bolsaempleo.servicios (idServicio , nombreServicio , salarioEsperado , descripcionDescripcion ) "+
-                "values(? ,? ,? ,? )";
-        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
-        db.getConnection();
-        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
-        preparedStmt.setInt(1, p.getIdServicio());
-        preparedStmt.setString (2, p.getNombreServicio());
-        preparedStmt.setFloat(3, p.getSalarioEsperado());
-        preparedStmt.setString (4, p.getDescripcionDescripcion());
-      
-        
-      
-      
-       preparedStmt.execute();
-       
-    }
-            
-            
-                public void ServiciosDelete(Servicios p) throws Exception{
-        String sql="delete from bolsaempleo.servicios where idServicio='%s'";
-        sql = String.format(sql,p.getIdServicio());
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("Servicio no existe");
-        }
-    }
-                
-                 public void ServiciosUpdate(Servicios p) throws Exception{
-        String sql="update bolsaempleo.servicios set  nombreServicio='%s' , salarioEsperado='%s' , descripcionDescripcion='%s'"   +
-                "where idServicio='%s'";
-        sql=String.format(sql,p.getNombreServicio(),
-                p.getSalarioEsperado(),p.getDescripcionDescripcion(), p.getIdServicio());
-        
-        int count=db.executeUpdate(sql);
-        if (count==0){
-            throw new Exception("Servicio no existe");
-        }
-    }
-      
-        
-          private Servicios servicios(ResultSet rs){
-        try {
-            Servicios ec= new Servicios();
-          
-                ec.setDescripcionDescripcion(rs.getString("descripcion"));
-                ec.setNombreServicio(rs.getString("nombreServicio"));
-                ec.setSalarioEsperado(rs.getFloat("salarioEsperado"));
-                ec.setIdServicio(rs.getInt("idServicio"));
-               
+                ec.setIdCaracteristica( rs.getInt("idCaracteristica") );
+                ec.setHabilidad(rs.getString("habilidad"));
+                ec.setPadre( rs.getBoolean( "ifPadre" ) );
+                if ( !ec.isPadre() )
+                    ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );
+                else ec.setPapa_carac (null); 
+                /*  ec.setAreaTrabajo( rs.getString("areaTrabajo") ); ec.setEspecializacion( rs.getString("especializacion") );*/
             return ec;
         } catch (SQLException ex) {
             return null;
         }
     }
-      
     
+    public Caracteristicas CaracteristicasGet(int codigo) throws Exception{
+        String sql="select * from caracteristicas where idCaracteristica=%d";
+        sql = String.format(sql,codigo);
+        ResultSet rs =  db.executeQuery(sql); 
+        if (rs.next()) {
+            return caracteristicas(rs);
+        }
+        else{
+            throw new Exception ("Caracteristicas no Existe");
+        }
+    }
+     /*
+    public void CaracteristicasUpdate(Caracteristicas p) throws Exception{
+        String sql="update bolsaempleo.caracteristicas set areaTrabajo='%s', especializacion='%s'"   +
+                " where idCaracteristica='%s'";
+        sql=String.format(sql,p.getAreaTrabajo(),
+                p.getEspecializacion(),p.getIdCaracteristica());
+        
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            throw new Exception("caracteristica no existe");
+        }
+    }
+          */    
+    public void CaracteristicasDelete(Caracteristicas p) throws Exception{
+        String sql="delete from bolsaempleo.caracteristicas where idCaracteristica=%d";
+        sql = String.format(sql,p.getIdCaracteristica());
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            throw new Exception("puesto no existe");
+        }
+    }
+    
+       /* 
+    public void CaracteristicasAdd(Caracteristicas p) throws Exception{
+            System.out.println("en oferenteAdd");
+        String sql="insert into bolsaempleo.caracteristicas (idCaracteristica , areaTrabajo , especializacion ) "+
+                "values(? ,? ,? )";
+        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+        db.getConnection();
+        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
+        System.out.println("despues de prepared" );
+        preparedStmt.setInt( 1, p.getIdCaracteristica() );
+        preparedStmt.setString ( 2, p.getAreaTrabajo() );
+        preparedStmt.setString ( 3, p.getEspecializacion() );
+      
+       preparedStmt.execute();
+    }*/
+    
+    /*
+    // busca por areaTrabajo
+    public List<Caracteristicas> CaracteristicasEspecializ(String areaTrabajo) throws Exception{
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        Caracteristicas aux;
+        try {
+            String sql="select * from caracteristicas";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                aux = caracteristicas(rs);
+                if ( areaTrabajo.equals( aux.getAreaTrabajo() ) )
+                    estados.add( aux );
+            }
+        } catch (SQLException ex) { }
+        return estados;  
+    }
+    
+    public List<Caracteristicas> CaracteristicasAreaTrabajo( ) throws Exception {
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        Caracteristicas aux; String areaTrabajo = "as";
+        try {
+            String sql="select * from caracteristicas";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                aux = caracteristicas(rs);
+                if ( !areaTrabajo.equals( aux.getAreaTrabajo() ) ) 
+                    estados.add( aux );
+                areaTrabajo = aux.getAreaTrabajo();
+            }
+        } catch (SQLException ex) { }
+        return estados;  
+    }
+    */
+    public List<Caracteristicas> CaracteristicasGetAll() throws Exception {
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        try {
+            String sql="select * from caracteristicas";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                estados.add(caracteristicas(rs));
+            }
+        } catch (SQLException ex) { }
+        return estados;        
+    }
+
+    public List<Caracteristicas> AllCaracteristicasPadres() throws Exception { // busca los padres
+        List<Caracteristicas> padres=new Vector<Caracteristicas>();
+        try {
+            //String sql="select * from caracteristicas";
+            String sql="select * from caracteristicas where ifPadre=true";
+            ResultSet rs =  db.executeQuery(sql);
+            Caracteristicas car;
+            while (rs.next()) {
+                car = caracteristicas(rs);
+                padres.add( car );
+            }
+        } catch (SQLException ex) { throw new Exception("Error AllCaracteristicasPadres"); }
+        return padres;        
+    }
+    
+    public List<Caracteristicas> BuscarCaracteristicas( int idP) throws Exception { // busca los hijos de un padre
+        List<Caracteristicas> estados=new Vector<Caracteristicas>();
+        try {
+            String sql="select * from caracteristicas where idPadre=%d";
+            sql = String.format(sql,idP);
+            ResultSet rs =  db.executeQuery(sql);
+            Caracteristicas car;
+            while (rs.next()) {
+                car = caracteristicas(rs);
+                estados.add( car );
+            }
+        } catch (SQLException ex) { throw new Exception("Error AllCaracteristicasPadres"); }
+        return estados;        
+    }
+    /*********************PUESTOS********************************/
+    
+    private Puestos puestos(ResultSet rs) {
+        try {
+            Puestos ec= new Puestos();
+                ec.setIdPuesto(rs.getInt("idPuesto"));
+                // ec.setEmpresa( this.empresa(rs) );
+                ec.setNombrePuesto(rs.getString("nombrePuesto"));
+                ec.setSalario(rs.getFloat("salario"));
+                ec.setDescripcionPuesto(rs.getString("descripcionPuesto"));
+                ec.setTipoPublicacion( rs.getBoolean("tipoPublicacion") );
+        
+            return ec;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+     
+    public void PuestosUpdate(Puestos p) throws Exception {
+        String sql="update bolsaempleo.puestos set nombrePuesto='%s', idEmp='%s', salario='%s' , descripcionPuesto='%s', "
+                + "tipoPublicacion=%b where idPuesto='%s'";
+        sql=String.format(sql,p.getNombrePuesto(), p.getEmpresa().getIdEmp(),
+                p.getSalario(),p.getDescripcionPuesto(), p.getIdPuesto(), p.getTipoPublicacion() );
+        
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            throw new Exception("puestos no existe");
+        }
+    }
+              
+    public void PuestosDelete(Puestos p) throws Exception {
+        String sql="delete from bolsaempleo.puestos where idPuesto='%s'";
+        sql = String.format(sql,p.getIdPuesto());
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            throw new Exception("puesto no existe");
+        }
+    }
+        
+    public void PuestosAdd(Puestos p) throws Exception {
+            System.out.println("en oferenteAdd");
+        String sql="insert into bolsaempleo.puestos (nombrePuesto, idEmp, salario, descripcionPuesto, tipoPublicacion ) "+
+                "values(?, ?, ?, ?, ?)";
+        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+        db.getConnection();
+        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
+        System.out.println("despues de prepared" );
+        preparedStmt.setString(1, p.getNombrePuesto());
+        preparedStmt.setFloat (2, p.getSalario());
+        preparedStmt.setString (3, p.getDescripcionPuesto());
+        preparedStmt.setBoolean(4, p.getTipoPublicacion() );
+        
+       preparedStmt.execute();
+    }
+      
+    public Puestos PuestosGet(int codigo) throws Exception {
+        String sql="select * from puestos where idPuesto=%d";
+        sql = String.format(sql,codigo);
+        ResultSet rs =  db.executeQuery(sql);
+        if (rs.next()) {
+            return puestos(rs);
+        }
+        else{
+            throw new Exception ("puesto no Existe");
+        }
+    }
+        
+    public List<Puestos> PuestosGetAll() {
+        Vector<Puestos> estados=new Vector<Puestos>();
+        try {
+            String sql="select * from puestos";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                estados.add(puestos(rs));
+            }
+        } catch (SQLException ex) { }
+        return estados;        
+    }
+    /*
+    public List<Puestos> ListTop5 () throws Exception {
+        List<Puestos> resultado = new ArrayList<>();
+           try {
+            String sql="select * from Puestos p inner join CARACTERISTICAS_PUESTOS c on p.idPuesto=c.consecutivo order "
+                    + "by p.idPuesto desc limit 5;";
+            ResultSet rs =  db.executeQuery(sql);
+            Puestos p;
+            CaracteristicasPuestos c;
+            while (rs.next()) {
+                p = puestos(rs);
+                //c = this.caracteristicasPuestos(rs);
+                //p.setEmpresa(empresa(rs));
+                resultado.add(p);
+            }
+        } catch (SQLException ex) { }
+        return resultado;
+    }
+    */
+    
+    /*********************CARACTERISTICAS PUESTOS********************************/
+    int keyCarPuesCar;
+    private CaracteristicasPuestos caracteristicasPuestos(ResultSet rs){
+        try {
+            CaracteristicasPuestos ec= new CaracteristicasPuestos();
+                
+                ec.setConsecutivo( rs.getInt("consecutivo") );
+                ec.setValor( rs.getInt("valor") );
+                keyCarPuesCar = rs.getInt( "idCaracteristica" );
+                ec.setFechaInclusion( rs.getDate("fecha_Inclusion") );
+
+                return ec;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+              
+    public void CaracteristicasPuestosDelete(CaracteristicasPuestos p) throws Exception{
+        String sql="delete from bolsaempleo.CARACTERISTICAS_PUESTOS where consecutivo=%d";
+        sql = String.format(sql,p.getConsecutivo() );
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            throw new Exception("caracteristica no ha sido incluida");
+        }
+    }
+    
+        
+    public void CaracteristicasPuestosAdd(CaracteristicasPuestos p) throws Exception{
+            System.out.println("en oferenteAdd");
+        String sql="insert into bolsaempleo.CARACTERISTICAS_PUESTOS (consecutivo , caracteristica , idPuesto,idCaracteristica, "
+                + "valor ) values(?, ?, ?, ? )";
+        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+        db.getConnection();
+        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
+        System.out.println("despues de prepared" );
+        preparedStmt.setInt( 1, p.getConsecutivo() );
+        preparedStmt.setInt ( 2,  p.getCaracteristicas().getIdCaracteristica() );
+        preparedStmt.setInt ( 3,  p.getPuesto().getIdPuesto() );
+        preparedStmt.setInt( 4,  p.getValor() );
+      
+        preparedStmt.execute();
+    }
+            
+    public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
+        String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
+        sql = String.format(sql,codigo);
+        ResultSet rs =  db.executeQuery(sql);
+        if (rs.next()) {
+            return caracteristicasPuestos(rs);
+        }
+        else{
+            throw new Exception ("servicio no ha sido publicado");
+        }
+    }
+    
+    public List<CaracteristicasPuestos> CaracteristicasPuestosGetAll(){
+        Vector<CaracteristicasPuestos> estados=new Vector<CaracteristicasPuestos>();
+        try {
+            String sql="select * from CARACTERISTICAS_PUESTOS";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                estados.add(caracteristicasPuestos(rs));
+            }
+        } catch (SQLException ex) { }
+        return estados;        
+    }
+    
+    public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
+       try { // este metodo busca CaracteristicasPuestos q tengan el id del puesto
+            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
+            sql = String.format(sql,codigo);
+            ResultSet rs =  db.executeQuery(sql);
+            CaracteristicasPuestos c;
+            while ( rs.next() ) {
+                c = caracteristicasPuestos(rs); // encotró uno
+                c.setPuesto(p); // setea el atributo de puesto
+                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) ); // obtengo la caracteristica
+                ListTop5.add(c); // lo agrego a lista magica, para agregarlo en puesto
+            }
+        } catch (SQLException ex) { }
+    }    
+    
+    
+    List<CaracteristicasPuestos> ListTop5 = new ArrayList<>();
+    public List<Puestos> ListTop5 () throws Exception {
+        List<Puestos> ListPuest = new ArrayList();
+    //    CaracteristicasPuestos c; // borrarlo
+           try {
+            String sql="select * from Puestos p order by p.idPuesto desc limit 5;";
+            ResultSet rs =  db.executeQuery(sql);
+            Puestos p;
+            while ( rs.next() ) {
+                ListTop5 = new ArrayList(); // limpio la lista de la busqueda anterior
+                p = this.puestos(rs); // obtengo puestos
+                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) ); // obtengo la empresa asociada al puesto
+                this.CaracteristicasPuestosIDpuesto ( p.getIdPuesto(), p ); // busca CaracteristicasPuestos q tengan el id del puesto
+                p.setCaracteristicasPuestos ( ListTop5 ); // agrego la lista CaracteristicasPuestos aL puesto
+                ListPuest.add(p); // lo agrego a lista magica depuestoa
+            }
+        } catch (SQLException ex) { }
+        return ListPuest;
+    }
+    
+    // 1_PuestosPorCaracteristicas trae puetosXpuesto, cada vez q tiene uno "setea" atributo empresa.luego 2_CaracteristicasPuestosIDpuestoAll
+    // ,este busca en los CARACTERISTICAS_PUESTOS quien tiene el mismo idPuesto. Ahora tiene construido a puesto,empresa 
+    // y construye a CARACTERISTICAS_PUESTOS, depues por medio de su atributo idCaracteristica trae a CARACTERISTICA y lo compara 
+    // con el q tengo por parametro, si es? entonces lo agrega a puetosAll. 
+  /*  List<CaracteristicasPuestos> puetosAll = new ArrayList<>();
+    public List<CaracteristicasPuestos> PuestosPorCaracteristicas ( String especializacion ) throws Exception {
+        List<CaracteristicasPuestos> resultado = new ArrayList<>();
+        puetosAll = new ArrayList<>(); // lo limpia de la busqueda pasada
+        try {
+            String sql="select * from Puestos;";
+            ResultSet rs =  db.executeQuery(sql);
+            Puestos p;
+            while ( rs.next() ) {
+                p = this.puestos(rs);
+                p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) );
+                CaracteristicasPuestosIDpuestoAll ( p.getIdPuesto(), p, especializacion );
+            }
+        } catch (SQLException ex) { }
+        return puetosAll;
+    }
+    
+    public void CaracteristicasPuestosIDpuestoAll(int codigo, Puestos p, String especializacion ) throws Exception{
+       try {
+            String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
+            sql = String.format(sql,codigo);
+            ResultSet rs =  db.executeQuery(sql);
+            CaracteristicasPuestos c;
+            while ( rs.next() ) {
+                c = caracteristicasPuestos(rs);
+                c.setPuesto(p);
+                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) );
+                if ( especializacion.equals( c.getCaracteristicas().getEspecializacion() ))
+                    puetosAll.add(c);
+            }
+        } catch (SQLException ex) { }
+    }    
+    */
     
 }

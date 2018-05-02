@@ -17,6 +17,27 @@ div.Div_Top p{
     font-family :"Bernard MT Condensed";
 }
 
+ul li a#habilidad:focus {
+    color: red;
+}
+
+a {
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .areaTrabajo table { border-collapse: collapse; text-align: center; width: 100%; } 
 
 .areaTrabajo {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; 
@@ -47,34 +68,26 @@ div.Div_Top p{
     font-weight: bold;
 } 
 
-
 .grid table caption  {
     color: #275420; 
 }
  .grid table { border-collapse: collapse; text-align: center; width: 100%; } 
-
 .grid {
     font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff;
     overflow: hidden; 
     border: 1px solid #36752D; 
     width: 100%; background: #fff; margin: auto;   }
-
 .grid table td { padding: 3px 10px; 
                      color: #275420; 
                      font-size: 12px; 
                      border-bottom: 1px solid #E1EEF4;
                      font-weight: bold;
 } 
-
-
 div.grid {
     width: 100%;
     margin: auto;
    /* background-color: #ffff00;*/
 }
-
-
 .grid table, .grid thead, .grid tbody {
-   
     /* background-color: #ff00ff;*/
 }

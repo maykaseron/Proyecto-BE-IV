@@ -17,6 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel = "stylesheet" href = "css/PuestosCaracteristicas.css" type="text/css"/>
+        <script type="text/javascript" src="js/ajax.js"></script>        
         <title>Puestos Caracteristicas</title>
     </head>
     
@@ -25,114 +26,50 @@
         <div class="Div_Top"> <p> ImaJobs </p> </div>
         
         <h1> Puestos Ofrecidos por Caracteristicas  </h1>
-        
-        <form method="post" action="BuscarCaracterAreaTrabajo" >
-            <label> Elija un área de Trabajo: </label> 
+        <%--                
+        <form method="post" action="BuscarCarac" >
+            <label> Caracteristica: </label> 
                 <input type="search" name="areaTrabajo" /> 
                 <input type="submit" value="Buscar" >
         </form >
-                <br><br>
-        <form method="post" action="BuscarPuestosPorEspecial" >
-            <label> Elija una especialización: </label>
-                <input type="search" name="especializacion" /> 
-                <input type="submit" value="Buscar" >
-        </form> <br><br>
+        --%>
+        <jsp:useBean id="listaPuestos" scope="request" type=" List<CaracteristicasPuestos> " beanName="java.util.ArrayList"/>
+        <!-- copiar el documento busca caracte_puestos.txt dq esta en: C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV -->
         
-         <form method="post" action="ListarCaracteristicas" >
-                <input type="submit" value="Restablecer" >
-        </form >       
+        <input type="text" name="z" id="z">
         <br><br><br> <br><br><br>   
         
-        <jsp:useBean id="listaAreaTrabajo" scope="request" type="List<Caracteristicas> " 
-                        beanName="java.util.ArrayList"/>
-         <jsp:useBean id="listaEspecializacion" scope="request" type="List<Caracteristicas>" 
-                         beanName="java.util.ArrayList" />
+        <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
+        <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
+            <ul> 
+                <li > 
+                    <p onclick="buscar(this, <%= L_CPad.getIdCaracteristica()  %> )"> <%= L_CPad.getHabilidad() %>  </p>
+                </li>
+            </ul>
+        <%}%> 
         
-        <div class="areaTrabajo">
-            <table>
-                <thead>
-                    <tr> 
-                        <td> Área de trabajo </td> 
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <% if ( listaAreaTrabajo !=null || listaAreaTrabajo.isEmpty() ) { %>
-                        <% for (Caracteristicas lc: listaAreaTrabajo)  { %>
-                                <tr> 
-                                    <td> <%= lc.getAreaTrabajo() %> </td> 
-                                </tr>
-                        <% } %>  
-                    <% } else { %>
-                    <tr> 
-                        <td> Sin resultados </td> 
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div> 
-        <br><br><br>  
-        
-        <% if ( listaEspecializacion !=null || !listaEspecializacion.isEmpty() ) { %>
-        <div class="especializacion">
-            <table>
-                <thead>
-                    <tr> 
-                        <td> Especialización </td> 
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <%  for (Caracteristicas lc: listaEspecializacion)  {  %>
-                            <tr> 
-                                <td> <%= lc.getEspecializacion() %> </td> 
-                            </tr>
-                    <% } %> 
-                </tbody>
-            </table>
-        </div> <br><br><br>  
-        <% } %>
-        
-        
-        <jsp:useBean id="listaPuestos" scope="request" type=" List<CaracteristicasPuestos> "
-                     beanName="java.util.ArrayList"/>
-        <% if ( listaPuestos !=null || !listaPuestos.isEmpty() ) { %>
-        <div class="grid">  
-            <table>
-                <caption>Puestos disponibles</caption>
-                <thead><tr><td>Nombre empresa</td><td>Puesto</td><td>Salario</td><td>AreaTrabajo</td><td>Especializacion</td>
-                           <td>Dominio</td>
-                        </tr>
-                </thead>
-                <tbody style="height: 250px;">
-                    <% Puestos  puesto = new Puestos (); %>
-                    <% for(CaracteristicasPuestos p: listaPuestos){   %>
-                        <tr> 
-                        <%--    Detalles Puesto      --%>
-                            <% if ( p.getPuesto().getIdPuesto() != puesto.getIdPuesto() ) {%>
-                            <td><%= p.getPuesto().getEmpresa().getNombreEmp() %></td> 
-                            <td> <%= p.getPuesto().getNombrePuesto() %> </td>
-                            <td> <%= p.getPuesto().getSalario() %> </td> 
-                                 <% puesto.setIdPuesto( p.getPuesto().getIdPuesto() ); %>
-                            <% } else { %> 
-                                    <td>  </td> 
-                                    <td>  </td>
-                                    <td>  </td> 
-                            <%}%> 
-                            
-                        <%--    Detalles Caracteris      --%>
-                            <td> <%= p.getCaracteristicas().getAreaTrabajo() %> </td>
-                            <td> <%= p.getCaracteristicas().getEspecializacion() %> </td> 
-
-                        <%--    Detalles Nivel de espc      --%>
-                            <td> <%= p.getValor() %> </td> 
-                       </tr>
-                    <% } %> 
-                </tbody>
-            </table> 
-        </div>      
-        <% } %>
-        
+        <jsp:useBean id="CaracteristicasHijos" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
+        <% for(Caracteristicas L_CHij: CaracteristicasHijos){   %>
+            <ul> 
+                <li > 
+                    <p onclick="buscar(this, <%= L_CHij.getIdCaracteristica()  %> )"> <%= L_CHij.getHabilidad() %>  </p>
+                </li>
+            </ul>
+        <%}%> 
      <a href = "Top5" target = "_self">Regresar</a>   
     </body>
+    
+    <script>
+        function loaded(event){	}
+        function buscar (elmnt,idCaracteristica) {
+            document.getElementById("z").value = idCaracteristica;
+            prueba = { idCaracteristica:idCaracteristica };
+            ajax ( {"method": "POST", 
+                    "url":"pru", 
+                    "data": prueba
+                } ); 
+        }
+        document.addEventListener("DOMContentLoaded",loaded);
+    </script>
+
 </html>
