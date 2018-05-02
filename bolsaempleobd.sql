@@ -65,7 +65,7 @@ CREATE TABLE CARACTERISTICAS_PUESTOS (  /* CARACTERISTICAS_INCLUIDOS se llamaba 
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','ama@gm.com','86546','1');
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1');
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('Pali','San jose','Oportunidades','pp','86546','1');
-insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVen','8888','Nicaragua','jac@gm.com','PriCrater','1');
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVen','8888','Nicaragua','a','PriCrater','1');
 
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Progra', 100, 'desa pro', true, 1);
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Desa Web ', 200, 'Cretividad', true, 1);

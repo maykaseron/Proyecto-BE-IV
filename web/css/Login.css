@@ -1,0 +1,35 @@
+body {
+    text-align: center; 
+    background-color: #f3ecff;
+}
+
+div.Menu {
+    background-color: black;
+    color: white;
+    height: 38px;
+    width: 101%;
+    margin-top:-15px; /* pegado hasta arriba */
+    margin-left: -7px ;
+    text-align: left;
+}
+
+div.Menu ul {
+    padding: 0px 8px 0px 1px;
+    border-top:  3px solid #6600cc;
+}
+
+div.Menu ul li {
+    font-size:115%;
+    padding: 0px 18px 0px 24px;
+    display: inline-block;
+}
+
+div.Menu ul li a {
+    color: white;
+    text-decoration:none; 
+} 
+div.Menu ul li#Titulo {
+    font-size:185%; /* tam letra */
+    background-color: #6600cc; padding: 0px 7px 0px 3px;
+    font-family :"Bernard MT Condensed";
+}

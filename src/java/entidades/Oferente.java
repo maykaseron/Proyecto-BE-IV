@@ -18,6 +18,7 @@ public class Oferente  implements java.io.Serializable {
      private String nacionalidad; 
      private String correoOferente;
      private String ubicacion;
+    private String contrasena;
 
     public Oferente() {
        this.cedulaOferente = "";
@@ -33,16 +34,18 @@ public class Oferente  implements java.io.Serializable {
     public Oferente(String cedulaOferente) {
         this.cedulaOferente = cedulaOferente;
     }
-    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion) {
-       this.cedulaOferente = cedulaOferente;
-       this.nombreOferente = nombreOferente;
-       this.primerApellido = primerApellido;
-       this.celular = celular;
-       this.nacionalidad = nacionalidad;
-       this.correoOferente = correoOferente;
-       this.ubicacion = ubicacion;
+
+    public Oferente(String cedulaOferente, String nombreOferente, String primerApellido, String celular, String nacionalidad, String correoOferente, String ubicacion, String contrasena) {
+        this.cedulaOferente = cedulaOferente;
+        this.nombreOferente = nombreOferente;
+        this.primerApellido = primerApellido;
+        this.celular = celular;
+        this.nacionalidad = nacionalidad;
+        this.correoOferente = correoOferente;
+        this.ubicacion = ubicacion;
+        this.contrasena = contrasena;
     }
-   
+    
     public String getCedulaOferente() {
         return this.cedulaOferente;
     }
@@ -93,6 +96,15 @@ public class Oferente  implements java.io.Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+    
 }
 
 

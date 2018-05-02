@@ -113,34 +113,51 @@
     
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
     <script>
-        $(document).ready(function(){
-            $('.myCarousel').carousel()
-        });
-        
-        function login () {
-            if ( document.getElementById("empresa").checked ) {                
-                
-                empresa = {
-                    correoEmp:document.getElementById("correo").value,
-                    contrasena:document.getElementById("contraseña").value,
-                };
-                 ajax ( { "method": "POST", 
-                         "url":"LoginEmpresa", 
-                         "data": empresa, 
+$(document).ready(function(){
+    $('.myCarousel').carousel()
+});
 
-                         "error": function(status) {
-                             window.alert("Error");
-                         }                    
-                      }
-                 );
-                this.window.window.location.href = "loginEmpresa.jsp";
-            }
-            if ( document.getElementById("oferente").checked ) {
-                document.getElementById("z").value = "oferente"; 
-            }
-            
-        }
+function login () {
+    if ( document.getElementById("empresa").checked ) {                
+        empresa = { correoEmp:document.getElementById("correo").value,
+                    contrasena:document.getElementById("contraseña").value  };
+         ajax ( { "method": "POST", 
+                 "url":"LoginEmpresa", 
+                 "data": empresa, 
+                 "success": 
+                    function(obj){
+                    document.getElementById("formulario").reset();
+                    redireccionar();
+                    },
+                 "error": function(status) {
+                        window.alert("Error");
+                 }                    
+              }
+         );
+    }
+    if ( document.getElementById("oferente").checked ) {
+        oferente = { correoOferente:document.getElementById("correo").value,
+            contrasena:document.getElementById("contraseña").value  };
+        ajax ( { "method": "POST", 
+                 "url":"LoginOferente", 
+                 "data": oferente, 
+                 "success": 
+                    function(obj){
+                    document.getElementById("formulario").reset();
+                    redireccionar2();
+                    },
+                 "error": function(status) {
+                        window.alert("Error");
+                 }                    
+              }
+         );
+    }
+}
+function redireccionar () { this.window.location.href = "loginEmpresa.jsp"; }
+function redireccionar2 () { this.window.location.href = "loginOferente.jsp"; }
+
     </script>
 </body>
 </html>

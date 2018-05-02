@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
-@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5", "/LoginEmpresa"})
+@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5", "/LoginEmpresa","/LoginOferente"})
 public class Registros extends HttpServlet {
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -40,6 +40,9 @@ public class Registros extends HttpServlet {
                 break;
             case "/LoginEmpresa":
                 this.doLoginEmpresa (request, response); 
+                break;
+            case "/LoginOferente":
+                this.doLoginOferente (request, response); 
                 break;
         }
     }
@@ -124,11 +127,11 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Gson gson = new Gson();
             Empresa empresa = gson.fromJson(reader, Empresa.class);
             PrintWriter out = response.getWriter(); 
-            empresa = Model.instance().getEmpresaLogin( empresa ); 
-            s.setAttribute("Login_empresa", empresa);
+            empresa = Model.instance().getEmpresaLogin( empresa );
+            s.setAttribute("Login_Empresa", empresa);
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(empresa)); 
-            request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
+            response.setStatus(200);
       }
       catch(Exception e){	
           System.out.println("eror");
@@ -136,9 +139,24 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
       }	
     }
     
-    
-
-    
+    private void doLoginOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            HttpSession s =  request.getSession( true );
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson();
+            Oferente oferente = gson.fromJson(reader, Oferente.class);
+            PrintWriter out = response.getWriter(); 
+            oferente = Model.instance().getOferenteLogin(oferente);
+            s.setAttribute("Login_Oferente", oferente);
+            response.setContentType("application/json; charset=UTF-8"); 
+            out.write(gson.toJson(oferente)); 
+            response.setStatus(200);
+      }
+      catch(Exception e){	
+          System.out.println("eror");
+          response.setStatus(401); //Bad request
+      }	
+    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -178,5 +196,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }

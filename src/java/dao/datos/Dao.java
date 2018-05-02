@@ -160,7 +160,7 @@ public class Dao {
         }
     }
       
-       public List<Oferente> OferenteGetAll(){
+       public List<Oferente> OferenteGetAll() throws Exception{
         Vector<Oferente> estados=new Vector<Oferente>();
         try {
             String sql="select * from oferente";
@@ -223,27 +223,34 @@ public class Dao {
         }
     }
       
-    private Oferente oferente(ResultSet rs) {
-        try {
-            Oferente ec= new Oferente();
-                ec.setCedulaOferente(rs.getString("cedulaOferente"));
-                ec.setPrimerApellido(rs.getString("primerApellido"));
-                ec.setNombreOferente(rs.getString("nombreOferente"));
-                ec.setNacionalidad(rs.getString("nacionalidad"));
-                ec.setCorreoOferente(rs.getString("correoOferente"));
-                ec.setUbicacion(rs.getString("ubicacion"));
+    private Oferente oferente(ResultSet rs) throws Exception{
+        Oferente ec= new Oferente();
+            ec.setCedulaOferente(rs.getString("cedulaOferente"));
+            ec.setPrimerApellido(rs.getString("primerApellido"));
+            ec.setNombreOferente(rs.getString("nombreOferente"));
+            ec.setNacionalidad(rs.getString("nacionalidad"));
+            ec.setCorreoOferente(rs.getString("correoOferente"));
+            ec.setUbicacion(rs.getString("ubicacion"));
+            ec.setContrasena( rs.getString("contrasena") );
 
-            return ec;
-        } catch (SQLException ex) {
-            return null;
-        }
+        return ec;
     }
     
     public boolean compararOferenteVacio (Oferente o) { // 
         return !( o.getNombreOferente().equals("") || o.getPrimerApellido().equals("") || o.getCedulaOferente().equals("") ||
                 o.getCelular().equals("") || o.getNacionalidad().equals("") ); // no hay espacios vacios
-        
     }
+    
+    public Oferente OferenteLogin(Oferente o) throws Exception {
+        String sql="select * from Oferente o where o.correoOferente='%s' and o.contrasena='%s'";
+        sql = String.format( sql,o.getCorreoOferente(), o.getContrasena());
+        ResultSet rs =  db.executeQuery(sql);
+        rs.next();
+        return oferente(rs); 
+    }
+    
+    
+            
     
     /*********************CARACTERISTICAS********************************/
 // el dilema recursivo = si hago esta llamada ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );

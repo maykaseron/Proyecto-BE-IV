@@ -85,6 +85,9 @@ public class Model {
         return  dao.OferenteGetAll();
     }
     
+    public Oferente getOferenteLogin( Oferente o ) throws Exception{
+        return dao.OferenteLogin( o );
+    }
     /*********************CARACTERISTICAS********************************/
 /*
     public void updateCaracteristicas(Caracteristicas p) throws Exception{
