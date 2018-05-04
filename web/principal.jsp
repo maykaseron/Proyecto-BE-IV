@@ -118,6 +118,12 @@
 $(document).ready(function(){
     $('.myCarousel').carousel()
 });
+function loaded(event){	
+        document.getElementById("formulario").addEventListener("none",validate);
+}
+function none(event){
+    event.target.classList.add("none");
+}
 
 function login () {
     if ( document.getElementById("empresa").checked ) {                
@@ -132,7 +138,7 @@ function login () {
                     redireccionar();
                     },
                  "error": function(status) {
-                        window.alert("Error");
+                        redireccionarError ();
                  }                    
               }
          );
@@ -149,15 +155,17 @@ function login () {
                     redireccionar2();
                     },
                  "error": function(status) {
-                        window.alert("Error");
+                        redireccionarError ();
                  }                    
               }
          );
     }
 }
-function redireccionar () { this.window.location.href = "loginEmpresa.jsp"; }
-function redireccionar2 () { this.window.location.href = "loginOferente.jsp"; }
+function redireccionar () { this.window.location.replace ( "loginEmpresa.jsp" ); }
+function redireccionar2 () { this.window.location.replace ( "loginOferente.jsp" ); }
+function redireccionarError () { this.window.location.replace ( "Top5" ); }
 
+document.addEventListener("DOMContentLoaded",loaded);
     </script>
 </body>
 </html>

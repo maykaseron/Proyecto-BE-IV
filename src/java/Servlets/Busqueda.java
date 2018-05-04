@@ -8,6 +8,7 @@ package Servlets;
 import com.google.gson.Gson;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasPuestos;
+import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
-@WebServlet(name = "Busqueda", urlPatterns = {"/ListarCaracteristicasPadre","/BuscarCarac","/pru"} )
+@WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/pru"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +31,9 @@ public class Busqueda extends HttpServlet {
         ListaEspecializacion = new ArrayList();
         ListaPuetos = new ArrayList();
         switch(request.getServletPath()){ 
+            case "/Top5":
+                this.doTop5(request, response); 
+                break;
             case "/ListarCaracteristicasPadre":
                 this.doListarCaracteristicasPadre (request, response);
                 break;
@@ -50,6 +54,20 @@ public class Busqueda extends HttpServlet {
                 this.doBuscarPuestosPorEspecial (request, response);
                 break;*/
         }
+    }
+    
+    private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        try{
+            System.out.print("sdads");
+            List<Puestos> puestos = Model.instance().ListTop5();
+            request.setAttribute("Top5puestos",puestos);
+            request.getRequestDispatcher("principal.jsp").forward( request, response);
+          }
+        catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",error);
+                request.getRequestDispatcher("principal.jsp").forward( request, response);
+          }		
     }
     
     private void doListarCaracteristicasPadre(HttpServletRequest request, HttpServletResponse response)

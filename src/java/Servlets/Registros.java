@@ -22,7 +22,8 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
-@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/Top5", "/LoginEmpresa","/LoginOferente"})
+@WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/LoginEmpresa","/LoginOferente",
+    "/Logout"})
 public class Registros extends HttpServlet {
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -35,15 +36,15 @@ public class Registros extends HttpServlet {
             case "/AddOferente":
                  this.doAddOferente(request, response); 
                  break;
-            case "/Top5":
-                this.doTop5(request, response); 
-                break;
             case "/LoginEmpresa":
                 this.doLoginEmpresa (request, response); 
                 break;
             case "/LoginOferente":
                 this.doLoginOferente (request, response); 
                 break;
+            case "/Logout":
+                this.doLogout (request, response); 
+                break;    
         }
     }
 
@@ -107,18 +108,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
     }	
 }
 
-    private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        try{
-            List<Puestos> puestos = Model.instance().ListTop5();
-            request.setAttribute("Top5puestos",puestos);
-            request.getRequestDispatcher("principal.jsp").forward( request, response);
-          }
-        catch(Exception e){
-                String error = e.getMessage(); 	
-                request.setAttribute("error",error);
-                request.getRequestDispatcher("principal.jsp").forward( request, response);
-          }		
-    }
+    
     
     private void doLoginEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
@@ -134,7 +124,8 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             response.setStatus(200);
       }
       catch(Exception e){	
-          System.out.println("eror");
+          request.setAttribute("error",e.getMessage());
+          request.getRequestDispatcher("Error.jsp").forward( request, response);
           response.setStatus(401); //Bad request
       }	
     }
@@ -153,9 +144,16 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             response.setStatus(200);
       }
       catch(Exception e){	
-          System.out.println("eror");
+          request.setAttribute("error",e.getMessage());
           response.setStatus(401); //Bad request
+          request.getRequestDispatcher("Error.jsp").forward( request, response);
       }	
+    }
+    
+    private void doLogout(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+            request.getSession().invalidate();
+            request.getRequestDispatcher("principal.jsp").forward( request, response);     
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -196,6 +194,8 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
     
 

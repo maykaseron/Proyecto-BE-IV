@@ -17,10 +17,16 @@
         <% Oferente oferente= (Oferente) session.getAttribute("Login_Oferente");%>
         <div class="Menu"> 
             <ul>
+            <%  if (oferente != null) { %> 
                 <li id="Titulo"> ImaJobs </li>
                 <li><%= oferente.getNombreOferente() %> </li>
                 <li> <a href="registroempresa.jsp"> Habilidades </a> </li>
-                <li> <a href="registroempresa.jsp"> Salir </a> </li>
+                <li> <a href="Logout"> Salir </a> </li>
+            <% } %>
+            <%  if (oferente == null) { %> 
+                <li id="Titulo"> ImaJobs </li>
+                <li> <a href="Top5"> Cerrar Sesión </a> </li>
+            <% } %>
             </ul>
         </div>
                 

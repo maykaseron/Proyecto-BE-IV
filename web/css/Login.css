@@ -33,3 +33,10 @@ div.Menu ul li#Titulo {
     background-color: #6600cc; padding: 0px 7px 0px 3px;
     font-family :"Bernard MT Condensed";
 }
+
+div#formu_Publ_Puestos {
+    background-color:black;
+    height: 38px;
+    width: 50%;
+    float:left;
+}

@@ -16,16 +16,34 @@
     
     
     <body>
-        <% Empresa empresa= (Empresa) session.getAttribute("Login_Empresa");%>
+        <% Empresa empresa= (Empresa) session.getAttribute("Login_Empresa"); %>
+              
+       
         <div class="Menu"> 
             <ul>
+            <%  if (empresa != null) { %> 
                 <li id="Titulo"> ImaJobs </li>
-                <li><%= empresa.getNombreEmp() %> </li>
-                <li> <a href="registroempresa.jsp"> Publicar puestos </a> </li>
+                <li><%= empresa.getNombreEmp() %> </li>          
+                <li> <a href="registroempresa.jsp"> Publicar puesto </a> </li>
                 <li> <a href="registroempresa.jsp"> Buscar candidatos </a> </li>
-                <li> <a href="registroempresa.jsp"> Salir </a> </li>
+                <li> <a href="Logout"> Cerrar Sesión </a> </li>
+            <% } %>
+             <%  if (empresa == null) { %> 
+                <li id="Titulo"> ImaJobs </li>
+                <li> <a href="Top5"> Cerrar Sesión </a> </li>
+            <% } %>
             </ul>
         </div>
         
+        <div id="formu_Publ_Puestos">
+            <form>
+                
+            </form>
+        </div>
+        
+    <script>
+
+    </script>
+
     </body>
 </html>

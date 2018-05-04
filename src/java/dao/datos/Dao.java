@@ -442,8 +442,8 @@ public class Dao {
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
         preparedStmt.setString(1, p.getNombrePuesto());
+        preparedStmt.setInt (2, p.getEmpresa().getIdEmp() );
         preparedStmt.setFloat (2, p.getSalario());
         preparedStmt.setString (3, p.getDescripcionPuesto());
         preparedStmt.setBoolean(4, p.getTipoPublicacion() );
