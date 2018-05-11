@@ -14,11 +14,9 @@
         <title>LoginEmpresa</title>
     </head>
     
-    
     <body>
         <% Empresa empresa= (Empresa) session.getAttribute("Login_Empresa"); %>
               
-       
         <div class="Menu"> 
             <ul>
             <%  if (empresa != null) { %> 

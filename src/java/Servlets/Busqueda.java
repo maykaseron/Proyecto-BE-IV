@@ -8,6 +8,7 @@ package Servlets;
 import com.google.gson.Gson;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasPuestos;
+import entidades.Oferente;
 import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +24,8 @@ import javax.servlet.http.HttpSession;
 import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
-@WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/pru"} )
+@WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/pru",
+                "/Habilida_Oferente"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +44,10 @@ public class Busqueda extends HttpServlet {
                 break;    
             case "/pru":
                 this.pru (request, response);
-                break;     
+                break;   
+            case "/Habilida_Oferente":
+                this.doHabilidadesOferente (request, response);
+                break;   
             /*
             case "/ListarCaracteristicas":
                 this.doListarCaracteristicas (request, response);
@@ -76,6 +81,9 @@ public class Busqueda extends HttpServlet {
             HttpSession s =  request.getSession( true);
             List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
             request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();
+            out.write(gson.toJson(ListaCaracterPadres));
             request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
           }
         catch(Exception e){
@@ -108,16 +116,33 @@ public class Busqueda extends HttpServlet {
     List<Caracteristicas>  ListaCaracterHijos = Model.instance().getBuscarCaracteristicas( caracteristica.getIdCaracteristica() );
             request.setAttribute( "CaracteristicasHijos", ListaCaracterHijos );  
             response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(caracteristica));
+            out.write(gson.toJson(ListaCaracterHijos));
             response.setStatus(200); // ok with content
           }
         catch(Exception e){
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
           }	
+         
     }
     
-    
+    private void doHabilidadesOferente(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException  {
+        try{
+            Oferente of = new Oferente ();
+            HttpSession s =  request.getSession( true);
+            List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
+            request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();
+            out.write(gson.toJson(ListaCaracterPadres));
+            request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
+          }
+        catch(Exception e){
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
+        }	
+    }
     
     
     
@@ -231,6 +256,8 @@ public class Busqueda extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
     
 

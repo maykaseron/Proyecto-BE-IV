@@ -39,37 +39,59 @@
         <input type="text" name="z" id="z">
         <br><br><br> <br><br><br>   
         
-        <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
-        <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
-            <ul> 
-                <li > 
-                    <p onclick="buscar(this, <%= L_CPad.getIdCaracteristica()  %> )"> <%= L_CPad.getHabilidad() %>  </p>
-                </li>
-            </ul>
-        <%}%> 
-        
         <jsp:useBean id="CaracteristicasHijos" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
-        <% for(Caracteristicas L_CHij: CaracteristicasHijos){   %>
-            <ul> 
+        <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
+        
+        
+        <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
+            <ul>  
                 <li > 
-                    <p onclick="buscar(this, <%= L_CHij.getIdCaracteristica()  %> )"> <%= L_CHij.getHabilidad() %>  </p>
+                     <p id="<%= L_CPad.getIdCaracteristica()  %>"  onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > <%= L_CPad.getHabilidad() %>  </p>  
+                    <%-- <%= L_CPad.getHabilidad() %>  --%>
                 </li>
             </ul>
+        <% } %> 
+        
+        <% for(Caracteristicas L_CHij: CaracteristicasHijos){   %>
+        <ul> 
+            <li onclick="buscar(this, <%= L_CHij.getIdCaracteristica()  %> )"> 
+                <p > <%= L_CHij.getHabilidad() %>  </p>
+            </li>
+        </ul>
         <%}%> 
      <a href = "Top5" target = "_self">Regresar</a>   
     </body>
     
-    <script>
-        function loaded(event){	}
-        function buscar (elmnt,idCaracteristica) {
-            document.getElementById("z").value = idCaracteristica;
-            prueba = { idCaracteristica:idCaracteristica };
-            ajax ( {"method": "POST", 
-                    "url":"pru", 
-                    "data": prueba
-                } ); 
-        }
-        document.addEventListener("DOMContentLoaded",loaded);
-    </script>
+<script>
+function loaded(event){
+}
+function buscar (idCaracteristica ) {
+    carac = { idCaracteristica:idCaracteristica 
+            };
+    var listado = document.getElementById( carac.idCaracteristica );
+    ajax ({ "method": "POST", 
+            "url":"pru", 
+            "data": carac,
+            "success": 
+                function(obj){
+                lista(obj,listado); 
+            },
+            "error": function(status){
+                 window.alert("Error");
+            }                    
+        });
+        listado.removeAttribute("onclick");
+/* listado.insertAdjacentHTML('beforeend',' <ul> <li> "sirvo?" </li> </ul>'); }*/
+}
+function lista (obj,listado) {
+    for (i=0; i<obj.length; i++) {
+        var aux = obj[i];
+        var ul =document.createElement("ul");
+        ul.innerHTML = "<li > <p id='\""+aux.idCaracteristica+"\"' onclick='buscar(\""+aux.idCaracteristica+"\")'>"+ aux.habilidad + "</p> </li>";
+        listado.appendChild(ul);
+    }
+}
+document.addEventListener("DOMContentLoaded",loaded);
+</script>
 
 </html>
