@@ -19,10 +19,13 @@
 </head>
   
 <body>
-    <div class="Div_Top"> <p> ImaJobs </p> </div>
-    
+    <div class="Menu"> 
+            <ul>
+                <li id="Titulo"> ImaJobs </li>
+                <li> <a href = "Top5" target = "_self"> Regresar </a> </li>
+            </ul>
+        </div>
     <br>
-
     
     <jsp:useBean id="Ofe" scope="request" type="Oferente" beanName="entidades.Oferente"/>
     <jsp:useBean id="error" scope="request" type="java.lang.String" class="java.lang.String"/>
@@ -60,9 +63,6 @@
             <label class="Msj_error"> <%= error %> </label>
         </div>
     </form><br><br>
-    
-	  
-      <a href = "Top5" target = "_self">Regresar</a>
 </body>
 
 </html>

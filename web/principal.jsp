@@ -16,14 +16,18 @@
 <head>
     <title>Bolsa Empleo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
+    <!-- Bootstrap  HOJAS DE ESTILO-->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/principal.css" rel="stylesheet" >
-    <script type="text/javascript" src="js/ajax.js"></script>   
-    <%-- <link rel = "stylesheet" href = "principal.css"> --%>
+    <!-- SCRIPT -->
+    <script type="text/javascript" src="js/ajax.js"></script> 
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
   
 <body>
+    <%--
     <div class="Div_Top"> <p> ImaJobs </p> </div> 
         <div class="reg">
             <ul>
@@ -42,8 +46,21 @@
                 </li>
             </ul>
         </div>
+    --%>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">ImaJobs</a>
+            </div>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Login</a></li>
+                <li><a href="registroempresa.jsp">Registroempresa</a></li>
+                <li><a href="registrooferente.jsp">Registrooferente</a></li>
+                <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
+              </ul>
+        </div>
+    </nav>
     
-    <script src="http://code.jquery.com/jquery.js"></script>
     
     <div id="contenedor">
         <div id="myCarousel" class="carousel slide">
@@ -90,8 +107,8 @@
             
         <div id="login" class="login">
             <form method="POST" name="formulario" id="formulario" action="javascript:login();">
-                <label>Correo </label> <input type="text" required name="correo" id="correo">
-                <label>Contraseña </label> <input type="password" required name="contraseña" id="contraseña"> <br>
+                <label>Correo </label> <br> <input type="text" required name="correo" id="correo"> <br>
+                <label>Contraseña </label>  <br> <input type="password" required name="contraseña" id="contraseña"> <br>
                 <table> 
                     <tr> 
                         <td><label>Empresa </label> </td> 

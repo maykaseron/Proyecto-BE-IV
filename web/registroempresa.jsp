@@ -16,8 +16,14 @@
 </head>
 
 <body> 
-    <div class="Div_Top"> <p> ImaJobs </p> </div>
+    <%-- <div class="Div_Top"> <p> ImaJobs </p> </div> --%>
     
+    <div class="Menu"> 
+            <ul>
+                <li id="Titulo"> ImaJobs </li>
+                <li> <a href = "Top5" target = "_self"> Regresar </a> </li>
+            </ul>
+        </div>
     <br>
     
     
@@ -56,8 +62,6 @@
         </div>
     </form><br><br>
     
-    <a href = "Top5" target = "_self">Regresar</a>
-
 </body>
         
 </html>
