@@ -21,34 +21,29 @@
     <link href="css/principal.css" rel="stylesheet" >
     <script type="text/javascript" src="js/ajax.js"></script>   
     <%-- <link rel = "stylesheet" href = "principal.css"> --%>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
   
 <body>
-    <div class="Div_Top"> <p> ImaJobs </p> </div>
-    
-    
-    <div class="reg">
-        <ul>
-            <li>
-                <a href="#">Registro</a>
-                <ul>
-                    <li><a href="registroempresa.jsp">Registroempresa</a></li>
-                    <li><a href="registrooferente.jsp">Registrooferente</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Busqueda</a>
-                <ul>
-                    <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+    <div class="Div_Top"> <p> ImaJobs </p> </div> 
+        <div class="reg">
+            <ul>
+                <li>
+                    <a href="#">Registro</a>
+                    <ul>
+                        <li><a href="registroempresa.jsp">Registroempresa</a></li>
+                        <li><a href="registrooferente.jsp">Registrooferente</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Busqueda</a>
+                    <ul>
+                        <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     
     <div id="contenedor">
         <div id="myCarousel" class="carousel slide">

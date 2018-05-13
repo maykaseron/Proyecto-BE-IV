@@ -87,7 +87,7 @@ function lista (obj,listado) {
     for (i=0; i<obj.length; i++) {
         var aux = obj[i];
         var ul =document.createElement("ul");
-        ul.innerHTML = "<li > <p id='\""+aux.idCaracteristica+"\"' onclick='buscar(\""+aux.idCaracteristica+"\")'>"+ aux.habilidad + "</p> </li>";
+        ul.innerHTML = "<li > <p id="+aux.idCaracteristica+" onclick='buscar(\""+aux.idCaracteristica+"\")'>"+ aux.habilidad + "</p> </li>";
         listado.appendChild(ul);
     }
 }

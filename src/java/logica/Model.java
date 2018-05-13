@@ -13,7 +13,6 @@ import entidades.Oferente;
 import entidades.Puestos;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 //import java.util.Collections;
 

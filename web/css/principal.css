@@ -1,7 +1,39 @@
 body {
-    background-color: #f3ecff;
+    background-color: #EDEAF7;
+}
+/*
+div.Menu {
+    background-color: black;
+    color: white;
+    height: 60px;
+    width: 101%;
+    margin-top:-15px; 
+    margin-left: -7px ;
+    text-align: left;
 }
 
+div.Menu ul {
+    padding: 0px 8px 0px 1px;
+    border-top:  3px solid #6600cc;
+}
+
+div.Menu ul li {
+    font-size:115%;
+    padding: 0px 18px 0px 24px;
+    display: inline-block;
+}
+
+div.Menu ul li a {
+    color: white;
+    text-decoration:none; 
+} 
+div.Menu ul li#Titulo {
+    font-size:185%; 
+    background-color: #6600cc; padding: 0px 7px 0px 3px;
+    font-family :"Bernard MT Condensed";
+}
+
+*/
 div.Div_Top p{
     background-color: #6600cc;
     font-size:220%; /* tam letra */
@@ -27,8 +59,11 @@ div#myCarousel {
 }
 
 div.login {
-    background-color: #FFFFFF;
+    padding: 9px;
+    border:1px solid #6600cc;
+    background-color: #EDEAF7;
     width: 25%;         height: 100%;
     display: inline-block;
     float: right; /* a la derecha */
+    border: 5pxred;
 }
