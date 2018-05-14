@@ -30,24 +30,24 @@
             </ul>
         </div>
         
-        <h1> Puestos Ofrecidos por Caracteristicas  </h1>
+        <h1> Busqueda de Puestos por Caracteristicas  </h1>
         <%--                
         <form method="post" action="BuscarCarac" >
             <label> Caracteristica: </label> 
                 <input type="search" name="areaTrabajo" /> 
                 <input type="submit" value="Buscar" >
         </form >
+        <input type="text" name="z" id="z">
         --%>
         
         <jsp:useBean id="listaPuestos" scope="request" type=" List<CaracteristicasPuestos> " beanName="java.util.ArrayList"/>
         <!-- copiar el documento busca caracte_puestos.txt dq esta en: C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV -->
         
-        <input type="text" name="z" id="z">
-        <br><br><br> <br><br><br>   
+        
         <ol id="lista3">
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
-                    <li > 
+                    <li id="cuadro"> 
                         <p id="<%= L_CPad.getIdCaracteristica()  %>"  onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )"><%= L_CPad.getHabilidad() %>  </p>
                         <%-- <%= L_CPad.getHabilidad() %>  --%>
                     </li>

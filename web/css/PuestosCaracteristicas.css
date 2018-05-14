@@ -3,6 +3,13 @@ body {
     background-color: #ffffff;
 }
 
+body h1 {
+    text-align: center;
+    background-color: #E4E6F8;
+    width: 97%;
+    margin-left: 44px;
+}
+
 div.Menu {
     background-color: black;
     color: white;
@@ -33,32 +40,26 @@ div.Menu ul li#Titulo {
     background-color: #6600cc; padding: 0px 7px 0px 3px;
     font-family :"Bernard MT Condensed";
 }
-
+/*
 div.Div_Top p{
     background-color: #6600cc;
-    font-size:195%; /* tam letra */
+    font-size:195%; 
     color:white;  
     text-align: left;
     height: 38px;
     width: 300%;
     margin-top:-8px; /* pegado hasta arriba */
-    margin-left: -7px;
+/*    margin-left: -7px;
     padding-left: 6px;
     font-family :"Bernard MT Condensed";
-}
-
-ul li a#habilidad:focus {
-    color: red;
-}
-
-a {  color: black; }
+}*/
 
 #lista3 {
     counter-reset: li; 
     list-style: none; 
     *list-style: decimal; 
     font: 15px 'Britannic Bold', 'lucida sans';
-    padding: 0;
+    padding: 0px 0px 0px 7px;
     margin-bottom: 4em;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
@@ -77,6 +78,11 @@ a {  color: black; }
     color: white; /*  letra */
     text-decoration: none;
     transition: all .3s ease-out;   
+    border-block-start: 1px solid #282EFB; 
+/*    border-block-start:  1px solid #6600cc  282EFB; */
+}
+#lista3 li#cuadro{ 
+    border-bottom:1px solid #282EFB;
 }
 
 #lista3 li:hover{
@@ -116,3 +122,5 @@ a {  color: black; }
     left: -.5em;
     border-left-color: #000000;   
 }
+
+/* https://blog.endeos.com/lleva-las-listas-html-al-siguiente-nivel-con-css/ */
