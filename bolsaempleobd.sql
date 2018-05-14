@@ -86,7 +86,7 @@ insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Ing Siste',nul
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('Len Progra',1,false); /*  2 */
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('HTML',2,false);
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('C++',2,false);  /* 4 */
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java',2,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java',2,false);
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Datos',1,false);  /*  6  */
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Desarro',6,false);
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Admi',6,false);   /*   8    */

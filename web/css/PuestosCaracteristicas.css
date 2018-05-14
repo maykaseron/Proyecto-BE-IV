@@ -1,7 +1,37 @@
 
 body {
-    background-color: #EDEAF7;
-    float:left;
+    background-color: #ffffff;
+}
+
+div.Menu {
+    background-color: black;
+    color: white;
+    height: 38px;
+    width: 101%;
+    margin-top:-15px; /* pegado hasta arriba */
+    margin-left: -7px ;
+    text-align: left;
+}
+
+div.Menu ul {
+    padding: 0px 8px 0px 1px;
+    border-top:  3px solid #6600cc;
+}
+
+div.Menu ul li {
+    font-size:115%;
+    padding: 0px 18px 0px 24px;
+    display: inline-block;
+}
+
+div.Menu ul li a {
+    color: white;
+    text-decoration:none; 
+} 
+div.Menu ul li#Titulo {
+    font-size:185%; /* tam letra */
+    background-color: #6600cc; padding: 0px 7px 0px 3px;
+    font-family :"Bernard MT Condensed";
 }
 
 div.Div_Top p{
@@ -21,73 +51,68 @@ ul li a#habilidad:focus {
     color: red;
 }
 
-a {
+a {  color: black; }
+
+#lista3 {
+    counter-reset: li; 
+    list-style: none; 
+    *list-style: decimal; 
+    font: 15px 'Britannic Bold', 'lucida sans';
+    padding: 0;
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+#lista3 ol {
+    margin: 0 0 0 2em; 
+}
+
+#lista3 li{
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em .8em;
+    *padding: .4em;
+    margin: .5em 0 .5em 2.5em;
+    background: #E4E6F8; /* aqui el color de la lista*/
+    color: white; /*  letra */
+    text-decoration: none;
+    transition: all .3s ease-out;   
+}
+
+#lista3 li:hover{
+    background: #eee;
+}   
+
+#lista3 li p{
     color: black;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.areaTrabajo table { border-collapse: collapse; text-align: center; width: 100%; } 
-
-.areaTrabajo {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; 
-          overflow: hidden; 
-          border: 1px solid #36752D;  
-          width: 50%; background: #fff; margin: auto;   }
-
-.areaTrabajo table td { padding: 3px 10px; 
-                     color: #275420; 
-                     font-size: 12px; 
-                     border-bottom: 1px solid #E1EEF4;
-                     font-weight: bold;
 } 
 
- .especializacion table { border-collapse: collapse; text-align: center; width: 100%; } 
-
-.especializacion {
-    font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff;
-    overflow: hidden; 
-    border: 1px solid #36752D; 
-    width: 50%; background: #fff; margin: auto;   }
-
-.especializacion table td { 
-    padding: 3px 10px; 
-    color: #275420; 
-    font-size: 12px; 
-    border-bottom: 1px solid #E1EEF4;
+#lista3 li:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute; 
+    left: -2.5em;
+    top: 50%;
+    margin-top: -1em;
+    background: #000000; /* el cuadro de los # */
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
     font-weight: bold;
-} 
+}
 
-.grid table caption  {
-    color: #275420; 
+#lista3 li:after{
+    position: absolute; 
+    content: '';
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    transition: all .3s ease-out;               
 }
- .grid table { border-collapse: collapse; text-align: center; width: 100%; } 
-.grid {
-    font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff;
-    overflow: hidden; 
-    border: 1px solid #36752D; 
-    width: 100%; background: #fff; margin: auto;   }
-.grid table td { padding: 3px 10px; 
-                     color: #275420; 
-                     font-size: 12px; 
-                     border-bottom: 1px solid #E1EEF4;
-                     font-weight: bold;
-} 
-div.grid {
-    width: 100%;
-    margin: auto;
-   /* background-color: #ffff00;*/
-}
-.grid table, .grid thead, .grid tbody {
-    /* background-color: #ff00ff;*/
+
+#lista3 li:hover:after{
+    left: -.5em;
+    border-left-color: #000000;   
 }

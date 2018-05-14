@@ -4,20 +4,6 @@ body {
     background-color: #EDEAF7;
 }
 
-div.Div_Top p{
-    background-color: #6600cc;
-    font-size:195%; /* tam letra */
-    color:white;  
-    text-align: left;
-    height: 38px;
-    width: 150%;
-    margin-top:-8px; /* pegado hasta arriba */
-    margin-left: -7px;
-    padding-left: 6px;
-    font-family :"Bernard MT Condensed";
-}
-
-
 div.Menu {
     background-color: black;
     color: white;
