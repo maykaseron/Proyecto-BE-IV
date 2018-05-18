@@ -3,7 +3,7 @@ body {
     background-color: #EDEAF7;
 }
 
-div.Menu {
+div.container-fluid {
     background-color: black;
     color: white;
     height: 38px;
@@ -13,22 +13,22 @@ div.Menu {
     text-align: left;
 }
 
-div.Menu ul {
+div.container-fluid ul {
     padding: 0px 8px 0px 1px;
     border-top:  3px solid #6600cc;
 }
 
-div.Menu ul li {
+div.container-fluid ul li {
     font-size:115%;
     padding: 0px 18px 0px 24px;
     display: inline-block;
 }
 
-div.Menu ul li a {
+div.container-fluid ul li a {
     color: white;
     text-decoration:none; 
 } 
-div.Menu ul li#Titulo {
+div.container-fluid ul li#Titulo {
     font-size:185%; /* tam letra */
     background-color: #6600cc; padding: 0px 7px 0px 3px;
     font-family :"Bernard MT Condensed";

@@ -3,7 +3,8 @@
     Created on : Mar 17, 2018, 1:26:37 PM
     Author     : pc
 --%>
-
+<%@page import="entidades.Empresa"%>
+<%@page import="entidades.Oferente"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidades.Puestos"%>
 <%@page import="java.util.List"%>
@@ -28,17 +29,35 @@
   
 <body id="fff">
     
+    <% Empresa empresa= (Empresa) session.getAttribute("Login_Empresa"); %>
+    <% Oferente oferente= (Oferente) session.getAttribute("Login_Oferente");%>
+    
+    
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
+        <div class="navbar-header">
               <a class="navbar-brand" href="#">ImaJobs</a>
-            </div>
-              <ul class="nav navbar-nav">
+        </div>
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+            <%  if (empresa == null && oferente == null) { %> 
                 <li class="active"><a href="#">Login</a></li>
                 <li><a href="registroempresa.jsp">Registroempresa</a></li>
                 <li><a href="registrooferente.jsp">Registrooferente</a></li>
                 <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
-              </ul>
+              
+            <% } %>
+            <%  if (empresa != null ) { %> 
+                <li class="active"> <a href="#"><%= empresa.getNombreEmp() %> </a>  </li>    
+                <li> <a href="registroempresa.jsp"> Publicar puesto </a> </li>
+                <li> <a href="registroempresa.jsp"> Buscar candidatos </a> </li>
+                <li> <a href="Logout"> Cerrar Sesión </a> </li>
+            <% } else { %>
+            <%  if (oferente != null) { %> 
+                <li class="active"> <a href="#"> <%= oferente.getNombreOferente() %> </a> </li>
+                <li> <a href=""> Habilidades </a> </li>
+                <li> <a href="Logout"> Salir </a> </li>
+            <% } }%>
+           </ul>        
         </div>
     </nav>
     

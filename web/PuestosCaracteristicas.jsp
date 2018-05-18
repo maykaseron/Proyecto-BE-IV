@@ -17,7 +17,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel = "stylesheet" href = "css/PuestosCaracteristicas.css" type="text/css"/>
-        <script type="text/javascript" src="js/ajax.js"></script>        
+        <script type="text/javascript" src="js/ajax.js"></script>       
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
         <title>Puestos Caracteristicas</title>
     </head>
     
@@ -42,13 +45,12 @@
         
         <jsp:useBean id="listaPuestos" scope="request" type=" List<CaracteristicasPuestos> " beanName="java.util.ArrayList"/>
         <!-- copiar el documento busca caracte_puestos.txt dq esta en: C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV -->
-        
-        
         <ol id="lista3">
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
                     <li id="cuadro"> 
-                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > 
+                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  ondblclick="detalles( <%= L_CPad.getIdCaracteristica()  %> )"
+                           onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > 
                             <%= L_CPad.getHabilidad() %>  </p>
                         <%-- <%= L_CPad.getHabilidad() %>  --%>
                     </li>
@@ -58,7 +60,19 @@
     
 <script>
 function loaded(event){
-}/*
+}
+function detalles(id) {
+    carac = { idCaracteristica:id };
+    var inp = $("<input type='text'>/");
+    $("#carac.idCaracterica").append( inp );
+    /*
+    var listado = $("#carac.idCaracterica");
+    listado.append( inp );
+        */
+    $("#Titulo").css({'color' : 'black'});
+}
+
+/*
 function cambiar(idCaracteristica ) {
     carac = { idCaracteristica:idCaracteristica };
     var listado = document.getElementById( carac.idCaracteristica ).style.color= "red";
@@ -87,7 +101,8 @@ function lista (obj,listado) {
     for (i=0; i<obj.length; i++) {
         var aux = obj[i];
         var ol =document.createElement("ul");
-        ol.innerHTML = "<li> <p id="+aux.idCaracteristica+" onclick='buscar(\""+aux.idCaracteristica+"\")'>"+ aux.habilidad + "</p> </li>";
+        ol.innerHTML = "<li> <p style='color:red' id="+aux.idCaracteristica+" ondblclick='detalles()'   onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
+                + aux.habilidad + "</p> </li>";
         listado.appendChild(ol);
     }
 }

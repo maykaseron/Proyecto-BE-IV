@@ -18,20 +18,17 @@
     </head>
     <body>
         <% Oferente oferente= (Oferente) session.getAttribute("Login_Oferente");%>
-        <div class="Menu"> 
-            <ul>
-            <%  if (oferente != null) { %> 
-                <li id="Titulo"> ImaJobs </li>
-                <li><%= oferente.getNombreOferente() %> </li>
-                <li> <a href=""> Habilidades </a> </li>
-                <li> <a href="Logout"> Salir </a> </li>
-            <% } %>
-            <%  if (oferente == null) { %> 
-                <li id="Titulo"> ImaJobs </li>
-                <li> <a href="Top5"> Cerrar Sesión </a> </li>
-            <% } %>
-            </ul>
-        </div>
+        <nav>          
+            <div class="container-fluid"> 
+                <ul  class="nav navbar-nav">    
+                <%@ include file="encabezado.jsp" %>
+                <%  if (oferente == null) { %> 
+                    <li id="Titulo"> ImaJobs </li>
+                    <li> <a href="Top5"> Principal </a> </li>
+                <% } %>
+                </ul>
+            </div>
+        </nav> 
             
         <div class="Div_Habilidades"> 
             <form method="POST" name="formulario" id="formulario" action="">
