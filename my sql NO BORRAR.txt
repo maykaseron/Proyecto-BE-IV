@@ -1,0 +1,29 @@
+use BOLSAEMPLEO;
+DROP DATABASE BOLSAEMPLEO;
+select * from oferente;
+select * from empresa;
+select * from Caracteristicas;
+select * from Puestos;
+select * from Caracteristicas_puestos;
+DROP DATABASE BOLSAEMPLEO;
+source C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV\bolsaempleobd.sql
+
+select * from Puestos p inner join CARACTERISTICAS_PUESTOS c on p.idPuesto=c.consecutivo order by p.idPuesto desc limit 5;
+select * from Puestos p order by p.idPuesto desc limit 5;
+select * from CARACTERISTICAS_PUESTOS cp order by cp.idPuesto desc limit 5;
+
+select * from CARACTERISTICAS_PUESTOS where idPuesto=;
+select * from Caracteristicas where areaTrabajo=;
+
+
+DROP DATABASE sugerenciasV2;
+use sugerenciasV2;
+select * from sugerencia;
+source C:\Users\anderson\Documents\Cursos Actuales\Progra IV\SugerenciasV2\SugerenciasV2.sql
+
+select * from Sugerencia s inner join Cliente c on s.cliente=c.identificacion order by s.puntaje desc limit 5;
+
+
+show tables;
+delete from ** where **='';
+select * from Empresa e where e.correoEmp='pp' and e.contrasena='1';

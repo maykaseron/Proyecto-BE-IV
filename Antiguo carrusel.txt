@@ -1,0 +1,32 @@
+<%--
+    <div id="contenedor">
+        <div id="myCarousel" class="carousel slide">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+              <!-- Carousel items -->
+           
+            <div class="carousel-inner" >
+                
+                <div class="active item"> 
+                    <h2> Top 5 </h2> </div>
+                
+                <% for(Puestos p: Top5puestos) {   %>  <!-- empieza for Top5puestos-->
+
+                <div class="item">  
+                            <p onclick=" detalles() " >  leer más </p>
+                            <p  >Nombre Empesa: <%= p.getEmpresa().getNombreEmp() %> </p> 
+                            <p >Nombre Puesto: <%= p.getNombrePuesto() %></p>
+                </div>
+                <% } %>  <!-- termina for Top5puestos-->
+            </div>
+              
+              <!-- Carousel nav -->
+              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+           --%> 

@@ -26,7 +26,7 @@
         <div class="Menu"> 
             <ul>
                 <li id="Titulo"> ImaJobs </li>
-                <li> <a href = "Top5" target = "_self"> Regresar </a> </li>
+                <li> <a href = "Top5" target = "_self"> Principal </a> </li>
             </ul>
         </div>
         
@@ -48,7 +48,8 @@
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
                     <li id="cuadro"> 
-                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )"><%= L_CPad.getHabilidad() %>  </p>
+                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > 
+                            <%= L_CPad.getHabilidad() %>  </p>
                         <%-- <%= L_CPad.getHabilidad() %>  --%>
                     </li>
             <% } %> 
@@ -57,13 +58,20 @@
     
 <script>
 function loaded(event){
-}
+}/*
+function cambiar(idCaracteristica ) {
+    carac = { idCaracteristica:idCaracteristica };
+    var listado = document.getElementById( carac.idCaracteristica ).style.color= "red";
+    var ty =document.createElement("input type="text"");
+     listado.appendChild(ty);
+}*/
+
 function buscar (idCaracteristica ) {
     carac = { idCaracteristica:idCaracteristica 
             };
     var listado = document.getElementById( carac.idCaracteristica );
     ajax ({ "method": "POST", 
-            "url":"pru", 
+            "url":"Busc_caracteristicas", 
             "data": carac,
             "success": 
                 function(obj){
@@ -74,7 +82,6 @@ function buscar (idCaracteristica ) {
             }                    
         });
         listado.removeAttribute("onclick");
-/* listado.insertAdjacentHTML('beforeend',' <ul> <li> "sirvo?" </li> </ul>'); }*/
 }
 function lista (obj,listado) {
     for (i=0; i<obj.length; i++) {

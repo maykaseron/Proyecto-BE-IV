@@ -11,7 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
+         <!--    https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_ev_onclick2 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
     <title>Bolsa Empleo</title>
@@ -26,27 +26,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
   
-<body>
-    <%--
-    <div class="Div_Top"> <p> ImaJobs </p> </div> 
-        <div class="reg">
-            <ul>
-                <li>
-                    <a href="#">Registro</a>
-                    <ul>
-                        <li><a href="registroempresa.jsp">Registroempresa</a></li>
-                        <li><a href="registrooferente.jsp">Registrooferente</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Busqueda</a>
-                    <ul>
-                        <li><a href="ListarCaracteristicasPadre">Puestos Por Caracteristicas</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    --%>
+<body id="fff">
+    
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -61,53 +42,50 @@
         </div>
     </nav>
     
-    
-    <div id="contenedor">
-        <div id="myCarousel" class="carousel slide">
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-                <li data-target="#myCarousel" data-slide-to="4"></li>
-            </ol>
-              <!-- Carousel items -->
-           
-            <div class="carousel-inner">
-                
-                <jsp:useBean id="Top5puestos" scope="request" type="List<Puestos>" class="java.util.ArrayList"/>
-                <div class="active item"> <br><br><br><br><br><br><br><br>
-                    <h2> Top 5 </h2> </div>
-                
-                <% for(Puestos p: Top5puestos) {   %>  <!-- empieza for Top5puestos-->
-                
-                <div class="item">  <br><br><br><br><br><br><br><br>
-                    <%--<h2> centrar </h2> --%>
-                   <%-- <table class="TableTop">--%>
-                            <p>Nombre Empesa: <%= p.getEmpresa().getNombreEmp() %> </p> 
-                            <p>Nombre Puesto: <%= p.getNombrePuesto() %></p>
-                            <p>Salario: <%= p.getSalario() %></p>     
-                            <!--  LCP lista CaracteristicasPuestos  -->  
-                            <% for(CaracteristicasPuestos LCP: p.getCaracteristicasPuestos()) { %> <!-- empieza for LCP-->
-                            <%--    <td> <%= LCP.getCaracteristicas().getAreaTrabajo() %>  </td>
-                            <td> <%= LCP.getCaracteristicas().getEspecializacion() %></td>  --%>
-                            <p>Habilidad: <%= LCP.getCaracteristicas().getHabilidad() %> 
-                               Nivel de conocimiento: <%= LCP.getValor() %> </p> 
-                            <% } %>  <!-- termina for LCP-->
-                 <%--   </table> --%>
-                </div>
-                
-                <% } %>  <!-- termina for Top5puestos-->
-            </div>
-              
-              <!-- Carousel nav -->
-              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    <div >
+        <div>
+            <form>
+                <label id="red" style="color:red" onclick=" detalles() "> SIRVO </label>
+            </form>
         </div>
-            
+    </div>
+    
+    <div style="width: 70%;         height: 50%; display: inline-block;">
+                 <jsp:useBean id="Top5puestos" scope="request" type="List<Puestos>" class="java.util.ArrayList"/>
+        <div class="carousel slide" id="img-carousel" data-ride="carousel">
+          <!-- Indicators-->
+          <ol class="carousel-indicators">
+            <li class="active" data-target="#img-carousel" data-slide-to="0"></li>
+            <li data-target="#img-carousel" data-slide-to="1"></li>
+            <li data-target="#img-carousel" data-slide-to="2"></li>
+          </ol>
+          <!-- Wrapper for slides-->
+          <div class="carousel-inner" role="listbox" >
+
+              <div class="item active"><img src="https://beautimour.com/wp-content/uploads/2018/04/pexels-photo-380769.jpeg" alt=""/>
+                  <div class="carousel-caption">
+                    <h2 class="animated fadeInDown"> Top 5 </h2>
+                    <p class="animated fadeInUp"> Los ultimos Puestos publicos </p>
+                  </div>
+                </div>
+
+              <% for(Puestos p: Top5puestos) {   %>  <!-- empieza for Top5puestos-->
+              <div class="item"><img src="https://beautimour.com/wp-content/uploads/2018/04/pexels-photo-459654.jpeg" alt=""/>
+                  <div class="carousel-caption">
+                    <h2 class="animated bounceInDown">  Empesa: <%= p.getEmpresa().getNombreEmp() %>  </h2>
+                    <p class="animated bounceInUp"> Nombre Puesto: <%= p.getNombrePuesto() %> </p>
+                    <p class="animated bounceInUp" onclick=" detalles2() ">  leer más </p>
+                  </div>
+                </div>
+              <% } %>   
+              </div>
+              <!-- Controls--><a class="left carousel-control" href="#img-carousel" role="button" data-slide="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#img-carousel" role="button" data-slide="next"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next</span></a>
+            </div>
+    </div>
+      
         <div id="login" class="login">
             <form method="POST" name="formulario" id="formulario" action="javascript:login();">
-                <label>Correo </label> <br> <input type="text" required name="correo" id="correo"> <br>
+                <label>Correo </label> <br> <input type="text" required name="correo" id="correo" value=""> <br>
                 <label>Contraseña </label>  <br> <input type="password" required name="contraseña" id="contraseña"> <br>
                 <table> 
                     <tr> 
@@ -120,7 +98,7 @@
                 <input type="submit" value="Iniciar sesión" >
             </form>
         </div>
-    </div>
+    </div> 
     
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -129,13 +107,13 @@
 $(document).ready(function(){
     $('.myCarousel').carousel()
 });
-function loaded(event){	
-        document.getElementById("formulario").addEventListener("none",validate);
-}
-function none(event){
-    event.target.classList.add("none");
-}
 
+function detalles() {
+    document.getElementById("red").style.color = "blue";
+}
+function detalles2() {
+    document.getElementById("red").style.color = "red";
+}
 function login () {
     if ( document.getElementById("empresa").checked ) {                
         empresa = { correoEmp:document.getElementById("correo").value,

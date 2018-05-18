@@ -26,9 +26,13 @@ div.Menu ul {
 }
 
 div.Menu ul li {
-    font-size:115%;
-    padding: 0px 18px 0px 24px;
+    font-size:20px;
+    padding: 6px 18px 0px 24px;
     display: inline-block;
+    
+}
+div.Menu ul li:hover {
+    border-block-start:  3px solid #6600cc;
 }
 
 div.Menu ul li a {
@@ -87,7 +91,7 @@ div.Div_Top p{
 
 #lista3 li:hover{
     background: #eee;
-}   
+} 
 
 #lista3 li p{
     color: black;
@@ -122,5 +126,4 @@ div.Div_Top p{
     left: -.5em;
     border-left-color: #000000;   
 }
-
 /* https://blog.endeos.com/lleva-las-listas-html-al-siguiente-nivel-con-css/ */

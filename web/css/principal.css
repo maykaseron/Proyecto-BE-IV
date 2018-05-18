@@ -1,5 +1,5 @@
-body {
-    background-color: #EDEAF7;
+body#fff {
+    background-color: #ffffff;
 }
 
 div.Div_Top p{
@@ -11,7 +11,7 @@ div.Div_Top p{
     margin-left: 1px; padding-top: 9px; padding-left: 6px;
     font-family :"Bernard MT Condensed";
 }
-
+/*
 div#contenedor { height: 400px; }
 
 div.carousel-inner div.item h2 {
@@ -22,10 +22,10 @@ div#myCarousel {
     width: 70%;         height: 100%;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     text-align: center;
-    background-color: #FFFFFF;    
+    background-color: #E8E7EE;    
     display: inline-block;
 }
-
+*/
 div.login {
     padding: 9px;
     border:1px solid #000000;
@@ -43,3 +43,4 @@ div.login form input[type="submit"]{
     color:white;
     font-size: 15px;
 }
+
