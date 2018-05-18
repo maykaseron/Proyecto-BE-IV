@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -266,6 +265,7 @@ public class Dao {
                 if ( !ec.isPadre() )
                     ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );
                 else ec.setPapa_carac (null); 
+                ec.setHabilitado( rs.getBoolean( "habilitado" ) );
                 /*  ec.setAreaTrabajo( rs.getString("areaTrabajo") ); ec.setEspecializacion( rs.getString("especializacion") );*/
             return ec;
         } catch (SQLException ex) {

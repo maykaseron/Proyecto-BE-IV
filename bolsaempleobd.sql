@@ -36,7 +36,8 @@ CREATE TABLE CARACTERISTICAS (
 		idPadre integer,
 		habilidad varchar(20),
 		ifPadre boolean,
-
+		habilitado boolean,
+		
         CONSTRAINT PK_Caracteriticas PRIMARY KEY (idCAracteristica)
 );
 
@@ -82,20 +83,20 @@ insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Tec Salud','
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Chef','Artesanal');
 */
 /*  DESPUES */
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Ing Siste',null,true);
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('Len Progra',1,false); /*  2 */
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre)  values ('HTML',2,false);
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('C++',2,false);  /* 4 */
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java',2,false);
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Datos',1,false);  /*  6  */
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Desarro',6,false);
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Admi',6,false);   /*   8    */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Ing Siste',null,true,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Len Progra',1,false,false); /*  2 */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('HTML',2,false,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('C++',2,false,true);  /* 4 */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Java',2,false,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Datos',1,false,false);  /*  6  */
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Desarro',6,false,true);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Admi',6,false,true);   /*   8    */
 
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Cocina saludable',null,true);
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Artesanal',9,false); /*  10 */ 
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Tropical',9,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Cocina saludable',null,true,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Artesanal',9,false,true); /*  10 */ 
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Tropical',9,false,true);
 
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre) values ('Java GUI',5,false);
+insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Java Web',5,false,true);
 
 
 

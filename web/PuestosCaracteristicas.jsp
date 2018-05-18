@@ -49,7 +49,7 @@
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
                     <li id="cuadro"> 
-                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  ondblclick="detalles( <%= L_CPad.getIdCaracteristica()  %> )"
+                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  
                            onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > 
                             <%= L_CPad.getHabilidad() %>  </p>
                         <%-- <%= L_CPad.getHabilidad() %>  --%>
@@ -63,24 +63,13 @@ function loaded(event){
 }
 function detalles(id) {
     carac = { idCaracteristica:id };
-    var inp = $("<input type='text'>/");
+    var inp = document.createElement("input"); /*type="text" */
+    inp.setAttribute("type","text");
     var listado = document.getElementById( carac.idCaracteristica );
-    listado.appendChild( inp );
-      /*
-    $("#carac.idCaracterica").append( inp );
-    var listado = $("#carac.idCaracterica");
-    listado.append( inp );
-        */
-    $("#Titulo").css({'color' : 'black'});
+        //listado.appendChild( inp );
+    listado.append(inp);
+ //   $("#Titulo").css({'color' : 'black'});
 }
-
-/*
-function cambiar(idCaracteristica ) {
-    carac = { idCaracteristica:idCaracteristica };
-    var listado = document.getElementById( carac.idCaracteristica ).style.color= "red";
-    var ty =document.createElement("input type="text"");
-     listado.appendChild(ty);
-}*/
 
 function buscar (idCaracteristica ) {
     carac = { idCaracteristica:idCaracteristica 
@@ -103,11 +92,19 @@ function lista (obj,listado) {
     for (i=0; i<obj.length; i++) {
         var aux = obj[i];
         var ol =document.createElement("ul");
-        ol.innerHTML = "<li> <p style='color:red' id="+aux.idCaracteristica+" ondblclick='detalles()'   onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
+        if ( aux.habilitado === true ) {
+        ol.innerHTML = "<li> <p style='color:#6600CC' id="+aux.idCaracteristica+" ondblclick='detalles(\""+aux.idCaracteristica+"\")'  \n\
+             onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
                 + aux.habilidad + "</p> </li>";
+        } else {
+            ol.innerHTML = "<li> <p  id="+aux.idCaracteristica+" \n\
+             onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
+                + aux.habilidad + "</p> </li>";
+        }
         listado.appendChild(ol);
     }
 }
+
 document.addEventListener("DOMContentLoaded",loaded);
 </script>
 

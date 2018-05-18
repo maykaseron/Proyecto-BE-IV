@@ -16,7 +16,8 @@ public class Caracteristicas  implements java.io.Serializable {
     Caracteristicas papa_carac;
     private String habilidad;
     boolean padre;  // true si es padre
-
+    boolean habilitado;
+    
     public Caracteristicas() {
         papa_carac =null;
     }
@@ -78,8 +79,14 @@ public class Caracteristicas  implements java.io.Serializable {
     public void setPadre(boolean padre) {
         this.padre = padre;
     }
-    
-    
+
+    public boolean getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
+    }
 }
 
 
