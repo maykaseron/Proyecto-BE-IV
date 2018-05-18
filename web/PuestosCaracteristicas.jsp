@@ -64,8 +64,10 @@ function loaded(event){
 function detalles(id) {
     carac = { idCaracteristica:id };
     var inp = $("<input type='text'>/");
+    var listado = document.getElementById( carac.idCaracteristica );
+    listado.appendChild( inp );
+      /*
     $("#carac.idCaracterica").append( inp );
-    /*
     var listado = $("#carac.idCaracterica");
     listado.append( inp );
         */
