@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <link rel = "stylesheet" href = "css/PuestosCaracteristicas.css" type="text/css"/>
         <script type="text/javascript" src="js/ajax.js"></script>       
         
@@ -49,28 +49,139 @@
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
                     <li id="cuadro"> 
-                        <p id="<%= L_CPad.getIdCaracteristica()  %>"  
-                           onclick="buscar(<%= L_CPad.getIdCaracteristica()  %> )" > 
+                        <p   
+                           onclick="buscar(<%= L_CPad.getIdCaracteristica()  %>,this )" > 
                             <%= L_CPad.getHabilidad() %>  </p>
                         <%-- <%= L_CPad.getHabilidad() %>  --%>
                     </li>
             <% } %> 
         </ol>
+        
+        
+        
+        <form method="POST" action="javascript:buscarPuestos();" accept-charset="utf-8">
+            <input  type="submit" value="Registrar">
+        </form>
     </body>
     
 <script>
 function loaded(event){
 }
-function detalles(id) {
+function buscar (idCaracteristica,elmt ) { 
+    carac = { idCaracteristica:idCaracteristica 
+            };
+    var listado = elmt;
+    ajax ({ "method": "POST", 
+            "url":"Busc_caracteristicas", 
+            "data": carac,
+            "success": 
+                function(obj){
+                lista(obj,listado); 
+            },
+            "error": function(status){
+                 window.alert("Error");
+            }                    
+        });
+    listado.removeAttribute("onclick");
+}
+function lista (obj,listado) { // trae la lista del q se le dio click
+    for (i=0; i<obj.length; i++) {
+        var aux = obj[i];
+        var ol =document.createElement("ul");
+        if ( aux.habilitado === true ) {
+        ol.innerHTML = "<li> <p style='color:#6600CC'  ondblclick='nivel(\""+aux.idCaracteristica+"\", this)' \n\
+             onclick='buscar(\""+aux.idCaracteristica+"\", this )  '>"
+                + aux.habilidad + "</p> </li>";
+        } else {
+            ol.innerHTML = "<li> <p   \n\
+             onclick='buscar(\""+aux.idCaracteristica+"\", this)  '>"
+                + aux.habilidad + "</p> </li>";
+        }
+        listado.appendChild(ol);
+    }
+}
+function nivel(id,elmt) {
     carac = { idCaracteristica:id };
-    var inp = document.createElement("input"); /*type="text" */
-    inp.setAttribute("type","text");
-    var listado = document.getElementById( carac.idCaracteristica );
-        //listado.appendChild( inp );
-    listado.append(inp);
- //   $("#Titulo").css({'color' : 'black'});
+    var inp = document.createElement("span"); 
+    inp.innerHTML = " <input  type='text' class='buscaBusca' id=\""+carac.idCaracteristica+"\"> ";
+    var listado = elmt;
+    listado.appendChild( inp );
+    listado.removeAttribute("ondblclick");
 }
 
+    /*
+function buscarPuestos(  ) { 
+    var obj = $( ".buscaBusca" );
+    var miArray=new Array();
+    for (i=0; i<obj.length; i++) { 
+        var aux = { idCaracteristica:obj[i].id, valor:obj[i].value };
+        miArray.push(aux);
+    }
+    $.ajax ({ type: "POST", 
+            url:"Busc_puestos_X_caracteristicas", 
+            data: JSON.stringify(aux),
+            dataType:"json",
+            success: 
+                function(obj2){
+                prueba(obj2); 
+            },
+            error: function(status){
+                 window.alert("Error");
+            }                    
+        });
+    document.getElementById("Titulo").style.color= "black";
+}
+*/
+function buscarPuestos(  ) {
+    var obj = $( ".buscaBusca" );
+    var lista = new Array();
+ //   for (i=0; i<obj.length; i++) { 
+        car = { idCaracteristica:obj[i].id};
+        lista.push(car);
+   // }
+    data=new FormData();
+    data.append("listaId",JSON.stringify(car));
+    $.ajax ({ type: "POST", 
+            url:"Busc_puestos_X_caracteristicas", 
+            data: data,
+            processData: false,
+            contentType: false,  
+            success: 
+                function(obj2){
+                prueba(obj2); 
+            },
+            error: function(status){
+                 window.alert("Error");
+            }                    
+        });
+    document.getElementById("Titulo").style.color= "black";
+}
+function prueba (obj) {
+    for (i=0; i<obj.length; i++) {
+        var ppp = obj[i];
+    }
+    ppp;
+    document.getElementById("Titulo").style.color= "red";
+}
+
+
+document.addEventListener("DOMContentLoaded",loaded);
+/* var obj = $( ".buscaBusca" );
+    var car = { idCaracteristica:obj[0].id };
+    $.ajax ({ type: "POST", 
+            url:"Busc_puestos_X_caracteristicas", 
+            data: JSON.stringify(car),
+            dataType:"json",
+            success: 
+                function(obj2){
+                prueba(obj2); 
+            },
+            error: function(status){
+                 window.alert("Error");
+            }                    
+        }); 
+    */
+/*
 function buscar (idCaracteristica ) {
     carac = { idCaracteristica:idCaracteristica 
             };
@@ -86,26 +197,9 @@ function buscar (idCaracteristica ) {
                  window.alert("Error");
             }                    
         });
-        listado.removeAttribute("onclick");
+    listado.removeAttribute("onclick");
 }
-function lista (obj,listado) {
-    for (i=0; i<obj.length; i++) {
-        var aux = obj[i];
-        var ol =document.createElement("ul");
-        if ( aux.habilitado === true ) {
-        ol.innerHTML = "<li> <p style='color:#6600CC' id="+aux.idCaracteristica+" ondblclick='detalles(\""+aux.idCaracteristica+"\")'  \n\
-             onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
-                + aux.habilidad + "</p> </li>";
-        } else {
-            ol.innerHTML = "<li> <p  id="+aux.idCaracteristica+" \n\
-             onclick='buscar(\""+aux.idCaracteristica+"\")  '>"
-                + aux.habilidad + "</p> </li>";
-        }
-        listado.appendChild(ol);
-    }
-}
-
-document.addEventListener("DOMContentLoaded",loaded);
+     */
 </script>
 
 </html>

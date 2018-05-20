@@ -8,11 +8,12 @@ package Servlets;
 import com.google.gson.Gson;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasPuestos;
-import entidades.Oferente;
 import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
-                "/Habilida_Oferente"} )
+                "/Habilida_Oferente","/Busc_puestos_X_caracteristicas"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +45,10 @@ public class Busqueda extends HttpServlet {
                 break;    
             case "/Busc_caracteristicas":
                 this.doBusc_caracteristicas (request, response);
-                break;   
+                break; 
+            case "/Busc_puestos_X_caracteristicas":
+                this.doBusc_puestos_caracteristicas (request, response);
+                break;    
             /*
             case "/ListarCaracteristicas":
                 this.doListarCaracteristicas (request, response);
@@ -60,7 +64,6 @@ public class Busqueda extends HttpServlet {
     
     private void doTop5(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         try{
-            System.out.print("sdads");
             List<Puestos> puestos = Model.instance().ListTop5();
             request.setAttribute("Top5puestos",puestos);
             request.getRequestDispatcher("principal.jsp").forward( request, response);
@@ -120,10 +123,38 @@ public class Busqueda extends HttpServlet {
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
           }	
+    }
+    private void doBusc_puestos_caracteristicas(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException  {
+        try{
+            System.out.print("paso 11");
+            /*
+            Reader caracteristicaReader = request.getReader();
+            Gson gson = new Gson();
+            Caracteristicas[] caracteristica = gson.fromJson(caracteristicaReader, Caracteristicas[].class); 
+            PrintWriter out = response.getWriter(); 
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(caracteristica));
+            response.setStatus(200); // ok with content   
+            */ 
+            System.out.print(  request.getPart("listaId").getInputStream() );
+            System.out.print("22");
+           /* Reader caracteristicaReader = new BufferedReader(new InputStreamReader(request.getPart("listaId_C").getInputStream()));
+            Gson gson = new Gson();
+            
+            Caracteristicas[] caracteristica = gson.fromJson(caracteristicaReader, Caracteristicas[].class); 
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(caracteristica));
+            System.out.print("555");*/
+            response.setStatus(200); // ok with content     
+          }
+        catch(Exception e){
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
+          }	
          
     }
-    
-    
     
     
     

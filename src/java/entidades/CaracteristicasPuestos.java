@@ -8,7 +8,6 @@ public class CaracteristicasPuestos  implements java.io.Serializable {
     private Puestos puesto;
     private Caracteristicas caracteristicas;
     private int valor;
-    private Date fechaInclusion;
 
     public CaracteristicasPuestos() {
     }
@@ -44,13 +43,5 @@ public class CaracteristicasPuestos  implements java.io.Serializable {
 
     public void setValor(int valor) {
         this.valor = valor;
-    }
-    
-    public Date getFechaInclusion() {
-        return this.fechaInclusion;
-    }
-    
-    public void setFechaInclusion(Date fechaInclusion) {
-        this.fechaInclusion = fechaInclusion;
     }
 }

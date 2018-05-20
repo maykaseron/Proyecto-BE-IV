@@ -55,13 +55,22 @@ CREATE TABLE PUESTOS (
 CREATE TABLE CARACTERISTICAS_PUESTOS (  /* CARACTERISTICAS_INCLUIDOS se llamaba así */
         consecutivo integer auto_increment not null,
         valor int,
-		fecha_Inclusion date,
 		idPuesto int(10),
         idCaracteristica int(10),
-       
 
         CONSTRAINT PK_CARAC_PUESTOS PRIMARY KEY(consecutivo)
 );
+
+CREATE TABLE CARACTERISTICAS_OFERENTE (  /* CARACTERISTICAS_INCLUIDOS se llamaba así */
+        idCO integer auto_increment not null,
+        valor int,
+		cedulaOferente varchar (15),
+        idCaracteristica int(10),
+
+        CONSTRAINT PK_CARAC_PUESTOS PRIMARY KEY(idCO)
+);
+insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',4,90);
+insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',3,80);
 
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','ama@gm.com','86546','1');
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1');
@@ -96,11 +105,10 @@ insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Coc
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Artesanal',9,false,true); /*  10 */ 
 insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Tropical',9,false,true);
 
-insert into CARACTERISTICAS (habilidad, idPadre,ifPadre,habilitado) values ('Java Web',5,false,true);
 
 
 
-insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,4,80);
+insert into CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (1,4,80);
 insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,3,80);
 insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (2,5,90);
 insert into bolsaempleo.CARACTERISTICAS_PUESTOS (idPuesto,idCaracteristica, valor ) values (3,4,95);

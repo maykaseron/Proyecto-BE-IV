@@ -58,13 +58,20 @@ div.Div_Top p{
     font-family :"Bernard MT Condensed";
 }*/
 
+input[type="submit"] {
+    background-color:#6600cc;
+    height: 35px;
+    width: 85px;
+    color:white;
+    font-size: 15px;
+}
+
 #lista3 {
     counter-reset: li; 
     list-style: none; 
     *list-style: decimal; 
     font: 15px 'Britannic Bold', 'lucida sans';
     padding: 0px 0px 0px 7px;
-    margin-bottom: 4em;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
 

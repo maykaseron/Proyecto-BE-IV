@@ -146,7 +146,20 @@ public class Dao {
     }
     /*********************Oferente********************************/
     
-      public Oferente OferenteGet(String codigo) throws Exception{
+    private Oferente oferente(ResultSet rs) throws Exception{
+        Oferente ec= new Oferente();
+            ec.setCedulaOferente(rs.getString("cedulaOferente"));
+            ec.setPrimerApellido(rs.getString("primerApellido"));
+            ec.setNombreOferente(rs.getString("nombreOferente"));
+            ec.setNacionalidad(rs.getString("nacionalidad"));
+            ec.setCorreoOferente(rs.getString("correoOferente"));
+            ec.setUbicacion(rs.getString("ubicacion"));
+            ec.setContrasena( rs.getString("contrasena") );
+
+        return ec;
+    }
+    
+    public Oferente OferenteGet(String codigo) throws Exception{
         String sql="select * from oferente where cedulaOferente='%s'";
         sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
@@ -159,7 +172,7 @@ public class Dao {
         }
     }
       
-       public List<Oferente> OferenteGetAll() throws Exception{
+    public List<Oferente> OferenteGetAll() throws Exception{
         Vector<Oferente> estados=new Vector<Oferente>();
         try {
             String sql="select * from oferente";
@@ -170,7 +183,8 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
-       
+    
+    
     public void OferenteAdd(Oferente p) throws Exception {
         if ( this.compararOferenteVacio(p) ) { // add si no hay espacios vacios
             String sql= "insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) "
@@ -221,20 +235,7 @@ public class Dao {
             throw new Exception("Oferente no existe");
         }
     }
-      
-    private Oferente oferente(ResultSet rs) throws Exception{
-        Oferente ec= new Oferente();
-            ec.setCedulaOferente(rs.getString("cedulaOferente"));
-            ec.setPrimerApellido(rs.getString("primerApellido"));
-            ec.setNombreOferente(rs.getString("nombreOferente"));
-            ec.setNacionalidad(rs.getString("nacionalidad"));
-            ec.setCorreoOferente(rs.getString("correoOferente"));
-            ec.setUbicacion(rs.getString("ubicacion"));
-            ec.setContrasena( rs.getString("contrasena") );
-
-        return ec;
-    }
-    
+            
     public boolean compararOferenteVacio (Oferente o) { // 
         return !( o.getNombreOferente().equals("") || o.getPrimerApellido().equals("") || o.getCedulaOferente().equals("") ||
                 o.getCelular().equals("") || o.getNacionalidad().equals("") ); // no hay espacios vacios
@@ -503,7 +504,6 @@ public class Dao {
                 ec.setConsecutivo( rs.getInt("consecutivo") );
                 ec.setValor( rs.getInt("valor") );
                 keyCarPuesCar = rs.getInt( "idCaracteristica" );
-                ec.setFechaInclusion( rs.getDate("fecha_Inclusion") );
 
                 return ec;
         } catch (SQLException ex) {
@@ -635,4 +635,17 @@ public class Dao {
     }    
     */
     
+    /********************* CARACTERISTICAS OFERENTE ---- CARACTERISTICAS OFERENTE ********************************/
+    
+    public void CaracteristicasOferentes (Oferente p) throws Exception {
+        String sql="select * from CARACTERISTICAS_OFERENTE where cedulaOferente='111'";
+        sql = String.format(sql,p.getCedulaOferente());
+        ResultSet rs =  db.executeQuery(sql);
+        if (rs.next()) {
+            
+        }
+        else{
+            throw new Exception ("Oferente no Existe");
+        }
+    }
 }
