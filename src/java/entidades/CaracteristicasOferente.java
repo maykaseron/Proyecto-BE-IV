@@ -10,7 +10,7 @@ package entidades;
  * @author anderson
  */
 public class CaracteristicasOferente {
-    private Integer consecutivo;
+    private Integer idCO;
     private Oferente oferente;
     private Caracteristicas caracteristicas;
     private int valor;
@@ -18,19 +18,19 @@ public class CaracteristicasOferente {
     public CaracteristicasOferente() {
     }
 
-    public CaracteristicasOferente(Integer consecutivo, Oferente oferente, Caracteristicas caracteristicas, int valor) {
-        this.consecutivo = consecutivo;
+    public CaracteristicasOferente(Integer idCO, Oferente oferente, Caracteristicas caracteristicas, int valor) {
+        this.idCO = idCO;
         this.oferente = oferente;
         this.caracteristicas = caracteristicas;
         this.valor = valor;
     }
 
-    public Integer getConsecutivo() {
-        return consecutivo;
+    public Integer getIdCO() {
+        return idCO;
     }
 
-    public void setConsecutivo(Integer consecutivo) {
-        this.consecutivo = consecutivo;
+    public void setIdCO(Integer idCO) {
+        this.idCO = idCO;
     }
 
     public Oferente getOferente() {

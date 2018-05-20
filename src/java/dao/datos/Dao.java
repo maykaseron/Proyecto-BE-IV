@@ -6,6 +6,7 @@
 package dao.datos;
 
 import entidades.Caracteristicas;
+import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
 import entidades.Empresa;
 import entidades.Oferente;
@@ -500,12 +501,11 @@ public class Dao {
     private CaracteristicasPuestos caracteristicasPuestos(ResultSet rs){
         try {
             CaracteristicasPuestos ec= new CaracteristicasPuestos();
-                
-                ec.setConsecutivo( rs.getInt("consecutivo") );
-                ec.setValor( rs.getInt("valor") );
-                keyCarPuesCar = rs.getInt( "idCaracteristica" );
+                    ec.setConsecutivo( rs.getInt("consecutivo") );
+                    ec.setValor( rs.getInt("valor") );
+                    keyCarPuesCar = rs.getInt( "idCaracteristica" );
 
-                return ec;
+            return ec;
         } catch (SQLException ex) {
             return null;
         }
@@ -519,7 +519,6 @@ public class Dao {
             throw new Exception("caracteristica no ha sido incluida");
         }
     }
-    
         
     public void CaracteristicasPuestosAdd(CaracteristicasPuestos p) throws Exception{
             System.out.println("en oferenteAdd");
@@ -568,14 +567,13 @@ public class Dao {
             ResultSet rs =  db.executeQuery(sql);
             CaracteristicasPuestos c;
             while ( rs.next() ) {
-                c = caracteristicasPuestos(rs); // encotró uno
+                c = caracteristicasPuestos(rs); // encontró uno
                 c.setPuesto(p); // setea el atributo de puesto
                 c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) ); // obtengo la caracteristica
                 ListTop5.add(c); // lo agrego a lista magica, para agregarlo en puesto
             }
         } catch (SQLException ex) { }
     }    
-    
     
     List<CaracteristicasPuestos> ListTop5 = new ArrayList<>();
     public List<Puestos> ListTop5 () throws Exception {
@@ -636,16 +634,35 @@ public class Dao {
     */
     
     /********************* CARACTERISTICAS OFERENTE ---- CARACTERISTICAS OFERENTE ********************************/
+    private CaracteristicasOferente caracteristicasOferente(ResultSet rs) throws Exception{
+        try {
+            CaracteristicasOferente ec= new CaracteristicasOferente();
+                    ec.setIdCO( rs.getInt("idCO") );
+                    ec.setValor( rs.getInt("valor") );
+                    ec.setOferente( OferenteGet ( rs.getString( "cedulaOferente" ) ) );
+                    ec.setCaracteristicas( CaracteristicasGet ( rs.getInt( "idCaracteristica" ) ) );
+                    
+            return ec;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
     
-    public void CaracteristicasOferentes (Oferente p) throws Exception {
-        String sql="select * from CARACTERISTICAS_OFERENTE where cedulaOferente='111'";
-        sql = String.format(sql,p.getCedulaOferente());
-        ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            
+    public List<CaracteristicasOferente> CaracteristicasOferenteGet (String cedula) throws Exception {
+        Vector<CaracteristicasOferente> ListCarOfe = new Vector<CaracteristicasOferente>();
+        try {
+            String sql="select * from CARACTERISTICAS_OFERENTE where cedulaOferente='%s';";
+            sql = String.format(sql,cedula);
+            ResultSet rs =  db.executeQuery(sql);
+            System.out.print(sql);
+            int x =0;
+            while (rs.next()) {
+                ListCarOfe.add( caracteristicasOferente(rs) );
+            }
         }
-        else{
-            throw new Exception ("Oferente no Existe");
-        }
+        catch (SQLException ex) {  
+                throw new Exception ("Oferente no Existe"); 
+                }
+        return ListCarOfe;
     }
 }

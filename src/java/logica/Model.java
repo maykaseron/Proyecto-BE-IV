@@ -7,6 +7,7 @@ package logica;
 
 import dao.datos.Dao;
 import entidades.Caracteristicas;
+import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
 import entidades.Empresa;
 import entidades.Oferente;
@@ -180,5 +181,10 @@ public class Model {
         return dao.PuestosPorCaracteristicas( especializacion );
     }*/
     
+    /********************* CARACTERISTICAS OFERENTE ---- CARACTERISTICAS OFERENTE ********************************/
+    
+    public List<CaracteristicasOferente>  getAllCaracteristicasPuestos (String cedula) throws Exception{
+        return  dao.CaracteristicasOferenteGet( cedula );
+    }
     
 }

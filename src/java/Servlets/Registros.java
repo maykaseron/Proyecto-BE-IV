@@ -138,6 +138,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Oferente oferente = gson.fromJson(reader, Oferente.class);
             PrintWriter out = response.getWriter(); 
             oferente = Model.instance().getOferenteLogin(oferente);
+            oferente.setListaCaracteristicasOferente( Model.instance().getAllCaracteristicasPuestos( oferente.getCedulaOferente() ) );
             s.setAttribute("Login_Oferente", oferente);
             response.setContentType("application/json; charset=UTF-8"); 
             out.write(gson.toJson(oferente)); 

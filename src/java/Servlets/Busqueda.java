@@ -26,7 +26,7 @@ import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
-                "/Habilida_Oferente","/Busc_puestos_X_caracteristicas"} )
+                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Busc_habilidades_Oferente"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -48,6 +48,9 @@ public class Busqueda extends HttpServlet {
                 break; 
             case "/Busc_puestos_X_caracteristicas":
                 this.doBusc_puestos_caracteristicas (request, response);
+                break;
+            case "/Busc_habilidades_Oferente":
+                this.doBusc_habilidades_Oferente (request, response);
                 break;    
             /*
             case "/ListarCaracteristicas":
@@ -153,8 +156,20 @@ public class Busqueda extends HttpServlet {
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
           }	
-         
     }
+    
+    private void doBusc_habilidades_Oferente(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException  {
+         try{
+             
+          }
+        catch(Exception e){
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("principal.jsp").forward(request, response);
+          }	
+    }
+    
+    
     
     
     
@@ -265,6 +280,8 @@ public class Busqueda extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
     
 
