@@ -135,25 +135,25 @@ function buscarPuestos(  ) {
 function buscarPuestos(  ) {
     var obj = $( ".buscaBusca" );
     var lista = new Array();
- //   for (i=0; i<obj.length; i++) { 
-        car = { idCaracteristica:obj[i].id};
+    for (i=0; i<obj.length; i++) { 
+        ID = { idCaracteristica:obj[i].id};
+        car = { valor:obj[i].value,
+            caracteristicas:ID
+        };
         lista.push(car);
-   // }
-    data=new FormData();
-    data.append("listaId",JSON.stringify(car));
-    $.ajax ({ type: "POST", 
-            url:"Busc_puestos_X_caracteristicas", 
-            data: data,
-            processData: false,
-            contentType: false,  
-            success: 
-                function(obj2){
-                prueba(obj2); 
-            },
-            error: function(status){
-                 window.alert("Error");
-            }                    
-        });
+    }
+        $.ajax ({ type: "POST", 
+                url:"Busc_puestos_X_caracteristicas", 
+                data: JSON.stringify(lista), 
+                dataType:"json",
+                success: 
+                    function(obj2){
+                    prueba(obj2); 
+                },
+                error: function(status){
+                     window.alert("Error");
+                }                    
+            });
     document.getElementById("Titulo").style.color= "black";
 }
 function prueba (obj) {

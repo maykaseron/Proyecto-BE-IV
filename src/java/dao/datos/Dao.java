@@ -152,6 +152,7 @@ public class Dao {
             ec.setCedulaOferente(rs.getString("cedulaOferente"));
             ec.setPrimerApellido(rs.getString("primerApellido"));
             ec.setNombreOferente(rs.getString("nombreOferente"));
+            ec.setCelular(rs.getString("celular"));
             ec.setNacionalidad(rs.getString("nacionalidad"));
             ec.setCorreoOferente(rs.getString("correoOferente"));
             ec.setUbicacion(rs.getString("ubicacion"));
@@ -184,8 +185,6 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
-    
-    
     public void OferenteAdd(Oferente p) throws Exception {
         if ( this.compararOferenteVacio(p) ) { // add si no hay espacios vacios
             String sql= "insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) "
@@ -438,7 +437,6 @@ public class Dao {
     }
         
     public void PuestosAdd(Puestos p) throws Exception {
-            System.out.println("en oferenteAdd");
         String sql="insert into bolsaempleo.puestos (nombrePuesto, idEmp, salario, descripcionPuesto, tipoPublicacion ) "+
                 "values(?, ?, ?, ?, ?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
@@ -521,13 +519,11 @@ public class Dao {
     }
         
     public void CaracteristicasPuestosAdd(CaracteristicasPuestos p) throws Exception{
-            System.out.println("en oferenteAdd");
         String sql="insert into bolsaempleo.CARACTERISTICAS_PUESTOS (consecutivo , caracteristica , idPuesto,idCaracteristica, "
                 + "valor ) values(?, ?, ?, ? )";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
-        System.out.println("despues de prepared" );
         preparedStmt.setInt( 1, p.getConsecutivo() );
         preparedStmt.setInt ( 2,  p.getCaracteristicas().getIdCaracteristica() );
         preparedStmt.setInt ( 3,  p.getPuesto().getIdPuesto() );
@@ -559,6 +555,30 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
+    
+     public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
+        // para publicos nada mas
+        Vector<CaracteristicasPuestos> respuesta=new Vector<CaracteristicasPuestos>();
+        Vector<Puestos> puestos = new Vector<Puestos>();
+        CaracteristicasPuestos CP; boolean flag;
+        try {
+            String sql="select * from CARACTERISTICAS_PUESTOS";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                CP = caracteristicasPuestos(rs);
+                for ( CaracteristicasPuestos Ca_P: listaN ) {
+                    if ( CP.getCaracteristicas().getIdCaracteristica() == CP.getCaracteristicas().getIdCaracteristica() ) 
+                        if ( CP.getValor() == Ca_P.getValor() )
+                            flag = true;
+                    else flag = false;
+                }
+                if ( flag = true )
+                    if ( CP.getPuesto().getTipoPublicacion() ) 
+                        puestos.add( CP.getPuesto() );
+            }
+        } catch (SQLException ex) { }
+        return null;
+     }
     
     public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
        try { // este metodo busca CaracteristicasPuestos q tengan el id del puesto
@@ -594,6 +614,7 @@ public class Dao {
         } catch (SQLException ex) { }
         return ListPuest;
     }
+    
     
     // 1_PuestosPorCaracteristicas trae puetosXpuesto, cada vez q tiene uno "setea" atributo empresa.luego 2_CaracteristicasPuestosIDpuestoAll
     // ,este busca en los CARACTERISTICAS_PUESTOS quien tiene el mismo idPuesto. Ahora tiene construido a puesto,empresa 
@@ -648,21 +669,44 @@ public class Dao {
         }
     }
     
-    public List<CaracteristicasOferente> CaracteristicasOferenteGet (String cedula) throws Exception {
+    public List<CaracteristicasOferente> CaracteristicasOferenteGetCed (String cedula) throws Exception {
         Vector<CaracteristicasOferente> ListCarOfe = new Vector<CaracteristicasOferente>();
-        try {
+        try { // busca todos los Car_Ofe con esa cedula, lo uso en el servlet de registro para "set" de la lista q tiene Oferente
             String sql="select * from CARACTERISTICAS_OFERENTE where cedulaOferente='%s';";
             sql = String.format(sql,cedula);
             ResultSet rs =  db.executeQuery(sql);
-            System.out.print(sql);
             int x =0;
             while (rs.next()) {
                 ListCarOfe.add( caracteristicasOferente(rs) );
             }
         }
-        catch (SQLException ex) {  
-                throw new Exception ("Oferente no Existe"); 
-                }
+        catch (SQLException ex) {  throw new Exception ("error en CaracteristicasOferenteGet"); }
         return ListCarOfe;
     }
+    
+    public CaracteristicasOferente CaracteristicasOferenteGetIdCar (int idCar) throws Exception {
+        // busca aquel q tiene ese id Y lo manda
+        String sql="select * from CARACTERISTICAS_OFERENTE where idCaracteristica=%d;";
+        sql = String.format(sql,idCar);
+        ResultSet rs =  db.executeQuery(sql);
+        if ( rs.next() ) {
+            return caracteristicasOferente( rs );
+        }   else {   throw new Exception ("error en CaracteristicasOferenteGetIdCar"); }
+    }
+    
+    public void CaracteristicasOferenteUpdate (CaracteristicasOferente c) throws Exception {
+        String sql="update bolsaempleo.CARACTERISTICAS_OFERENTE set valor='%s' where idCaracteristica=%d;";
+        sql = String.format(sql,c.getValor(), c.getCaracteristicas().getIdCaracteristica());
+        int count=db.executeUpdate(sql);
+        if (count ==0 ){ // 0 == existe
+            throw new Exception("error CaracteristicasOferenteUpdate");
+        }
+    }
+    
+    /*
+    int count=db.executeUpdate(sql);
+            if (count ==0 ){ // 0 == existe
+                throw new Exception("Existe una cuenta con la misma cédula");
+            }
+    */
 }

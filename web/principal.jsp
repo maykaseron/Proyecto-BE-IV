@@ -53,7 +53,7 @@
                 <li> <a href="Logout"> Cerrar Sesión </a> </li>
             <% } else { %>
             <%  if (oferente != null) { %> 
-                <li class="active"> <a href="#"> <%= oferente.getNombreOferente() %> </a> </li>
+                <li class="active"> <a href="loginOferente.jsp"> <%= oferente.getNombreOferente() %> </a> </li>
                 <li> <a href=""> Habilidades </a> </li>
                 <li> <a href="Logout"> Salir </a> </li>
             <% } }%>

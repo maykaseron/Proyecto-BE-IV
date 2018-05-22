@@ -6,9 +6,9 @@
 package Servlets;
 
 import com.google.gson.Gson;
+import entidades.CaracteristicasOferente;
 import entidades.Empresa;
 import entidades.Oferente;
-import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -107,8 +107,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }	
 }
-
-    
     
     private void doLoginEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
@@ -138,8 +136,10 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Oferente oferente = gson.fromJson(reader, Oferente.class);
             PrintWriter out = response.getWriter(); 
             oferente = Model.instance().getOferenteLogin(oferente);
-            oferente.setListaCaracteristicasOferente( Model.instance().getAllCaracteristicasPuestos( oferente.getCedulaOferente() ) );
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
+            oferente.setListaCaracteristicasOferente( listaHabili );
             s.setAttribute("Login_Oferente", oferente);
+            s.setAttribute("lista_habilidad", listaHabili);
             response.setContentType("application/json; charset=UTF-8"); 
             out.write(gson.toJson(oferente)); 
             response.setStatus(200);
@@ -147,7 +147,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
       catch(Exception e){	
           request.setAttribute("error",e.getMessage());
           response.setStatus(401); //Bad request
-          request.getRequestDispatcher("Error.jsp").forward( request, response);
+          request.getRequestDispatcher("principal.jsp").forward( request, response);
       }	
     }
     

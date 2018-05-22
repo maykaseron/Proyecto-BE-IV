@@ -33,10 +33,26 @@
                 
             </form>
         </div>
-        
-    <script>
+                
+                
+        <div class="Conte_Datos">
+            <div class="Conte_Foto">
+                <img src="imagenes/fotoPerfil.png">
+            </div>
+            <div class="Conte_Form">
+                <form id="Form_datos">
+                    <br>
+                    <label> Empresa </label> <input type="text" > <br><br>
+                    <label> Telefono </label> <input type="text" > <br><br>
+                    <label> Correo </label> <input type="text" > <br><br>
+                    <label> Descripcion </label> <input type="text" > <br><br>
+                </form> 
+            </div>
+        </div>
+                
+<script>
 
-    </script>
+</script>
 
     </body>
 </html>

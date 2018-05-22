@@ -1,6 +1,71 @@
 body {
     text-align: center; 
+    background-color: white;
+}
+/* ponerlo abajo */ 
+div.Conte_Datos {
     background-color: #EDEAF7;
+    height: 230px; width: 45%;
+    border: 1px solid #6600cc;
+    margin-top: 20px;                    margin-bottom: 20px;   margin-right: 70px;
+    display: inline-block;
+}
+
+div.Div_Habilidades {
+    background-color: #EDEAF7;
+    width: 25%; height: 230px;
+    border: 1px solid #6600cc;           
+    margin-top: 20px;                 margin-right: 260px;
+    display: inline-block;
+    vertical-align:top
+}
+
+div.Div2_Habilidades {
+    width: 90%; height: 90%;
+    margin: 0px 0px 0px 15px;
+}
+
+div.Div2_Habilidades label{ 
+    color: white;
+    background-color: #6600cc;        
+    width: 30%; height: 20px;
+    display: inline-block;
+    float: left;
+}
+
+div.Div2_Habilidades input#actualizar{ 
+    color: white;
+    background-color: #6600cc;        
+    width: 50%; height: 31px;
+    display: inline-block;
+    font-family: cursive;
+    font-size: 95%;
+    float: left;
+}
+
+input[type="text"]{
+    background: transparent;
+    border:0;
+    border-bottom: 1px solid #6600cc;
+    color: #000000;
+    font-family:'Sofia', cursive;
+}
+div.Conte_Datos input.Label_correo{ 
+    margin-right: 230px;
+}
+div.Conte_Datos label{ display: inline-block;
+    text-align: left;
+    color: #000000;
+    height: 21px;
+    width: 60px;
+    font-family:'Sofia', cursive;
+}
+div.Conte_Foto  { float:left; }
+
+img#pdf {
+   float:right;
+    margin-right:17px;
+    margin-top: -20px;
 }
 
 div.container-fluid {
@@ -34,27 +99,49 @@ div.container-fluid ul li#Titulo {
     font-family :"Bernard MT Condensed";
 }
 
-div#formu_Publ_Puestos {
-    background-color:#ececec;
-    height: 38px;
-    width: 50%;
-    float:left;
-}
-
-div.Div_Habilidades {
-    background-color: white;
-    height: 120px;
+/*              */
+div.div_tabla_H {
     width: 80%;
-    display: inline-block; 
-    margin:auto;
+    background-color:#EDEAF7;
+    display: inline-block;
+    margin-right: 200px;
 }
 
-div.Lis_Habilidades {
-    background-color: white;
-    height: 70px;
-    width: 80%;
-    display: inline-block; 
-    margin:auto;
+table.Tabla_hab caption {
+    height: 30px;
+    font-size:20px;
 }
 
+table.Tabla_hab {
+    width: 98%;
+    margin:auto;
+    border-bottom: 10px solid #ececec;
+}
 
+table.Tabla_hab thead, table.Tabla_hab tbody tr {  /* IMPORTANTE */
+    display: table;
+    width: 100%; 
+    table-layout:fixed;
+}
+
+table.Tabla_hab thead tr td {
+    text-align: center;
+    background-color:#6600cc;
+    height: 30px;
+    color:white;
+}
+
+table.Tabla_hab tbody tr td {
+    text-align: center;
+    height: 30px;
+}
+
+table.Tabla_hab tbody tr { /* para la linea verde, ocupa  display: table; width: 100%; table-layout:fixed; */
+    vertical-align:top; 
+    border-top: 1px solid #6600cc;     
+    background-color:#ffffff;
+}
+
+table.Tabla_hab tbody tr:hover {
+    background-color:#EDEAF7;
+}

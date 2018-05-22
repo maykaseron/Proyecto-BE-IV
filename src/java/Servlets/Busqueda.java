@@ -7,6 +7,7 @@ package Servlets;
 
 import com.google.gson.Gson;
 import entidades.Caracteristicas;
+import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
 import entidades.Puestos;
 import java.io.BufferedReader;
@@ -26,7 +27,7 @@ import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
-                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Busc_habilidades_Oferente"} )
+                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -49,9 +50,12 @@ public class Busqueda extends HttpServlet {
             case "/Busc_puestos_X_caracteristicas":
                 this.doBusc_puestos_caracteristicas (request, response);
                 break;
-            case "/Busc_habilidades_Oferente":
-                this.doBusc_habilidades_Oferente (request, response);
-                break;    
+            case "/Habilidad_edit":
+                this.doHabilidad_edit (request, response);
+                break;
+            case "/Actualizar_Habilidad":
+                this.doActualizar_Habilidad (request, response);
+                break;
             /*
             case "/ListarCaracteristicas":
                 this.doListarCaracteristicas (request, response);
@@ -80,7 +84,7 @@ public class Busqueda extends HttpServlet {
     
     private void doListarCaracteristicasPadre(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
-        try{
+        try{ // busca la caracteristicas q son el papa de los tomates 
             HttpSession s =  request.getSession( true);
             List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
             request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
@@ -111,7 +115,7 @@ public class Busqueda extends HttpServlet {
     
     private void doBusc_caracteristicas(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException  {
-        try{
+        try{ // busca los hijos del padre q se lio dio click
             BufferedReader reader = request.getReader();
             Gson gson = new Gson();
             Caracteristicas caracteristica = gson.fromJson(reader, Caracteristicas.class);
@@ -131,25 +135,15 @@ public class Busqueda extends HttpServlet {
         throws ServletException, IOException  {
         try{
             System.out.print("paso 11");
-            /*
             Reader caracteristicaReader = request.getReader();
             Gson gson = new Gson();
-            Caracteristicas[] caracteristica = gson.fromJson(caracteristicaReader, Caracteristicas[].class); 
-            PrintWriter out = response.getWriter(); 
+            CaracteristicasPuestos[] caracteristicaPuest = gson.fromJson(caracteristicaReader, CaracteristicasPuestos[].class); 
+            PrintWriter out = response.getWriter();  
+            List<Puestos> lista = Model.instance().getCaracteristicasPuestosNivelPu( caracteristicaPuest  );
             response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(caracteristica));
+            out.write(gson.toJson(lista));
+            System.out.print("paso 44");
             response.setStatus(200); // ok with content   
-            */ 
-            System.out.print(  request.getPart("listaId").getInputStream() );
-            System.out.print("22");
-           /* Reader caracteristicaReader = new BufferedReader(new InputStreamReader(request.getPart("listaId_C").getInputStream()));
-            Gson gson = new Gson();
-            
-            Caracteristicas[] caracteristica = gson.fromJson(caracteristicaReader, Caracteristicas[].class); 
-            PrintWriter out = response.getWriter();
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(caracteristica));
-            System.out.print("555");*/
             response.setStatus(200); // ok with content     
           }
         catch(Exception e){
@@ -158,16 +152,53 @@ public class Busqueda extends HttpServlet {
           }	
     }
     
-    private void doBusc_habilidades_Oferente(HttpServletRequest request, HttpServletResponse response) 
+    private void doHabilidad_edit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
-         try{
-             
-          }
+        try{
+            HttpSession s =  request.getSession( true );
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            Caracteristicas Car = gson.fromJson(reader, Caracteristicas.class);
+            PrintWriter out = response.getWriter();
+            CaracteristicasOferente C_O = Model.instance().getCaracteristicasPuestosIdCar( Car.getIdCaracteristica() );
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson( C_O ));        
+            response.setStatus(200); // ok with content
+        }
         catch(Exception e){
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("principal.jsp").forward(request, response);
-          }	
+             response.setStatus(401); //Bad request
+        }	
     }
+    
+    private void doActualizar_Habilidad(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+            
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class);
+            int valor = C_O.getValor();
+ C_O = Model.instance().getCaracteristicasPuestosIdCar( C_O.getCaracteristicas().getIdCaracteristica() );
+            PrintWriter out = response.getWriter();
+            C_O.setValor(valor); 
+            Model.instance().updateCaracteristicasPuestos ( C_O );
+            response.setContentType("application/json; charset=UTF-8");
+            System.out.print("doActualizar_Habilidad linea 192");
+            out.write(gson.toJson( C_O ));        
+            response.setStatus(200); // ok with content
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
