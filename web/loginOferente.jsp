@@ -51,6 +51,7 @@
     <div class="Div_Habilidades" >
         <div class="Div2_Habilidades" >
             <br>
+            <label style="width: 100%; font-size: 120%"> Editar </label> <br><br>
             <label > Habilidad </label> <input disabled="" type="text"  id="habildad"  > <br><br>
             <label> Nivel </label>     <input type="text" name="habildad"  id="nivel" >
             <br><br><br><br>
@@ -74,11 +75,9 @@
                 <tbody> <% /* la lista es traida se sesion  */%>
                     <% for (CaracteristicasOferente C_O: lista_habilidad) { %>
                     <tr> 
-
                         <td onclick="editar( <%=C_O.getCaracteristicas().getIdCaracteristica() %> )"> <%= C_O.getCaracteristicas().getHabilidad() %> </td>
                         <td> <%= C_O.getValor()  %> </td>
                         <td> % </td>
-
                     </tr> <% } %>  
                 </tbody>
 
@@ -117,19 +116,20 @@ function actualizaHabilidad (){ // actualiza una habilidad, Gson recibe un proto
                       data: JSON.stringify(ID), 
                       dataType:"json",
                       success: 
-                        function(obj){
-                            falta( ); 
+                        function( o ){
+                            restaurar( o ); 
                         },
                       error: function(status){
                              window.alert("Error");
                         }                    
             }); 
-    $("#actualizar").attr('disabled','disabled');
-    $("#habildad").val( "" );
-    $("#nivel").val( "" );
 }
 
-function falta (){ }
+function restaurar ( o ){
+    $("#nivel").val( "" );
+    $("#actualizar").attr('disabled','disabled');
+    $("#habildad").val( "" );
+}
 </script>
     </body>
 </html>

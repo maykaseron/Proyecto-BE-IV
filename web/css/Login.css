@@ -5,17 +5,17 @@ body {
 /* ponerlo abajo */ 
 div.Conte_Datos {
     background-color: #EDEAF7;
-    height: 230px; width: 45%;
-    border: 1px solid #6600cc;
-    margin-top: 20px;                    margin-bottom: 20px;   margin-right: 70px;
+    height: 230px; width: 50%;
+    border: 1px solid black;
+    margin-top: 20px;                    margin-bottom: 20px;   margin-right: 80px;
     display: inline-block;
 }
 
 div.Div_Habilidades {
     background-color: #EDEAF7;
-    width: 25%; height: 230px;
+    width: 23%; height: 230px;
     border: 1px solid #6600cc;           
-    margin-top: 20px;                 margin-right: 260px;
+    margin-top: 20px;                 margin-right: 199px;
     display: inline-block;
     vertical-align:top
 }

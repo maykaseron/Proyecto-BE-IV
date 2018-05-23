@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
+import entidades.Oferente;
 import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -164,6 +165,7 @@ public class Busqueda extends HttpServlet {
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson( C_O ));        
             response.setStatus(200); // ok with content
+
         }
         catch(Exception e){
              response.setStatus(401); //Bad request
@@ -173,7 +175,7 @@ public class Busqueda extends HttpServlet {
     private void doActualizar_Habilidad(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         try{
-            
+            HttpSession s =  request.getSession( true );
             BufferedReader reader = request.getReader();
             Gson gson = new Gson(); 
             CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class);
@@ -182,9 +184,11 @@ public class Busqueda extends HttpServlet {
             PrintWriter out = response.getWriter();
             C_O.setValor(valor); 
             Model.instance().updateCaracteristicasPuestos ( C_O );
+            Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
             response.setContentType("application/json; charset=UTF-8");
-            System.out.print("doActualizar_Habilidad linea 192");
-            out.write(gson.toJson( C_O ));        
+            s.setAttribute("lista_habilidad", listaHabili);
+            out.write(gson.toJson( C_O ));   
             response.setStatus(200); // ok with content
         }
         catch(Exception e){
