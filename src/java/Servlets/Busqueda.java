@@ -12,8 +12,12 @@ import entidades.CaracteristicasPuestos;
 import entidades.Oferente;
 import entidades.Puestos;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -28,7 +32,7 @@ import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
-                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad"} )
+                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +60,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Actualizar_Habilidad":
                 this.doActualizar_Habilidad (request, response);
+                break;
+            case "/PDF_Add":
+                this.doPDF_Add (request, response);
                 break;
             /*
             case "/ListarCaracteristicas":
@@ -188,7 +195,7 @@ public class Busqueda extends HttpServlet {
             List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
             response.setContentType("application/json; charset=UTF-8");
             s.setAttribute("lista_habilidad", listaHabili);
-            out.write(gson.toJson( C_O ));   
+            out.write(gson.toJson( listaHabili ));   
             response.setStatus(200); // ok with content
         }
         catch(Exception e){
@@ -196,7 +203,26 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
-    
+    private void doPDF_Add(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+       //     HttpSession s =  request.getSession( true );
+            Gson gson = new Gson(); 
+            PrintWriter out = response.getWriter();
+            OutputStream pdfFile = new FileOutputStream (new File( "C:/Users/anderson/Desktop/prueba.pdf"  ));
+            InputStream pdfReader = request.getPart("foto").getInputStream();
+            int read = 0;
+                final byte[] bytes = new byte[1024];
+                while ((read = pdfReader.read(bytes)) != -1) {
+                    pdfFile.write(bytes, 0, read);
+                }
+            pdfFile.close(); 
+            response.setStatus(200); // ok with content
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
     
     
     

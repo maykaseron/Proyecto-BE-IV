@@ -36,15 +36,17 @@
                 <img id="Foto" src="imagenes/fotoPerfilver2.png">
             </div>
             <div class="Conte_Form">
-                <form id="Form_datos">
+                <form id="Form_datos"  method="POST" action="javascript:add();">
                     <br>
                     <label> Nombre </label> <input type="text" disabled="" value=<%= oferente2.getNombreOferente() %>  > 
                     <label> Apellido </label> <input type="text" disabled="" value=<%= oferente2.getPrimerApellido() %> > <br><br>
                     <label> Cédula </label> <input type="text" disabled="" value=<%= oferente2.getCedulaOferente() %> > 
                     <label> Celular </label> <input type="text" disabled="" value=<%= oferente2.getCelular() %> > <br><br>
                     <label class="Label_correo"> Correo </label> <input class="Label_correo" type="text" disabled="" value=<%= oferente2.getCorreoOferente() %> > 
+                     <input type="file" id="PDF" accept="application/pdf">
+                    <input class="boton" type="submit" value="Registrar">
                 </form> 
-                <img id="pdf" src="imagenes/iconPDF.png">
+                <%/* <img id="pdf" src="imagenes/iconPDFsubir.png"> */%>
             </div>
         </div>
                 
@@ -61,7 +63,7 @@
     </div>
     
     <jsp:useBean id="lista_habilidad" scope="session" type="List<CaracteristicasOferente>" class="java.util.List"/>                  
-        <div class="div_tabla_H">
+        <div class="div_tabla_H" >
             <table class="Tabla_hab">
                 <caption> <i> HABILIDADES </i> </caption>
                 <thead> 
@@ -72,7 +74,7 @@
                     </tr>
                 </thead>
 
-                <tbody> <% /* la lista es traida se sesion  */%>
+                <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
                     <% for (CaracteristicasOferente C_O: lista_habilidad) { %>
                     <tr> 
                         <td onclick="editar( <%=C_O.getCaracteristicas().getIdCaracteristica() %> )"> <%= C_O.getCaracteristicas().getHabilidad() %> </td>
@@ -116,20 +118,42 @@ function actualizaHabilidad (){ // actualiza una habilidad, Gson recibe un proto
                       data: JSON.stringify(ID), 
                       dataType:"json",
                       success: 
-                        function( o ){
-                            restaurar( o ); 
+                        function( ){
+                            restaurar( ); 
                         },
                       error: function(status){
                              window.alert("Error");
                         }                    
             }); 
 }
-
-function restaurar ( o ){
+function restaurar (  ){
+    $("#prueba").load(" #prueba");
     $("#nivel").val( "" );
     $("#actualizar").attr('disabled','disabled');
     $("#habildad").val( "" );
 }
+
+ function add(){
+        data=new FormData();
+        data.append("foto",$("#PDF")[0].files[0]);
+            $.ajax({type: "POST", 
+                  url:"PDF_Add", 
+                  data: data,
+                  processData: false,
+                  contentType: false,                  
+                  success: 
+                    function(){
+                        Verif(); 
+                    },
+                  error: function(status){
+                         window.alert("Nooooooooooooooooooooooo");
+                    }                    
+                });      
+  }  
+
+ function Verif(  ){ 
+ }
+
 </script>
     </body>
 </html>
