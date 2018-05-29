@@ -133,4 +133,51 @@ input[type="submit"] {
     left: -.5em;
     border-left-color: #000000;   
 }
+
+
+div.div_tabla_H {
+    width: 80%;
+    background-color:#EDEAF7;
+    display: inline-block;
+    margin-right: 200px;
+}
+
+table.Tabla_hab caption {
+    height: 30px;
+    font-size:20px;
+}
+
+table.Tabla_hab {
+    width: 98%;
+    margin:auto;
+    border-bottom: 10px solid #ececec;
+}
+
+table.Tabla_hab thead, table.Tabla_hab tbody tr {  /* IMPORTANTE */
+    display: table;
+    width: 100%; 
+    table-layout:fixed;
+}
+
+table.Tabla_hab thead tr td {
+    text-align: center;
+    background-color:#6600cc;
+    height: 30px;
+    color:white;
+}
+
+table.Tabla_hab tbody tr td {
+    text-align: center;
+    height: 30px;
+}
+
+table.Tabla_hab tbody tr { /* para la linea verde, ocupa  display: table; width: 100%; table-layout:fixed; */
+    vertical-align:top; 
+    border-top: 1px solid #6600cc;     
+    background-color:#ffffff;
+}
+
+table.Tabla_hab tbody tr:hover {
+    background-color:#EDEAF7;
+}
 /* https://blog.endeos.com/lleva-las-listas-html-al-siguiente-nivel-con-css/ */

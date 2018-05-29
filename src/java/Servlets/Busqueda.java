@@ -142,17 +142,18 @@ public class Busqueda extends HttpServlet {
     private void doBusc_puestos_caracteristicas(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException  {
         try{
-            System.out.print("paso 11");
             Reader caracteristicaReader = request.getReader();
             Gson gson = new Gson();
             CaracteristicasPuestos[] caracteristicaPuest = gson.fromJson(caracteristicaReader, CaracteristicasPuestos[].class); 
             PrintWriter out = response.getWriter();  
+       /*     for ( CaracteristicasPuestos Ca_P: caracteristicaPuest ) {
+                System.out.print(  Ca_P.getCaracteristicas().getIdCaracteristica() );
+            }*/
             List<Puestos> lista = Model.instance().getCaracteristicasPuestosNivelPu( caracteristicaPuest  );
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(lista));
             System.out.print("paso 44");
             response.setStatus(200); // ok with content   
-            response.setStatus(200); // ok with content     
           }
         catch(Exception e){
                 request.setAttribute("error", e.getMessage());

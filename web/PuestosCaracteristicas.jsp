@@ -56,12 +56,30 @@
                     </li>
             <% } %> 
         </ol>
-        
-        
-        
         <form method="POST" action="javascript:buscarPuestos();" accept-charset="utf-8">
-            <input  type="submit" value="Registrar">
+            <input  type="submit" value="Buscar">
         </form>
+        
+        
+        <div class="div_tabla_H" >
+            <table class="Tabla_hab">
+                <caption> <i> HABILIDADES </i> </caption>
+                <thead> 
+                    <tr> 
+                        <td> Habilidad </td>
+                        <td> Nivel </td>
+                        <td> Porcentaje </td>
+                        <td> Habilidad </td>
+                        <td> Nivel </td>
+                    </tr>
+                </thead>
+
+                <tbody id="prueba">
+                   
+                </tbody>
+
+            </table>
+        </div>
     </body>
     
 <script>
@@ -109,29 +127,7 @@ function nivel(id,elmt) {
     listado.removeAttribute("ondblclick");
 }
 
-    /*
-function buscarPuestos(  ) { 
-    var obj = $( ".buscaBusca" );
-    var miArray=new Array();
-    for (i=0; i<obj.length; i++) { 
-        var aux = { idCaracteristica:obj[i].id, valor:obj[i].value };
-        miArray.push(aux);
-    }
-    $.ajax ({ type: "POST", 
-            url:"Busc_puestos_X_caracteristicas", 
-            data: JSON.stringify(aux),
-            dataType:"json",
-            success: 
-                function(obj2){
-                prueba(obj2); 
-            },
-            error: function(status){
-                 window.alert("Error");
-            }                    
-        });
-    document.getElementById("Titulo").style.color= "black";
-}
-*/
+   
 function buscarPuestos(  ) {
     var obj = $( ".buscaBusca" );
     var lista = new Array();
@@ -157,10 +153,14 @@ function buscarPuestos(  ) {
     document.getElementById("Titulo").style.color= "black";
 }
 function prueba (obj) {
+    
     for (i=0; i<obj.length; i++) {
         var ppp = obj[i];
+        var tr =$("<tr />");
+        tr.html("<td>"+ppp.nombrePuesto+"</td>"+
+				"<td>"+ppp.salario+"</td>" );
+        $("#prueba").append(tr);
     }
-    ppp;
     document.getElementById("Titulo").style.color= "red";
 }
 
@@ -200,6 +200,30 @@ function buscar (idCaracteristica ) {
     listado.removeAttribute("onclick");
 }
      */
+    
+     /*
+function buscarPuestos(  ) { 
+    var obj = $( ".buscaBusca" );
+    var miArray=new Array();
+    for (i=0; i<obj.length; i++) { 
+        var aux = { idCaracteristica:obj[i].id, valor:obj[i].value };
+        miArray.push(aux);
+    }
+    $.ajax ({ type: "POST", 
+            url:"Busc_puestos_X_caracteristicas", 
+            data: JSON.stringify(aux),
+            dataType:"json",
+            success: 
+                function(obj2){
+                prueba(obj2); 
+            },
+            error: function(status){
+                 window.alert("Error");
+            }                    
+        });
+    document.getElementById("Titulo").style.color= "black";
+}
+*/
 </script>
 
 </html>

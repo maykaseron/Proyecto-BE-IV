@@ -261,12 +261,13 @@ public class Dao {
             Caracteristicas ec= new Caracteristicas();
             
                 ec.setIdCaracteristica( rs.getInt("idCaracteristica") );
+                ec.setHabilitado( rs.getBoolean( "habilitado" ) );
                 ec.setHabilidad(rs.getString("habilidad"));
                 ec.setPadre( rs.getBoolean( "ifPadre" ) );
-                if ( !ec.isPadre() )
-                    ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );
+                if ( !ec.isPadre() ){
+                    ec.setPapa_carac( this.CaracteristicasGet( rs.getInt("idPadre") ) );}
                 else ec.setPapa_carac (null); 
-                ec.setHabilitado( rs.getBoolean( "habilitado" ) );
+                
                 /*  ec.setAreaTrabajo( rs.getString("areaTrabajo") ); ec.setEspecializacion( rs.getString("especializacion") );*/
             return ec;
         } catch (SQLException ex) {
@@ -399,16 +400,16 @@ public class Dao {
     }
     /*********************PUESTOS********************************/
     
-    private Puestos puestos(ResultSet rs) {
+    private Puestos puestos(ResultSet rs) throws Exception {
         try {
             Puestos ec= new Puestos();
                 ec.setIdPuesto(rs.getInt("idPuesto"));
-                // ec.setEmpresa( this.empresa(rs) );
+                // ec.setEmpresa( this.empresa(rs) ); 29/5/2018 lo agregue 
+                ec.setEmpresa( EmpresaGet(  rs.getInt("idEmp") ) );
                 ec.setNombrePuesto(rs.getString("nombrePuesto"));
                 ec.setSalario(rs.getFloat("salario"));
                 ec.setDescripcionPuesto(rs.getString("descripcionPuesto"));
                 ec.setTipoPublicacion( rs.getBoolean("tipoPublicacion") );
-        
             return ec;
         } catch (SQLException ex) {
             return null;
@@ -463,7 +464,7 @@ public class Dao {
         }
     }
         
-    public List<Puestos> PuestosGetAll() {
+    public List<Puestos> PuestosGetAll() throws Exception {
         Vector<Puestos> estados=new Vector<Puestos>();
         try {
             String sql="select * from puestos";
@@ -508,7 +509,6 @@ public class Dao {
             return null;
         }
     }
-              
     public void CaracteristicasPuestosDelete(CaracteristicasPuestos p) throws Exception{
         String sql="delete from bolsaempleo.CARACTERISTICAS_PUESTOS where consecutivo=%d";
         sql = String.format(sql,p.getConsecutivo() );
@@ -517,7 +517,6 @@ public class Dao {
             throw new Exception("caracteristica no ha sido incluida");
         }
     }
-        
     public void CaracteristicasPuestosAdd(CaracteristicasPuestos p) throws Exception{
         String sql="insert into bolsaempleo.CARACTERISTICAS_PUESTOS (consecutivo , caracteristica , idPuesto,idCaracteristica, "
                 + "valor ) values(?, ?, ?, ? )";
@@ -531,7 +530,6 @@ public class Dao {
       
         preparedStmt.execute();
     }
-            
     public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
         String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
         sql = String.format(sql,codigo);
@@ -543,7 +541,6 @@ public class Dao {
             throw new Exception ("servicio no ha sido publicado");
         }
     }
-    
     public List<CaracteristicasPuestos> CaracteristicasPuestosGetAll(){
         Vector<CaracteristicasPuestos> estados=new Vector<CaracteristicasPuestos>();
         try {
@@ -556,28 +553,49 @@ public class Dao {
         return estados;        
     }
     
-     public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
+    private CaracteristicasPuestos caracteristicasPuestos2(ResultSet rs) throws Exception{
+        try {
+            CaracteristicasPuestos ec= new CaracteristicasPuestos();
+                    ec.setConsecutivo( rs.getInt("consecutivo") );
+                    ec.setValor( rs.getInt("valor") );
+                    ec.setPuesto(  PuestosGet( rs.getInt("idPuesto") ) ); 
+                    ec.setCaracteristicas( this.CaracteristicasGet( rs.getInt( "idCaracteristica" ) ) );
+            return ec;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+    public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
         // para publicos nada mas
         Vector<CaracteristicasPuestos> respuesta=new Vector<CaracteristicasPuestos>();
         Vector<Puestos> puestos = new Vector<Puestos>();
-        CaracteristicasPuestos CP; boolean flag;
+        CaracteristicasPuestos CP; boolean flag =false;
+        int aaa = 0;
         try {
-            String sql="select * from CARACTERISTICAS_PUESTOS";
+            String sql="select * from CARACTERISTICAS_PUESTOS;";
             ResultSet rs =  db.executeQuery(sql);
-            while (rs.next()) {
-                CP = caracteristicasPuestos(rs);
+            while ( rs.next() ) {
+                CP = caracteristicasPuestos2(rs); 
                 for ( CaracteristicasPuestos Ca_P: listaN ) {
-                    if ( CP.getCaracteristicas().getIdCaracteristica() == CP.getCaracteristicas().getIdCaracteristica() ) 
-                        if ( CP.getValor() == Ca_P.getValor() )
-                            flag = true;
-                    else flag = false;
+                    int bbb = Ca_P.getCaracteristicas().getIdCaracteristica();
+                    if ( bbb  == CP.getCaracteristicas().getIdCaracteristica() ) {
+                        if ( CP.getValor() == Ca_P.getValor() ) {
+                            flag = true;System.out.print("paso xxxxxxxxxx");
+                        } 
+                    }
                 }
-                if ( flag = true )
-                    if ( CP.getPuesto().getTipoPublicacion() ) 
+               if ( flag == true ) {
+                    if ( CP.getPuesto().getTipoPublicacion() ) {
+                        System.out.print("paso dddddddddddd");
                         puestos.add( CP.getPuesto() );
+                        flag = false;
+                    }
+                }
             }
         } catch (SQLException ex) { }
-        return null;
+        System.out.print("final");
+        return puestos;
      }
     
     public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
