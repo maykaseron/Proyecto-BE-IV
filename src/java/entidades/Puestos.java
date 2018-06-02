@@ -24,6 +24,7 @@ public class Puestos  implements java.io.Serializable {
     private List<CaracteristicasPuestos> caracteristicasPuestos = new ArrayList();
 
     public Puestos() {
+        
     }
 
     public Puestos(Integer idPuesto, Empresa empresa, String nombrePuesto, Float salario, String descripcionPuesto, Boolean tipoPublicacion) {

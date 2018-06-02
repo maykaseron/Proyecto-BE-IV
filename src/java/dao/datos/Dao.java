@@ -16,7 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 
 
@@ -531,6 +533,7 @@ public class Dao {
         preparedStmt.execute();
     }
     public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
+        // busca CARACTERISTICAS_PUESTOS q tengan el Puesto de interes
         String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
         sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
@@ -565,40 +568,90 @@ public class Dao {
             return null;
         }
     }
-    
+    /*
     public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
         // para publicos nada mas
         Vector<CaracteristicasPuestos> respuesta=new Vector<CaracteristicasPuestos>();
         Vector<Puestos> puestos = new Vector<Puestos>();
+        Puestos puesto;
         CaracteristicasPuestos CP; boolean flag =false;
-        int aaa = 0;
         try {
             String sql="select * from CARACTERISTICAS_PUESTOS;";
             ResultSet rs =  db.executeQuery(sql);
             while ( rs.next() ) {
-                CP = caracteristicasPuestos2(rs); 
-                for ( CaracteristicasPuestos Ca_P: listaN ) {
-                    int bbb = Ca_P.getCaracteristicas().getIdCaracteristica();
-                    if ( bbb  == CP.getCaracteristicas().getIdCaracteristica() ) {
+                CP = caracteristicasPuestos2(rs); // construyo CaracteristicasPuestos
+                for ( CaracteristicasPuestos Ca_P: listaN ) { // busco en lista q llego
+                    // if ( Ca_P.getCaracteristicas().getIdCaracteristica()  == CP.getCaracteristicas().getIdCaracteristica() ) {
+                    if ( Objects.equals(Ca_P.getCaracteristicas().getIdCaracteristica(), CP.getCaracteristicas().getIdCaracteristica()) ) {
                         if ( CP.getValor() == Ca_P.getValor() ) {
-                            flag = true;System.out.print("paso xxxxxxxxxx");
+                            flag = true;
                         } 
                     }
                 }
                if ( flag == true ) {
                     if ( CP.getPuesto().getTipoPublicacion() ) {
-                        System.out.print("paso dddddddddddd");
-                        puestos.add( CP.getPuesto() );
+                        puesto =  CP.getPuesto();
+                        respuesta.add(CP);
+                       // puesto.getCaracteristicasPuestos().add(CP);
+                        puestos.add( puesto );
                         flag = false;
                     }
                 }
             }
-        } catch (SQLException ex) { }
-        System.out.print("final");
+        } catch (SQLException ex) {   }
         return puestos;
+    }
+    */
+    public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
+        // para publicos nada mas
+     //   Vector<CaracteristicasPuestos> ListaCP =new Vector<CaracteristicasPuestos>();
+        Vector<Puestos> puestiños = new Vector<Puestos>();
+        CaracteristicasPuestos CP; boolean flag =false;
+        try {
+            String sql="select * from CARACTERISTICAS_PUESTOS;";
+            ResultSet rs =  db.executeQuery(sql);
+            while ( rs.next() ) {
+                ListTop5 = new ArrayList();
+                CP = caracteristicasPuestos2(rs); // construyo CaracteristicasPuestos
+                for ( CaracteristicasPuestos Ca_P: listaN ) { // busco en lista q llego
+                    // if ( Ca_P.getCaracteristicas().getIdCaracteristica()  == CP.getCaracteristicas().getIdCaracteristica() ) {
+                    if ( Objects.equals(Ca_P.getCaracteristicas().getIdCaracteristica(), CP.getCaracteristicas().getIdCaracteristica()) ) {
+                        if ( CP.getValor() == Ca_P.getValor() ) { //    if ( CP.getValor() >= Ca_P.getValor() ) {
+                            flag = true;
+                        } 
+                    }
+                }
+               if ( flag == true ) {
+                    if ( CP.getPuesto().getTipoPublicacion() ) {
+                        puestiños.add( CP.getPuesto() );
+                        flag = false;
+                    }
+                }
+            }
+        } catch (SQLException ex) {   }
+       return puestiños;
      }
     
+    public List<Puestos> PPPPP (  List<Puestos> listaP  ) throws Exception{
+       try { 
+           String sql="select * from CARACTERISTICAS_PUESTOS";
+            ResultSet rs =  db.executeQuery(sql);
+            CaracteristicasPuestos c;
+             while ( rs.next() ) {
+                c = caracteristicasPuestos(rs); // encontró uno
+                c.setCaracteristicas( this.CaracteristicasGet(keyCarPuesCar) ); // obtengo la caracteristica
+                 for ( int i=0; i<listaP.size(); i++ ) { 
+                     if ( listaP.get(i).getIdPuesto() == c.getPuesto().getIdPuesto() ) 
+                         listaP.get(i).getCaracteristicasPuestos().add(c);
+                 }
+            }
+        } catch (SQLException ex) { }
+       return listaP;
+    }    
+    
+    
     public void CaracteristicasPuestosIDpuesto(int codigo, Puestos p) throws Exception{
+        // es usado por public List<Puestos> ListTop5 ()
        try { // este metodo busca CaracteristicasPuestos q tengan el id del puesto
             String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d;";
             sql = String.format(sql,codigo);
@@ -624,6 +677,7 @@ public class Dao {
             while ( rs.next() ) {
                 ListTop5 = new ArrayList(); // limpio la lista de la busqueda anterior
                 p = this.puestos(rs); // obtengo puestos
+                // el sguiente hace falta o lo quito
                 p.setEmpresa( this.EmpresaGet( rs.getInt( "idEmp" ) ) ); // obtengo la empresa asociada al puesto
                 this.CaracteristicasPuestosIDpuesto ( p.getIdPuesto(), p ); // busca CaracteristicasPuestos q tengan el id del puesto
                 p.setCaracteristicasPuestos ( ListTop5 ); // agrego la lista CaracteristicasPuestos aL puesto

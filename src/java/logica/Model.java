@@ -173,6 +173,10 @@ public class Model {
         return dao.CaracteristicasPuestosNivelPuGet( listaN ); // le llega una lista de los q fueron seleciondados en la pag de caracte
     }
     
+    public  List<Puestos>  pppp ( List<Puestos> listaP ) throws Exception{
+        return dao.PPPPP( listaP ); // le llega una lista de los q fueron seleciondados en la pag de caracte
+    }
+    
     public List<CaracteristicasPuestos> getAllCaracteristicasPuestos () throws Exception{
         return  dao.CaracteristicasPuestosGetAll();
     }

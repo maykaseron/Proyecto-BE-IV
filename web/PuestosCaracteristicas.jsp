@@ -66,18 +66,13 @@
                 <caption> <i> HABILIDADES </i> </caption>
                 <thead> 
                     <tr> 
-                        <td> Habilidad </td>
-                        <td> Nivel </td>
-                        <td> Porcentaje </td>
-                        <td> Habilidad </td>
-                        <td> Nivel </td>
+                        <td> Empresa </td>
+                        <td> Puesto </td>
+                        <td> Salario </td>
                     </tr>
                 </thead>
-
                 <tbody id="prueba">
-                   
                 </tbody>
-
             </table>
         </div>
     </body>
@@ -85,7 +80,7 @@
 <script>
 function loaded(event){
 }
-function buscar (idCaracteristica,elmt ) { 
+function buscar (idCaracteristica,elmt ) { // desplega la lista de CARAC
     carac = { idCaracteristica:idCaracteristica 
             };
     var listado = elmt;
@@ -118,7 +113,7 @@ function lista (obj,listado) { // trae la lista del q se le dio click
         listado.appendChild(ol);
     }
 }
-function nivel(id,elmt) {
+function nivel(id,elmt) { // DOBLE CLICK para escribir el nivel a a buscar 
     carac = { idCaracteristica:id };
     var inp = document.createElement("span"); 
     inp.innerHTML = " <input  type='text' class='buscaBusca' id=\""+carac.idCaracteristica+"\"> ";
@@ -126,7 +121,6 @@ function nivel(id,elmt) {
     listado.appendChild( inp );
     listado.removeAttribute("ondblclick");
 }
-
    
 function buscarPuestos(  ) {
     var obj = $( ".buscaBusca" );
@@ -150,18 +144,19 @@ function buscarPuestos(  ) {
                      window.alert("Error");
                 }                    
             });
-    document.getElementById("Titulo").style.color= "black";
 }
-function prueba (obj) {
-    
+function prueba (obj) { // resultado = lista de puestos
+    if ( obj.length < 1 )
+        window.alert("Sin resultados");
+    else
     for (i=0; i<obj.length; i++) {
         var ppp = obj[i];
         var tr =$("<tr />");
-        tr.html("<td>"+ppp.nombrePuesto+"</td>"+
+        tr.html("<td>"+ppp.empresa.nombreEmp+"</td>"+
+                "<td>"+ppp.nombrePuesto+"</td>"+
 				"<td>"+ppp.salario+"</td>" );
         $("#prueba").append(tr);
     }
-    document.getElementById("Titulo").style.color= "red";
 }
 
 
@@ -223,6 +218,41 @@ function buscarPuestos(  ) {
         });
     document.getElementById("Titulo").style.color= "black";
 }
+    
+    
+     esto estaba en el DAO 
+    public List<Puestos> CaracteristicasPuestosNivelPuGet( CaracteristicasPuestos[] listaN ) throws Exception{ 
+        // para publicos nada mas
+        Vector<CaracteristicasPuestos> respuesta=new Vector<CaracteristicasPuestos>();
+        Vector<Puestos> puestos = new Vector<Puestos>();
+        Puestos puesto;
+        CaracteristicasPuestos CP; boolean flag =false;
+        try {
+            String sql="select * from CARACTERISTICAS_PUESTOS;";
+            ResultSet rs =  db.executeQuery(sql);
+            while ( rs.next() ) {
+                CP = caracteristicasPuestos2(rs); // construyo CaracteristicasPuestos
+                for ( CaracteristicasPuestos Ca_P: listaN ) { // busco en lista q llego
+                    // if ( Ca_P.getCaracteristicas().getIdCaracteristica()  == CP.getCaracteristicas().getIdCaracteristica() ) {
+                    if ( Objects.equals(Ca_P.getCaracteristicas().getIdCaracteristica(), CP.getCaracteristicas().getIdCaracteristica()) ) {
+                        if ( CP.getValor() == Ca_P.getValor() ) {
+                            flag = true;
+                        } 
+                    }
+                }
+               if ( flag == true ) {
+                    if ( CP.getPuesto().getTipoPublicacion() ) {
+                        puesto =  CP.getPuesto();
+                        respuesta.add(CP);
+                       // puesto.getCaracteristicasPuestos().add(CP);
+                        puestos.add( puesto );
+                        flag = false;
+                    }
+                }
+            }
+        } catch (SQLException ex) {   }
+        return puestos;
+     }
 */
 </script>
 

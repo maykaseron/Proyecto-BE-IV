@@ -93,6 +93,11 @@
                   <div class="carousel-caption">
                     <h2 class="animated bounceInDown">  Empesa: <%= p.getEmpresa().getNombreEmp() %>  </h2>
                     <p class="animated bounceInUp"> Nombre Puesto: <%= p.getNombrePuesto() %> </p>
+                    <p class="animated bounceInUp"> Salario: <%= p.getSalario() %> </p>
+                    <% for(CaracteristicasPuestos CP: p.getCaracteristicasPuestos()) {   %>
+                            <p class="animated bounceInUp"> Valor: <%= CP.getValor() %> </p>
+                             <p class="animated bounceInUp"> Habilidad: <%= CP.getCaracteristicas().getHabilidad() %> </p>
+                    <% }   %>
                     <p class="animated bounceInUp" onclick=" detalles2() ">  leer más </p>
                   </div>
                 </div>

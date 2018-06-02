@@ -46,10 +46,10 @@ public class Busqueda extends HttpServlet {
             case "/ListarCaracteristicasPadre":
                 this.doListarCaracteristicasPadre (request, response);
                 break;
-            case "/BuscarCarac":
+            case "/BuscarCarac": // NADA
                 this.doBuscarCarac (request, response);
                 break;    
-            case "/Busc_caracteristicas":
+            case "/Busc_caracteristicas":  // busca los hijos del padre q se lio dio click
                 this.doBusc_caracteristicas (request, response);
                 break; 
             case "/Busc_puestos_X_caracteristicas":
@@ -146,10 +146,8 @@ public class Busqueda extends HttpServlet {
             Gson gson = new Gson();
             CaracteristicasPuestos[] caracteristicaPuest = gson.fromJson(caracteristicaReader, CaracteristicasPuestos[].class); 
             PrintWriter out = response.getWriter();  
-       /*     for ( CaracteristicasPuestos Ca_P: caracteristicaPuest ) {
-                System.out.print(  Ca_P.getCaracteristicas().getIdCaracteristica() );
-            }*/
             List<Puestos> lista = Model.instance().getCaracteristicasPuestosNivelPu( caracteristicaPuest  );
+          //  Model.instance().pppp(lista);
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(lista));
             System.out.print("paso 44");
