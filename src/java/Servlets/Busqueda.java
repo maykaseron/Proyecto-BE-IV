@@ -33,7 +33,7 @@ import logica.Model;
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
-                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad"} )
+                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -67,6 +67,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Elminar_Habilidad":
                 this.doElminar_Habilidad (request, response);
+                break;
+            case "/Listar_Carac_Empresa":
+                this.doListar_Carac_Empresa (request, response);
                 break;
         }
     }
@@ -262,6 +265,22 @@ public class Busqueda extends HttpServlet {
         }
         catch(Exception e){
             ;
+            response.setStatus(401); //Bad request
+        }	
+    }
+    
+     private void doListar_Carac_Empresa(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+            HttpSession s =  request.getSession( true);
+            List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
+            request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();
+            out.write(gson.toJson(ListaCaracterPadres));
+            request.getRequestDispatcher("Publicarpuesto.jsp").forward( request, response);
+        }
+        catch(Exception e){
             response.setStatus(401); //Bad request
         }	
     }

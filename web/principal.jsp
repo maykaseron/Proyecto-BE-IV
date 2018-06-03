@@ -47,8 +47,8 @@
               
             <% } %>
             <%  if (empresa != null ) { %> 
-                <li class="active"> <a href="#"><%= empresa.getNombreEmp() %> </a>  </li>    
-                <li> <a href="registroempresa.jsp"> Publicar puesto </a> </li>
+                <li class="active"> <a href="loginEmpresa.jsp"><%= empresa.getNombreEmp() %> </a>  </li>    
+                <li> <a href="Publicarpuesto.jsp"> Publicar puesto </a> </li>
                 <li> <a href="registroempresa.jsp"> Buscar candidatos </a> </li>
                 <li> <a href="Logout"> Cerrar Sesión </a> </li>
             <% } else { %>

@@ -1,11 +1,10 @@
 <%-- 
-    Document   : AddHabilidades
-    Created on : 02/06/2018, 04:27:48 PM
+    Document   : Publicarpuesto
+    Created on : 03/06/2018, 02:10:31 AM
     Author     : anderson
 --%>
 
 <%@page import="entidades.Caracteristicas"%>
-<%@page import="entidades.CaracteristicasPuestos"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,8 +13,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel = "stylesheet" href = "css/Login.css"> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>       
-        <title>AddHabilidades</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+        <title>Publicar Puesto</title>
     </head>
     <body>
         
@@ -23,13 +22,34 @@
             <div class="container-fluid"> 
                 <ul  class="nav navbar-nav">    
                 <%@ include file="encabezado.jsp" %>
-                <%  if (oferente2 == null) { %> 
+                <%  if (empresa2 == null) { %> 
                     <li><a href="LoginOferente">Iniciar-Sesión</a></li>
                 <% } %>
                 </ul>
             </div>
         </nav> 
         
+        <div class="Conte_AddPuestos">
+            <div class="Conte_Form_AddPuestos">
+                <form id="Form_add_Puestos">
+                    <br>
+                    <label> Nombre Puesto </label> <input type="text" value=""> <br><br>
+                    <label> Salario </label> <input type="text" value=""> <br><br>
+                    <label> Descripcion Puesto </label> <input type="text" value=""> <br><br>
+                    
+                    <table id="TipoPues"> 
+                        <tr> 
+                            <td> <label> Tipo Puesto </label> <td>
+                            <td><label>Publico </label> </td> 
+                            <td><input type="radio" name="elegir" id="empresa" value="Empresa" required> </td> 
+                            <td><label>Privado </label> </td> 
+                            <td><input type="radio" name="elegir" id="oferente" value="Oferente" required> </td> 
+                        </tr>
+                    </table>
+                </form> 
+            </div>
+        </div>
+                
         <!-- copiar el documento busca caracte_puestos.txt dq esta en: C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV -->
         <ol id="lista3">
         <jsp:useBean id="CaracteristicasPadres" scope="request" type="List<Caracteristicas>" beanName="java.util.ArrayList"/>
@@ -41,16 +61,14 @@
                     </li>
             <% } %> 
         </ol>
-        <form method="POST" action="javascript:addHabilidades();" accept-charset="utf-8">
+        <form method="POST" action="javascript:addPuestos();" accept-charset="utf-8">
             <input id="BuscaHabiPadre"  type="submit" value="Agregar">
-        </form>   
-   
+        </form>  
 <script>
 function loaded(event){
 }
 function buscar (idCaracteristica,elmt ) { // desplega la lista de CARAC
-    carac = { idCaracteristica:idCaracteristica 
-            };
+    carac = { idCaracteristica:idCaracteristica };
     var listado = elmt;
     $.ajax ({ method: "POST", 
             url:"Busc_caracteristicas", 
@@ -90,43 +108,7 @@ function nivel(id,elmt) { // DOBLE CLICK para escribir el nivel a a buscar
     listado.appendChild( inp );
     listado.removeAttribute("ondblclick");
 }
-
-function addHabilidades () {
-    var obj = $( ".HabilidadHoja" );
-    var lista = new Array();
-    for (i=0; i<obj.length; i++) { 
-        ID = { idCaracteristica:obj[i].id};
-        car = { valor:obj[i].value,
-            caracteristicas:ID,
-        };
-        lista.push(car);
-    }
-    $.ajax ({ type: "POST", 
-            url:"Habilidades_Add", 
-            data: JSON.stringify(lista), 
-            dataType:"json",
-            "success": 
-                    function(obj2){
-                    prueba(obj2); 
-                },
-             "error": function(status){
-                     window.alert("???");
-                }                    
-            });
-    $( "#lista3" );
-}
-function prueba (obj) { // resultado = lista de puestos
-    if ( obj.length < 1 )
-        window.alert("Sin resultados");
-    else
-    for (i=0; i<obj.length; i++) {
-        var ppp = obj[i];
-        $( ".HabilidadHoja" );
-    }
-}
-
 document.addEventListener("DOMContentLoaded",loaded);
 </script>
-        
     </body>
 </html>

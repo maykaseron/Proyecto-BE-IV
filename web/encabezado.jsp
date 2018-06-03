@@ -8,9 +8,9 @@
     <!-- CUIDADO SO LO PUEDE ESTAR ABIERTA UNA SESION  -->
     <%  if (empresa2 != null ) { %> 
         <li id="Titulo"> ImaJobs </li>
-        <li>  <%= empresa2.getNombreEmp() %> </li>    
+        <li> <a href="loginEmpresa.jsp"> <%= empresa2.getNombreEmp() %> </a></li>    
         <li> <a href="Top5"> Principal </a> </li>
-        <li> <a href="registroempresa.jsp"> Publicar puesto </a> </li>
+        <li> <a href="Listar_Carac_Empresa"> Publicar puesto </a> </li>
         <li> <a href="registroempresa.jsp"> Buscar candidatos </a> </li>
         <li> <a href="Logout"> Cerrar Sesión </a> </li>
     <% } %>
