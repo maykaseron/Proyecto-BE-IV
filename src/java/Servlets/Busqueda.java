@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
+import entidades.Empresa;
 import entidades.Oferente;
 import entidades.Puestos;
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ import logica.Model;
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
-                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa"} )
+                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -70,6 +71,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Listar_Carac_Empresa":
                 this.doListar_Carac_Empresa (request, response);
+                break;
+            case "/Puestos_Add":
+                this.doPuestos_Add (request, response);
                 break;
         }
     }
@@ -285,6 +289,31 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
+     
+     private void doPuestos_Add (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+            HttpSession s =  request.getSession( true);
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            CaracteristicasPuestos[] ListaC_O  = gson.fromJson(reader, CaracteristicasPuestos[].class);
+            PrintWriter out = response.getWriter();
+            Empresa emp =  (Empresa) s.getAttribute("Login_Empresa"); 
+            for ( CaracteristicasPuestos CO : ListaC_O ) { 
+                //CO.setPuesto();
+                emp.getContrasena();
+            }
+            List<CaracteristicasOferente> listaHabili = new ArrayList();
+            response.setContentType("application/json; charset=UTF-8");
+            //s.setAttribute("lista_Puestos", listaHabili);
+            out.write(gson.toJson( listaHabili ));   
+            response.setStatus(200); // ok with content
+        }
+        catch(Exception e){
+            System.out.println( "linea 240" );
+            response.setStatus(401); //Bad request
+        }	
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

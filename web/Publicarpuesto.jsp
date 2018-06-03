@@ -31,11 +31,11 @@
         
         <div class="Conte_AddPuestos">
             <div class="Conte_Form_AddPuestos">
-                <form id="Form_add_Puestos">
+                <form id="Form_add_Puestos" action="javascript:addPuestos();">
                     <br>
-                    <label> Nombre Puesto </label> <input type="text" value=""> <br><br>
-                    <label> Salario </label> <input type="text" value=""> <br><br>
-                    <label> Descripcion Puesto </label> <input type="text" value=""> <br><br>
+                    <label> Nombre Puesto </label> <input type="text" value="" required="" id="NombreP"> <br><br>
+                    <label> Salario </label> <input type="text" value="" required="" id="SalarioP"> <br><br>
+                    <label> Descripcion Puesto </label> <input type="text" value="" required="" id="DescP"> <br><br>
                     
                     <table id="TipoPues"> 
                         <tr> 
@@ -46,6 +46,9 @@
                             <td><input type="radio" name="elegir" id="oferente" value="Oferente" required> </td> 
                         </tr>
                     </table>
+                    <br>
+                    <input id="BuscaHabiPadre"  type="submit" value="Agregar">
+                </form>  
                 </form> 
             </div>
         </div>
@@ -61,9 +64,7 @@
                     </li>
             <% } %> 
         </ol>
-        <form method="POST" action="javascript:addPuestos();" accept-charset="utf-8">
-            <input id="BuscaHabiPadre"  type="submit" value="Agregar">
-        </form>  
+        
 <script>
 function loaded(event){
 }
@@ -107,6 +108,47 @@ function nivel(id,elmt) { // DOBLE CLICK para escribir el nivel a a buscar
     var listado = elmt;
     listado.appendChild( inp );
     listado.removeAttribute("ondblclick");
+}
+
+function addPuestos () {
+    var obj = $( ".HabilidadHoja" );
+    var lista = new Array();
+    for (i=0; i<obj.length; i++) { 
+        ID = { idCaracteristica:obj[i].id};
+        car = { valor:obj[i].value,
+            caracteristicas:ID,
+        };
+        lista.push(car);
+    }/*
+    puesto = { nombrePuesto:$("nombreP").val(),
+        salario:$("$salarioP").val();
+        tipoPublicacion:true
+    };
+    data=new FormData();
+    data.append( "persona",JSON.stringify(persona) );*/
+    $.ajax ({ type: "POST", 
+            url:"Puestos_Add", 
+            data: JSON.stringify(lista), 
+            dataType:"json",
+            "success": 
+                    function(obj2){
+                    prueba(obj2); 
+                },
+             "error": function(status){
+                     window.alert("???");
+                }                    
+            });
+    $( "#lista3" );
+}
+
+function prueba (obj) { // resultado = lista de puestos
+    if ( obj.length < 1 )
+        window.alert("Sin resultados");
+    else
+    for (i=0; i<obj.length; i++) {
+        var ppp = obj[i];
+        $( ".HabilidadHoja" );
+    }
 }
 document.addEventListener("DOMContentLoaded",loaded);
 </script>
