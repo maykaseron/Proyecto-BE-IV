@@ -86,14 +86,12 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p onclick="eliminar( <%=C_O.getIdCO() %> )">Seguro</p>
+            <p id="POPup" onclick="eliminar( )"> Seguro </p>
         </div>
     </div>
                     
                     </tr> <% } %>  
-    
                 </tbody>
-
             </table>
         </div>
      
@@ -166,8 +164,8 @@ function restaurar (  ){
  function Verif(  ){
      
 }
-function eliminar (id) { // el ID de Caracteristica Oferente
-     ID = { idCO:id };
+function eliminar ( ) { // el ID de Caracteristica Oferente
+     ID = { idCO:$("#POPup").attr("name")  };
      $.ajax ({ type: "POST", 
             url:"Elminar_Habilidad", 
             data: JSON.stringify( ID ), 
@@ -183,17 +181,12 @@ function eliminar (id) { // el ID de Caracteristica Oferente
 }
 var modal = document.getElementById('myModal');
 function popUp (id) { // el ID de Caracteristica Oferente
-   
+    ID = { idCO:id };
     modal.style.display = "block";
-    /*
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-         */
+    $("#POPup").attr("name", ID.idCO)
 }
 var span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
+span.onclick = function() {
         modal.style.display = "none";
     };
 window.onclick = function(event) {
