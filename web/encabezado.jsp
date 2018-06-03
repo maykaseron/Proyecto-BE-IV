@@ -18,7 +18,7 @@
         <li id="Titulo"> ImaJobs </li>
         <li> <a href="loginOferente.jsp"> <%= oferente2.getNombreOferente() %> </a> </li>
         <li> <a href="Top5"> Principal </a> </li>
-        <li> <a href="AddHabilidades.jsp"> Habilidades </a> </li>
+        <li> <a href="Lista_Habilidades_Add"> Habilidades </a> </li>
         <li> <a href="Logout"> Salir </a> </li>
     <% } %>
     

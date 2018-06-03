@@ -71,6 +71,7 @@
                         <td> Habilidad </td>
                         <td> Nivel </td>
                         <td> Porcentaje </td>
+                        <td> Eliminar </td>
                     </tr>
                 </thead>
 
@@ -80,11 +81,23 @@
                         <td onclick="editar( <%=C_O.getCaracteristicas().getIdCaracteristica() %> )"> <%= C_O.getCaracteristicas().getHabilidad() %> </td>
                         <td> <%= C_O.getValor()  %> </td>
                         <td> % </td>
+                        <td onclick="popUp( <%=C_O.getIdCO() %> )"> <img id="delete" src="imagenes/delete.png"> </td>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p onclick="eliminar( <%=C_O.getIdCO() %> )">Seguro</p>
+        </div>
+    </div>
+                    
                     </tr> <% } %>  
+    
                 </tbody>
 
             </table>
         </div>
+     
+                
 <script>
 function editar ( id ) { // CaracteristicasOferente nivel
     C_O = {idCaracteristica:id
@@ -150,9 +163,44 @@ function restaurar (  ){
                     }                    
                 });      
   }  
-
- function Verif(  ){ 
- }
+ function Verif(  ){
+     
+}
+function eliminar (id) { // el ID de Caracteristica Oferente
+     ID = { idCO:id };
+     $.ajax ({ type: "POST", 
+            url:"Elminar_Habilidad", 
+            data: JSON.stringify( ID ), 
+            dataType:"json",
+            success: 
+                function(){
+                restaurar( ); 
+            },
+            error: function(status){
+                 window.alert("Error");
+            }                    
+        });
+}
+var modal = document.getElementById('myModal');
+function popUp (id) { // el ID de Caracteristica Oferente
+   
+    modal.style.display = "block";
+    /*
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+         */
+}
+var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
 
 </script>
     </body>

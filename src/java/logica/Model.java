@@ -153,7 +153,6 @@ public class Model {
        return dao.ListTop5();
     }
     */
-      
     
     /*********************CARACTERISTICAS PUESTOS********************************/
     
@@ -191,6 +190,18 @@ public class Model {
     
     /********************* CARACTERISTICAS OFERENTE ---- CARACTERISTICAS OFERENTE
      * @param cedula ********************************/
+    public void addCaracteristicasOferentes (CaracteristicasOferente p) throws Exception{
+        dao.CaracteristicasOferentesAdd(p);
+    }
+     
+    public  void updateCaracteristicasPuestos (CaracteristicasOferente idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
+         dao.CaracteristicasOferenteUpdate ( idCar );
+    }
+    
+    public void deleteCaracteristicasOferentes (int ID) throws Exception{
+        dao.CaracteristicasOferentesDelete( ID );
+    }
+    
     public List<CaracteristicasOferente>  getAllCaracteristicasPuestosCed (String cedula)throws Exception{//trae todos los q tienen esa cedula
         return  dao.CaracteristicasOferenteGetCed( cedula );
     }
@@ -199,7 +210,7 @@ public class Model {
         return  dao.CaracteristicasOferenteGetIdCar ( idCar );
     }
     
-    public  void updateCaracteristicasPuestos (CaracteristicasOferente idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
-         dao.CaracteristicasOferenteUpdate ( idCar );
-    }
+    
+    
+   
 }

@@ -32,27 +32,22 @@ import logica.Model;
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
-                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add"} )
+                "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
+                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ListaEspecializacion = new ArrayList();
-        ListaPuetos = new ArrayList();
         switch(request.getServletPath()){ 
             case "/Top5":
                 this.doTop5(request, response); 
                 break;
             case "/ListarCaracteristicasPadre":
                 this.doListarCaracteristicasPadre (request, response);
-                break;
-            case "/BuscarCarac": // NADA
-                this.doBuscarCarac (request, response);
-                break;    
             case "/Busc_caracteristicas":  // busca los hijos del padre q se lio dio click
                 this.doBusc_caracteristicas (request, response);
                 break; 
-            case "/Busc_puestos_X_caracteristicas":
+            case "/Busc_puestos_X_caracteristicas": // cuando se la de doble click este busca
                 this.doBusc_puestos_caracteristicas (request, response);
                 break;
             case "/Habilidad_edit":
@@ -64,16 +59,15 @@ public class Busqueda extends HttpServlet {
             case "/PDF_Add":
                 this.doPDF_Add (request, response);
                 break;
-            /*
-            case "/ListarCaracteristicas":
-                this.doListarCaracteristicas (request, response);
+            case "/Lista_Habilidades_Add":
+                this.doLista_Habilidades_Add (request, response);
                 break;
-            case "/BuscarCaracterAreaTrabajo":
-                this.doBuscarPorCaracteriscas (request, response);
+            case "/Habilidades_Add":
+                this.doHabilidades_Add (request, response);
                 break;
-            case "/BuscarPuestosPorEspecial":
-                this.doBuscarPuestosPorEspecial (request, response);
-                break;*/
+            case "/Elminar_Habilidad":
+                this.doElminar_Habilidad (request, response);
+                break;
         }
     }
     
@@ -99,20 +93,6 @@ public class Busqueda extends HttpServlet {
             Gson gson = new Gson();
             PrintWriter out = response.getWriter();
             out.write(gson.toJson(ListaCaracterPadres));
-            request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
-          }
-        catch(Exception e){
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("registrooferente.jsp").forward(request, response);
-          }	
-    }
-    
-    private void doBuscarCarac(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException  {
-        try{
-            //int areaTrabajo = Integer.parseInt( request.getParameter( "aaa" ) );
-            //List<Caracteristicas>  ListaCaracterHijos = Model.instance().getBuscarCaracteristicas(areaTrabajo);
-            //request.setAttribute( "CaracteristicasHijos", ListaCaracterHijos );  
             request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
           }
         catch(Exception e){
@@ -223,84 +203,68 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    List<Caracteristicas> ListaEspecializacion;
-    List<Caracteristicas> listaAreaTrabajo; List<CaracteristicasPuestos> ListaPuetos;
-    private void doListarCaracteristicas(HttpServletRequest request, HttpServletResponse response)
+    private void doLista_Habilidades_Add(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         try{
-            ListaEspecializacion = new ArrayList();
-            ListaPuetos = new ArrayList();
             HttpSession s =  request.getSession( true);
-          /*listaAreaTrabajo = Model.instance().getCaracteristicasAreaTrabajo();*/
-            request.setAttribute("listaAreaTrabajo", listaAreaTrabajo);
-            
-            request.setAttribute("listaEspecializacion",ListaEspecializacion); 
-            request.setAttribute( "listaPuestos", ListaPuetos ); 
-            
-            request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
-          }
+            List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
+            request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();
+            out.write(gson.toJson(ListaCaracterPadres));
+            request.getRequestDispatcher("AddHabilidades.jsp").forward( request, response);
+        }
         catch(Exception e){
-                request.getRequestDispatcher("principal.jsp").forward(request, response);
-          }	
+            response.setStatus(401); //Bad request
+        }	
     }
     
-    private void doBuscarPorCaracteriscas(HttpServletRequest request, HttpServletResponse response) 
-             throws ServletException, IOException  {
+    private void doHabilidades_Add (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
         try{
             HttpSession s =  request.getSession( true);
-            String areaTrabajo = request.getParameter( "areaTrabajo" );
-            System.out.println(areaTrabajo);
-        /*    ListaEspecializacion = Model.instance().getCaracteristicasEspecializ(areaTrabajo);*/
-            request.setAttribute("listaEspecializacion",ListaEspecializacion);
-            
-            request.setAttribute("listaAreaTrabajo", listaAreaTrabajo);
-            request.setAttribute( "listaPuestos", ListaPuetos );
-            
-            request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
-          }
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            CaracteristicasOferente[] ListaC_O  = gson.fromJson(reader, CaracteristicasOferente[].class);
+            PrintWriter out = response.getWriter();
+            Oferente ofe = (Oferente) s.getAttribute("Login_Oferente"); 
+            for ( CaracteristicasOferente CO : ListaC_O ) { 
+                CO.setOferente(ofe);
+                Model.instance().addCaracteristicasOferentes(CO );
+            }
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( ofe.getCedulaOferente() );
+            response.setContentType("application/json; charset=UTF-8");
+            s.setAttribute("lista_habilidad", listaHabili);
+            out.write(gson.toJson( listaHabili ));   
+            response.setStatus(200); // ok with content
+        }
         catch(Exception e){
-                request.getRequestDispatcher("principal.jsp").forward(request, response);
-          }	
+            System.out.println( "linea 240" );
+            response.setStatus(401); //Bad request
+        }	
     }
     
-    private void doBuscarPuestosPorEspecial(HttpServletRequest request, HttpServletResponse response)  
-        throws ServletException, IOException  {
+    private void doElminar_Habilidad (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
         try{
             HttpSession s =  request.getSession( true);
-            request.setAttribute("listaAreaTrabajo", listaAreaTrabajo);
-            request.setAttribute("listaEspecializacion",ListaEspecializacion); 
-            
-            String especialización = request.getParameter( "especializacion" );
-          /*  ListaPuetos = Model.instance().getPuestosPorCaracteristicas( especialización );*/
-            request.setAttribute( "listaPuestos", ListaPuetos );
-            request.getRequestDispatcher("PuestosCaracteristicas.jsp").forward( request, response);
-          }
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson();  
+            CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class); System.out.println( C_O.getIdCO() );
+            Model.instance().deleteCaracteristicasOferentes( C_O.getIdCO() );
+            PrintWriter out = response.getWriter();
+            Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
+            response.setContentType("application/json; charset=UTF-8");
+            s.setAttribute("lista_habilidad", listaHabili);
+            out.write(gson.toJson( listaHabili ));   
+            response.setStatus(200); // ok with content
+        }
         catch(Exception e){
-                request.getRequestDispatcher("principal.jsp").forward(request, response);
-          }	
-        
+            ;
+            response.setStatus(401); //Bad request
+        }	
     }
-    
-    
-    
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

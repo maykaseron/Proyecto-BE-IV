@@ -741,6 +741,50 @@ public class Dao {
         }
     }
     
+    public void CaracteristicasOferentesAdd ( CaracteristicasOferente p ) throws SQLException, Exception {
+        String sql="insert into CARACTERISTICAS_OFERENTE ( valor,cedulaOferente,idCaracteristica ) "
+                + "values(%d, '%s','%s');";
+        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+        sql=String.format( sql, p.getValor(),p.getOferente().getCedulaOferente(),p.getCaracteristicas().getIdCaracteristica() );
+        System.out.println( sql );
+        int count=db.executeUpdate(sql);
+        if (count ==0 ){ // 0 == existe
+            throw new Exception("Existe una cuenta con la misma cédula");
+        }
+    }
+    /*
+    public void CaracteristicasOferentesAdd ( CaracteristicasOferente p ) throws SQLException {
+        String sql="insert into bolsaempleo.CARACTERISTICAS_OFERENTE ( valor,cedulaOferente,idCaracteristica ) "
+                + "values(?, ?, ?)";
+        //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+        db.getConnection();
+        PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
+        preparedStmt.setInt( 1,  p.getValor() );
+        preparedStmt.setString ( 2,  p.getOferente().getCedulaOferente() );
+        preparedStmt.setInt ( 3,  p.getCaracteristicas().getIdCaracteristica() );
+        preparedStmt.execute();
+    }
+    */
+    public void CaracteristicasOferenteUpdate (CaracteristicasOferente c) throws Exception {
+        String sql="update bolsaempleo.CARACTERISTICAS_OFERENTE set valor='%s' where idCaracteristica=%d;";
+        sql = String.format(sql,c.getValor(), c.getCaracteristicas().getIdCaracteristica());
+        int count=db.executeUpdate(sql);
+        if (count ==0 ){ // 0 == existe
+            throw new Exception("error CaracteristicasOferenteUpdate");
+        }
+    }
+    
+    public void CaracteristicasOferentesDelete(int ID) throws Exception {
+         String sql="delete from CARACTERISTICAS_OFERENTE where idCO=%d";
+        sql = String.format(sql,ID);
+        System.out.println( ID );
+        int count=db.executeUpdate(sql);
+        if (count==0){
+            System.out.println("CaracteristicasOferentesDelete X.X linea 769");
+            throw new Exception("empresa no existe");
+        }
+    }
+    
     public List<CaracteristicasOferente> CaracteristicasOferenteGetCed (String cedula) throws Exception {
         Vector<CaracteristicasOferente> ListCarOfe = new Vector<CaracteristicasOferente>();
         try { // busca todos los Car_Ofe con esa cedula, lo uso en el servlet de registro para "set" de la lista q tiene Oferente
@@ -766,14 +810,7 @@ public class Dao {
         }   else {   throw new Exception ("error en CaracteristicasOferenteGetIdCar"); }
     }
     
-    public void CaracteristicasOferenteUpdate (CaracteristicasOferente c) throws Exception {
-        String sql="update bolsaempleo.CARACTERISTICAS_OFERENTE set valor='%s' where idCaracteristica=%d;";
-        sql = String.format(sql,c.getValor(), c.getCaracteristicas().getIdCaracteristica());
-        int count=db.executeUpdate(sql);
-        if (count ==0 ){ // 0 == existe
-            throw new Exception("error CaracteristicasOferenteUpdate");
-        }
-    }
+    
     
     /*
     int count=db.executeUpdate(sql);
@@ -781,4 +818,6 @@ public class Dao {
                 throw new Exception("Existe una cuenta con la misma cédula");
             }
     */
+
+   
 }
