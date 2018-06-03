@@ -147,7 +147,7 @@ public class Busqueda extends HttpServlet {
             Gson gson = new Gson(); 
             Caracteristicas Car = gson.fromJson(reader, Caracteristicas.class);
             PrintWriter out = response.getWriter();
-            CaracteristicasOferente C_O = Model.instance().getCaracteristicasPuestosIdCar( Car.getIdCaracteristica() );
+            CaracteristicasOferente C_O = Model.instance().getCaracteristicasOferenteIdCar( Car.getIdCaracteristica() );
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson( C_O ));        
             response.setStatus(200); // ok with content
@@ -166,12 +166,12 @@ public class Busqueda extends HttpServlet {
             Gson gson = new Gson(); 
             CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class);
             int valor = C_O.getValor();
- C_O = Model.instance().getCaracteristicasPuestosIdCar( C_O.getCaracteristicas().getIdCaracteristica() );
+ C_O = Model.instance().getCaracteristicasOferenteIdCar( C_O.getCaracteristicas().getIdCaracteristica() );
             PrintWriter out = response.getWriter();
             C_O.setValor(valor); 
-            Model.instance().updateCaracteristicasPuestos ( C_O );
+            Model.instance().updateCaracteristicasOferente ( C_O );
             Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
-            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( oferente.getCedulaOferente() );
             response.setContentType("application/json; charset=UTF-8");
             s.setAttribute("lista_habilidad", listaHabili);
             out.write(gson.toJson( listaHabili ));   
@@ -232,7 +232,7 @@ public class Busqueda extends HttpServlet {
                 CO.setOferente(ofe);
                 Model.instance().addCaracteristicasOferentes(CO );
             }
-            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( ofe.getCedulaOferente() );
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( ofe.getCedulaOferente() );
             response.setContentType("application/json; charset=UTF-8");
             s.setAttribute("lista_habilidad", listaHabili);
             out.write(gson.toJson( listaHabili ));   
@@ -254,7 +254,7 @@ public class Busqueda extends HttpServlet {
             Model.instance().deleteCaracteristicasOferentes( C_O.getIdCO() );
             PrintWriter out = response.getWriter();
             Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
-            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( oferente.getCedulaOferente() );
             response.setContentType("application/json; charset=UTF-8");
             s.setAttribute("lista_habilidad", listaHabili);
             out.write(gson.toJson( listaHabili ));   

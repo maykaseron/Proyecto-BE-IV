@@ -148,11 +148,10 @@ public class Model {
     public List<Puestos> getAllPuestos() throws Exception {
         return  dao.PuestosGetAll();
     }
-    /*
-    public List<Puestos> ListTop5() throws Exception{
-       return dao.ListTop5();
+    
+    public List<Puestos> getAllPuestosIDEmpresa( int ID ) throws Exception{
+       return dao.PuestosIDEmpresaGetAll(ID);
     }
-    */
     
     /*********************CARACTERISTICAS PUESTOS********************************/
     
@@ -164,8 +163,8 @@ public class Model {
         dao.CaracteristicasPuestosAdd(p);
     }
       
-    public CaracteristicasPuestos getCaracteristicasPuestos (int id1) throws Exception{
-        return dao.CaracteristicasPuestosGet(id1);
+    public List<CaracteristicasPuestos> getALLPuestoCaracteristicasPuestos (int id1) throws Exception{
+        return dao.CaracteristicasPuestosGetALLPuesto(id1);
     }
     
     public  List<Puestos>  getCaracteristicasPuestosNivelPu ( CaracteristicasPuestos[] listaN ) throws Exception{
@@ -194,7 +193,7 @@ public class Model {
         dao.CaracteristicasOferentesAdd(p);
     }
      
-    public  void updateCaracteristicasPuestos (CaracteristicasOferente idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
+    public  void updateCaracteristicasOferente (CaracteristicasOferente idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
          dao.CaracteristicasOferenteUpdate ( idCar );
     }
     
@@ -202,11 +201,11 @@ public class Model {
         dao.CaracteristicasOferentesDelete( ID );
     }
     
-    public List<CaracteristicasOferente>  getAllCaracteristicasPuestosCed (String cedula)throws Exception{//trae todos los q tienen esa cedula
+    public List<CaracteristicasOferente>  getAllCaracteristicasOferenteCed (String cedula)throws Exception{//trae todos los q tienen esa cedula
         return  dao.CaracteristicasOferenteGetCed( cedula );
     }
     
-    public  CaracteristicasOferente getCaracteristicasPuestosIdCar (int idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
+    public  CaracteristicasOferente getCaracteristicasOferenteIdCar (int idCar)throws Exception{//trae el q tiene ese Idcar (solo puede haber uno)
         return  dao.CaracteristicasOferenteGetIdCar ( idCar );
     }
     

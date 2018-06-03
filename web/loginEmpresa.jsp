@@ -4,6 +4,9 @@
     Author     : anderson
 --%>
 
+<%@page import="entidades.Puestos"%>
+<%@page import="java.util.List"%>
+<%@page import="entidades.CaracteristicasPuestos"%>
 <%@page import="entidades.Empresa"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,16 +43,40 @@
                 <img src="imagenes/fotoPerfil.png">
             </div>
             <div class="Conte_Form">
-                <form id="Form_datos">
+                <form id="Form_datos_Emp">
                     <br>
-                    <label> Empresa </label> <input type="text" > <br><br>
-                    <label> Telefono </label> <input type="text" > <br><br>
-                    <label> Correo </label> <input type="text" > <br><br>
-                    <label> Descripcion </label> <input type="text" > <br><br>
+                    <label> Empresa </label> <input type="text" disabled="" value=<%= empresa.getNombreEmp() %> > <br><br>
+                    <label> Telefono </label> <input type="text" disabled="" value=<%= empresa.getTeléfono() %> > <br><br>
+                    <label> Correo </label> <input type="text" disabled="" value=<%= empresa.getCorreoEmp() %> > <br><br>
                 </form> 
             </div>
         </div>
-                
+        
+        <jsp:useBean id="lista_Puestos" scope="session" type="List<Puestos>" class="java.util.List"/>                  
+        <div class="div_tabla_H" >
+            <table class="Tabla_hab">
+                <caption> <i> PUESTOS </i> </caption>
+                <thead> 
+                    <tr> 
+                        <td> Nombre </td>
+                        <td> Puesto </td>
+                        <td> Caracteristica </td>
+                        <td> % </td>
+                    </tr>
+                </thead>
+
+                <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
+                    <% for (Puestos p: lista_Puestos) { int flag=0; %>
+                    <% for (CaracteristicasPuestos CP: p.getCaracteristicasPuestos()) { %>
+                        <tr> 
+                            <td> <%= p.getNombrePuesto() %> </td>
+                            <td> <%= p.getSalario()  %> </td>
+                            <td> <%= CP.getCaracteristicas().getHabilidad()  %> </td>
+                            <td> <%= CP.getValor()  %> </td>
+                        </tr> <% } %> <% } %>   
+                </tbody>
+            </table>
+        </div>
 <script>
 
 </script>

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import entidades.CaracteristicasOferente;
 import entidades.Empresa;
 import entidades.Oferente;
+import entidades.Puestos;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -116,7 +117,12 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Empresa empresa = gson.fromJson(reader, Empresa.class);
             PrintWriter out = response.getWriter(); 
             empresa = Model.instance().getEmpresaLogin( empresa );
+            List<Puestos> listaPuestos = Model.instance().getAllPuestosIDEmpresa ( empresa.getIdEmp() );
+            for ( Puestos p : listaPuestos ) {
+                p.setCaracteristicasPuestos( Model.instance().getALLPuestoCaracteristicasPuestos(p.getIdPuesto()) );
+            }
             s.setAttribute("Login_Empresa", empresa);
+            s.setAttribute("lista_Puestos", listaPuestos);
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(empresa)); 
             response.setStatus(200);
@@ -127,7 +133,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
           response.setStatus(401); //Bad request
       }	
     }
-    
     private void doLoginOferente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             HttpSession s =  request.getSession( true );
@@ -136,7 +141,7 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Oferente oferente = gson.fromJson(reader, Oferente.class);
             PrintWriter out = response.getWriter(); 
             oferente = Model.instance().getOferenteLogin(oferente);
-            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasPuestosCed( oferente.getCedulaOferente() );
+            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( oferente.getCedulaOferente() );
             oferente.setListaCaracteristicasOferente( listaHabili );
             s.setAttribute("Login_Oferente", oferente);
             s.setAttribute("lista_habilidad", listaHabili);

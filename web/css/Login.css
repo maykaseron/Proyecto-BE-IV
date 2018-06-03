@@ -57,11 +57,14 @@ div.Conte_Datos label{ display: inline-block;
     text-align: left;
     color: #000000;
     height: 21px;
-    width: 60px;
+    width: 65px;
     font-family:'Sofia', cursive;
 }
 div.Conte_Foto  { float:left; }
 
+div.Conte_Datos #Form_datos_Emp {
+    float:left
+}
 img#pdf {
    float:right;
     margin-right:17px;

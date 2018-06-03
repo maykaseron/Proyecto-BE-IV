@@ -477,25 +477,20 @@ public class Dao {
         } catch (SQLException ex) { }
         return estados;        
     }
-    /*
-    public List<Puestos> ListTop5 () throws Exception {
-        List<Puestos> resultado = new ArrayList<>();
-           try {
-            String sql="select * from Puestos p inner join CARACTERISTICAS_PUESTOS c on p.idPuesto=c.consecutivo order "
-                    + "by p.idPuesto desc limit 5;";
+    
+    public List<Puestos> PuestosIDEmpresaGetAll (int IDem) throws Exception {
+        Vector<Puestos> estados=new Vector<Puestos>();
+        try {
+            String sql="select * from puestos where idEmp=%d";
+            sql = String.format(sql, IDem );
             ResultSet rs =  db.executeQuery(sql);
-            Puestos p;
-            CaracteristicasPuestos c;
             while (rs.next()) {
-                p = puestos(rs);
-                //c = this.caracteristicasPuestos(rs);
-                //p.setEmpresa(empresa(rs));
-                resultado.add(p);
+                estados.add(puestos(rs));
             }
         } catch (SQLException ex) { }
-        return resultado;
+        return estados;        
     }
-    */
+    
     
     /*********************CARACTERISTICAS PUESTOS********************************/
     int keyCarPuesCar;
@@ -532,17 +527,17 @@ public class Dao {
       
         preparedStmt.execute();
     }
-    public CaracteristicasPuestos CaracteristicasPuestosGet(int codigo) throws Exception{
+    public List<CaracteristicasPuestos> CaracteristicasPuestosGetALLPuesto(int codigo) throws Exception{
         // busca CARACTERISTICAS_PUESTOS q tengan el Puesto de interes
+        Vector<CaracteristicasPuestos> List_CP=new Vector<CaracteristicasPuestos>();
         String sql="select * from CARACTERISTICAS_PUESTOS where idPuesto=%d";
         sql = String.format(sql,codigo);
         ResultSet rs =  db.executeQuery(sql);
-        if (rs.next()) {
-            return caracteristicasPuestos(rs);
+        CaracteristicasPuestos ec= new CaracteristicasPuestos();
+        while (rs.next()) {
+            List_CP.add( caracteristicasPuestos2(rs) );
         }
-        else{
-            throw new Exception ("servicio no ha sido publicado");
-        }
+        return List_CP;
     }
     public List<CaracteristicasPuestos> CaracteristicasPuestosGetAll(){
         Vector<CaracteristicasPuestos> estados=new Vector<CaracteristicasPuestos>();

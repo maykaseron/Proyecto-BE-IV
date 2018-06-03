@@ -72,7 +72,7 @@ CREATE TABLE CARACTERISTICAS_OFERENTE (  /* CARACTERISTICAS_INCLUIDOS se llamaba
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',4,90);
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',3,80);
 
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','ama@gm.com','86546','1');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','1','86546','1');
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1');
 insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('Pali','San jose','Oportunidades','pp','86546','1');
 insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVista','8888','Nicaragua','a','PriCrater','1');
