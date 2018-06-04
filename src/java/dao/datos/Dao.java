@@ -447,9 +447,9 @@ public class Dao {
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
         preparedStmt.setString(1, p.getNombrePuesto());
         preparedStmt.setInt (2, p.getEmpresa().getIdEmp() );
-        preparedStmt.setFloat (2, p.getSalario());
-        preparedStmt.setString (3, p.getDescripcionPuesto());
-        preparedStmt.setBoolean(4, p.getTipoPublicacion() );
+        preparedStmt.setFloat (3, p.getSalario());
+        preparedStmt.setString (4, p.getDescripcionPuesto());
+        preparedStmt.setBoolean(5, p.getTipoPublicacion() );
         
        preparedStmt.execute();
     }
@@ -741,7 +741,6 @@ public class Dao {
                 + "values(%d, '%s','%s');";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         sql=String.format( sql, p.getValor(),p.getOferente().getCedulaOferente(),p.getCaracteristicas().getIdCaracteristica() );
-        System.out.println( sql );
         int count=db.executeUpdate(sql);
         if (count ==0 ){ // 0 == existe
             throw new Exception("Existe una cuenta con la misma cédula");

@@ -30,11 +30,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logica.Model;
+import javax.servlet.annotation.MultipartConfig;
+
+@MultipartConfig
 
 // "/ListarCaracteristicas","/BuscarCaracterAreaTrabajo","/BuscarPuestosPorEspecial"
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
-                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add"} )
+                "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add",
+                "/Listar_Carac_Candidatos"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -74,6 +78,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Puestos_Add":
                 this.doPuestos_Add (request, response);
+                break;
+            case "/Listar_Carac_Candidatos":
+                this.doListar_Carac_Candidatos (request, response);
                 break;
         }
     }
@@ -289,8 +296,40 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
+    private void doPuestos_Add (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+            HttpSession s =  request.getSession( true); 
+            Empresa emp =  (Empresa) s.getAttribute("Login_Empresa"); 
+                                      
+            Reader lista = new BufferedReader(new InputStreamReader( request.getPart("listaPuestos").getInputStream()) );
+            Gson gson = new Gson();  
+            CaracteristicasPuestos[] ListaC_O  = gson.fromJson(lista, CaracteristicasPuestos[].class);
+            PrintWriter out = response.getWriter();
+            
+            Reader Readpuesto = new BufferedReader(new InputStreamReader( request.getPart("puesto").getInputStream()) );
+            Puestos puesto = gson.fromJson(Readpuesto, Puestos.class);
+            puesto.setEmpresa(emp);
+            System.out.println( puesto.getTipoPublicacion() ); 
+            
+            Model.instance().addPuestos(puesto);
+            
+            for ( CaracteristicasPuestos CO : ListaC_O ) { 
+                emp.getContrasena();
+            }
+           
+            
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson( ListaC_O ));   
+            response.setStatus(200); // ok with content
+        }
+        catch(Exception e){
+            System.out.println( "linea 240" );
+            response.setStatus(401); //Bad request
+        }	
+    }
      
-     private void doPuestos_Add (HttpServletRequest request, HttpServletResponse response)
+    private void doPuestos_Addver1 (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         try{
             HttpSession s =  request.getSession( true);
@@ -314,6 +353,20 @@ public class Busqueda extends HttpServlet {
             response.setStatus(401); //Bad request
         }	
     }
+    
+    private void doListar_Carac_Candidatos (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  {
+        try{
+            HttpSession s =  request.getSession( true);
+            List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
+            request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
+            request.getRequestDispatcher("BuscarCandidatos<.jsp").forward( request, response);
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -354,9 +407,7 @@ public class Busqueda extends HttpServlet {
     }// </editor-fold>
 
     
-
     
-
     
 
 }

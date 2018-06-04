@@ -48,13 +48,13 @@
             <% } %>
             <%  if (empresa != null ) { %> 
                 <li class="active"> <a href="loginEmpresa.jsp"><%= empresa.getNombreEmp() %> </a>  </li>    
-                <li> <a href="Publicarpuesto.jsp"> Publicar puesto </a> </li>
-                <li> <a href="registroempresa.jsp"> Buscar candidatos </a> </li>
+                <li> <a href="Listar_Carac_Empresa"> Publicar puesto </a> </li>
+                <li> <a href="Listar_Carac_Candidatos"> Buscar candidatos </a> </li>
                 <li> <a href="Logout"> Cerrar Sesión </a> </li>
             <% } else { %>
             <%  if (oferente != null) { %> 
                 <li class="active"> <a href="loginOferente.jsp"> <%= oferente.getNombreOferente() %> </a> </li>
-                <li> <a href=""> Habilidades </a> </li>
+                <li> <a href="Lista_Habilidades_Add"> Habilidades </a> </li>
                 <li> <a href="Logout"> Salir </a> </li>
             <% } }%>
            </ul>        

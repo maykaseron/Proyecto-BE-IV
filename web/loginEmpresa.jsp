@@ -14,7 +14,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel = "stylesheet" href = "css/Login.css">
-        <script type="text/javascript" src="js/ajax.js"></script>   
         <title>LoginEmpresa</title>
     </head>
     

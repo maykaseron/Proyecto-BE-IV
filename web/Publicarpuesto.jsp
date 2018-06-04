@@ -28,10 +28,10 @@
                 </ul>
             </div>
         </nav> 
-        
+    <form id="Form_add_Puestos" action="javascript:addPuestos();" method="POST">     
         <div class="Conte_AddPuestos">
             <div class="Conte_Form_AddPuestos">
-                <form id="Form_add_Puestos" action="javascript:addPuestos();">
+                
                     <br>
                     <label> Nombre Puesto </label> <input type="text" value="" required="" id="NombreP"> <br><br>
                     <label> Salario </label> <input type="text" value="" required="" id="SalarioP"> <br><br>
@@ -48,8 +48,7 @@
                     </table>
                     <br>
                     <input id="BuscaHabiPadre"  type="submit" value="Agregar">
-                </form>  
-                </form> 
+               
             </div>
         </div>
                 
@@ -64,7 +63,7 @@
                     </li>
             <% } %> 
         </ol>
-        
+     </form>      
 <script>
 function loaded(event){
 }
@@ -119,17 +118,19 @@ function addPuestos () {
             caracteristicas:ID,
         };
         lista.push(car);
-    }/*
-    puesto = { nombrePuesto:$("nombreP").val(),
-        salario:$("$salarioP").val();
-        tipoPublicacion:true
+    }
+    puesto = { nombrePuesto:$("#NombreP").val(),
+                tipoPublicacion:true,
+                salario:$("#SalarioP").val(),
     };
     data=new FormData();
-    data.append( "persona",JSON.stringify(persona) );*/
+    data.append( "listaPuestos",JSON.stringify(lista) );
+    data.append("puesto",JSON.stringify(puesto) );
     $.ajax ({ type: "POST", 
             url:"Puestos_Add", 
-            data: JSON.stringify(lista), 
-            dataType:"json",
+            data: data,
+            processData: false,
+            contentType: false, 
             "success": 
                     function(obj2){
                     prueba(obj2); 
