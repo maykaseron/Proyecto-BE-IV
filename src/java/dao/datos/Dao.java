@@ -804,14 +804,25 @@ public class Dao {
         }   else {   throw new Exception ("error en CaracteristicasOferenteGetIdCar"); }
     }
     
-    
-    
-    /*
-    int count=db.executeUpdate(sql);
-            if (count ==0 ){ // 0 == existe
-                throw new Exception("Existe una cuenta con la misma cédula");
+    public List<Oferente> CaracteristicasOferentesNivelPuGet( CaracteristicasOferente[] listaN ) throws Exception{ 
+        // busca Candidatos segun las caracteristicas
+        Vector<Oferente> listaO = new Vector<Oferente>();
+        CaracteristicasOferente CO; boolean flag =false;
+        try {
+            String sql="select * from CARACTERISTICAS_OFERENTE;";
+            ResultSet rs =  db.executeQuery(sql);
+            while ( rs.next() ) {
+                CO = caracteristicasOferente(rs); // construyo CaracteristicasOferente
+                for ( CaracteristicasOferente Ca_O: listaN ) { // busco en lista q llego
+                    if ( Objects.equals(Ca_O.getCaracteristicas().getIdCaracteristica(), CO.getCaracteristicas().getIdCaracteristica()) ) {
+                        if ( CO.getValor() == Ca_O.getValor() ) { //    if ( CO.getValor() >= Ca_O.getValor() ) {
+                            listaO.add( CO.getOferente() );
+                        } 
+                    }
+                }
             }
-    */
-
+        } catch (SQLException ex) {   }
+       return listaO;
+     }
    
 }

@@ -209,7 +209,9 @@ public class Model {
         return  dao.CaracteristicasOferenteGetIdCar ( idCar );
     }
     
-    
+    public List<Oferente> getCaracteristicasOferentesNivelPu( CaracteristicasOferente[] listaN ) throws Exception  {
+        return dao.CaracteristicasOferentesNivelPuGet(listaN);
+    }
     
    
 }

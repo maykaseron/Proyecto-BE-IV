@@ -136,11 +136,11 @@ function buscarPuestos(  ) {
                 url:"Busc_puestos_X_caracteristicas", 
                 data: JSON.stringify(lista), 
                 dataType:"json",
-                success: 
+                "success": 
                     function(obj2){
                     prueba(obj2); 
                 },
-                error: function(status){
+                "error": function(status){
                      window.alert("Error");
                 }                    
             });

@@ -58,7 +58,7 @@
             <% for(Caracteristicas L_CPad: CaracteristicasPadres){   %>
                     <li id="cuadro"> 
                         <p   
-                           onclick="buscar(<%= L_CPad.getIdCaracteristica()  %>,this )" > 
+                           onclick="buscar(<%= L_CPad.getIdCaracteristica() %>,this )" > 
                             <%= L_CPad.getHabilidad() %>  </p>
                     </li>
             <% } %> 
@@ -68,7 +68,8 @@
 function loaded(event){
 }
 function buscar (idCaracteristica,elmt ) { // desplega la lista de CARAC
-    carac = { idCaracteristica:idCaracteristica };
+    carac = { idCaracteristica:idCaracteristica 
+            };
     var listado = elmt;
     $.ajax ({ method: "POST", 
             url:"Busc_caracteristicas", 
@@ -109,7 +110,7 @@ function nivel(id,elmt) { // DOBLE CLICK para escribir el nivel a a buscar
     listado.removeAttribute("ondblclick");
 }
 
-function addPuestos () {
+function addHabilidades () {
     var obj = $( ".HabilidadHoja" );
     var lista = new Array();
     for (i=0; i<obj.length; i++) { 
@@ -119,18 +120,10 @@ function addPuestos () {
         };
         lista.push(car);
     }
-    puesto = { nombrePuesto:$("#NombreP").val(),
-                tipoPublicacion:true,
-                salario:$("#SalarioP").val(),
-    };
-    data=new FormData();
-    data.append( "listaPuestos",JSON.stringify(lista) );
-    data.append("puesto",JSON.stringify(puesto) );
     $.ajax ({ type: "POST", 
-            url:"Puestos_Add", 
-            data: data,
-            processData: false,
-            contentType: false, 
+            url:"Habilidades_Add", 
+            data: JSON.stringify(lista), 
+            dataType:"json",
             "success": 
                     function(obj2){
                     prueba(obj2); 
@@ -141,7 +134,6 @@ function addPuestos () {
             });
     $( "#lista3" );
 }
-
 function prueba (obj) { // resultado = lista de puestos
     if ( obj.length < 1 )
         window.alert("Sin resultados");
@@ -151,6 +143,7 @@ function prueba (obj) { // resultado = lista de puestos
         $( ".HabilidadHoja" );
     }
 }
+
 document.addEventListener("DOMContentLoaded",loaded);
 </script>
     </body>

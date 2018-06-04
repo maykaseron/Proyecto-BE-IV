@@ -38,7 +38,7 @@ import javax.servlet.annotation.MultipartConfig;
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
                 "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add",
-                "/Listar_Carac_Candidatos"} )
+                "/Listar_Carac_Candidatos", "/Buscar_Carac_Candidatos"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -55,32 +55,35 @@ public class Busqueda extends HttpServlet {
             case "/Busc_puestos_X_caracteristicas": // cuando se la de doble click este busca
                 this.doBusc_puestos_caracteristicas (request, response);
                 break;
-            case "/Habilidad_edit":
+            case "/Habilidad_edit":       // edita habilidad Oferente
                 this.doHabilidad_edit (request, response);
                 break;
-            case "/Actualizar_Habilidad":
+            case "/Actualizar_Habilidad": // actualiza habilidad -Oferent
                 this.doActualizar_Habilidad (request, response);
                 break;
-            case "/PDF_Add":
+            case "/PDF_Add":            // agrega PDF -Oferent
                 this.doPDF_Add (request, response);
                 break;
-            case "/Lista_Habilidades_Add":
+            case "/Lista_Habilidades_Add": // lista caracteris Padre -Oferente para Agregar Habilidades
                 this.doLista_Habilidades_Add (request, response);
                 break;
-            case "/Habilidades_Add":
+            case "/Habilidades_Add":  // agrega habilidades -Oferente
                 this.doHabilidades_Add (request, response);
                 break;
-            case "/Elminar_Habilidad":
+            case "/Elminar_Habilidad":  // eliminar habilidad -Oferenre
                 this.doElminar_Habilidad (request, response);
                 break;
-            case "/Listar_Carac_Empresa":
+            case "/Listar_Carac_Empresa": // lista caracteris Padre -Empresa para Publicar Puesto
                 this.doListar_Carac_Empresa (request, response);
                 break;
-            case "/Puestos_Add":
+            case "/Puestos_Add": // agrega puestos      -Empresa
                 this.doPuestos_Add (request, response);
                 break;
-            case "/Listar_Carac_Candidatos":
+            case "/Listar_Carac_Candidatos":  // lista caracteris Padre -Empresa Para  Buscar Candidatos
                 this.doListar_Carac_Candidatos (request, response);
+                break;
+            case "/Buscar_Carac_Candidatos":  // busca Oferentes sehun caracteris -Empresa 
+                this.doBuscar_Carac_Candidatos (request, response);
                 break;
         }
     }
@@ -199,10 +202,11 @@ public class Busqueda extends HttpServlet {
     private void doPDF_Add(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         try{
-       //     HttpSession s =  request.getSession( true );
+            HttpSession s =  request.getSession( true );
+            Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
             Gson gson = new Gson(); 
-            PrintWriter out = response.getWriter();
-            OutputStream pdfFile = new FileOutputStream (new File( "C:/Users/anderson/Desktop/prueba.pdf"  ));
+            PrintWriter out = response.getWriter(); 
+            OutputStream pdfFile = new FileOutputStream (new File( getServletContext().getRealPath("/")+"imagenes/"+oferente.getCedulaOferente()+".pdf" )); 
             InputStream pdfReader = request.getPart("foto").getInputStream();
             int read = 0;
                 final byte[] bytes = new byte[1024];
@@ -210,6 +214,7 @@ public class Busqueda extends HttpServlet {
                     pdfFile.write(bytes, 0, read);
                 }
             pdfFile.close(); 
+            out.write(gson.toJson( oferente ));   
             response.setStatus(200); // ok with content
         }
         catch(Exception e){
@@ -239,7 +244,7 @@ public class Busqueda extends HttpServlet {
             HttpSession s =  request.getSession( true);
             BufferedReader reader = request.getReader();
             Gson gson = new Gson(); 
-            CaracteristicasOferente[] ListaC_O  = gson.fromJson(reader, CaracteristicasOferente[].class);
+            CaracteristicasOferente[] ListaC_O  = gson.fromJson(reader, CaracteristicasOferente[].class);System.out.print("245");
             PrintWriter out = response.getWriter();
             Oferente ofe = (Oferente) s.getAttribute("Login_Oferente"); 
             for ( CaracteristicasOferente CO : ListaC_O ) { 
@@ -264,7 +269,7 @@ public class Busqueda extends HttpServlet {
             HttpSession s =  request.getSession( true);
             BufferedReader reader = request.getReader();
             Gson gson = new Gson();  
-            CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class); System.out.println( C_O.getIdCO() );
+            CaracteristicasOferente C_O  = gson.fromJson(reader, CaracteristicasOferente.class); 
             Model.instance().deleteCaracteristicasOferentes( C_O.getIdCO() );
             PrintWriter out = response.getWriter();
             Oferente oferente = (Oferente) s.getAttribute("Login_Oferente");
@@ -280,7 +285,7 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
-     private void doListar_Carac_Empresa(HttpServletRequest request, HttpServletResponse response)
+    private void doListar_Carac_Empresa(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         try{
             HttpSession s =  request.getSession( true);
@@ -354,18 +359,46 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
-    private void doListar_Carac_Candidatos (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException  {
+    private void doListar_Carac_Candidatos (HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException  {  // lista caracteris Padre -Empresa Para  Buscar Candidatos
         try{
             HttpSession s =  request.getSession( true);
             List<Caracteristicas>  ListaCaracterPadres = Model.instance().getAllCaracteristicasPadres();
             request.setAttribute( "CaracteristicasPadres", ListaCaracterPadres ); 
-            request.getRequestDispatcher("BuscarCandidatos<.jsp").forward( request, response);
+            Gson gson = new Gson();
+            PrintWriter out = response.getWriter();
+            out.write(gson.toJson(ListaCaracterPadres));
+            request.getRequestDispatcher("BuscarCandidatos.jsp").forward( request, response);
         }
         catch(Exception e){
             response.setStatus(401); //Bad request
         }	
     }
+    
+    private void doBuscar_Carac_Candidatos(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  { // busca Oferentes segun caracteris -Empresa 
+        try{
+            HttpSession s =  request.getSession( true);
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            CaracteristicasOferente[] ListaC_O  = gson.fromJson(reader, CaracteristicasOferente[].class);
+            PrintWriter out = response.getWriter();   System.out.print("383");
+            List<Oferente> lista = Model.instance().getCaracteristicasOferentesNivelPu( ListaC_O  );
+            response.setContentType("application/json; charset=UTF-8");
+            out.write(gson.toJson(lista));
+            System.out.print("paso 44");
+            response.setStatus(200); // ok with content   
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
+    
+    /*
+    Reader caracteristicaReader = request.getReader();
+            Gson gson = new Gson();
+            CaracteristicasPuestos[] caracteristicaPuest = gson.fromJson(caracteristicaReader, CaracteristicasPuestos[].class); 
+    */
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
