@@ -6,6 +6,7 @@
 package Servlets;
 
 import com.google.gson.Gson;
+import entidades.Administrador;
 import entidades.CaracteristicasOferente;
 import entidades.Empresa;
 import entidades.Oferente;
@@ -24,7 +25,7 @@ import logica.Model;
 
                 /* POR AHORA ESTE NOMBRE     */
 @WebServlet(name = "AdministrarEmpresa", urlPatterns = {"/AddEmpresa", "/AddOferente", "/LoginEmpresa","/LoginOferente",
-    "/Logout"})
+    "/Logout", "/LoginAdministrador"})
 public class Registros extends HttpServlet {
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -42,6 +43,9 @@ public class Registros extends HttpServlet {
                 break;
             case "/LoginOferente":
                 this.doLoginOferente (request, response); 
+                break;
+            case "/LoginAdministrador":
+                this.doLoginAdministrador (request, response); 
                 break;
             case "/Logout":
                 this.doLogout (request, response); 
@@ -147,6 +151,28 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             s.setAttribute("lista_habilidad", listaHabili);
             response.setContentType("application/json; charset=UTF-8"); 
             out.write(gson.toJson(oferente)); 
+            response.setStatus(200);
+      }
+      catch(Exception e){	
+          request.setAttribute("error",e.getMessage());
+          response.setStatus(401); //Bad request
+          request.getRequestDispatcher("principal.jsp").forward( request, response);
+      }	
+    }
+    
+    private void doLoginAdministrador(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            System.out.println( "asdadss" );
+            HttpSession s =  request.getSession( true );
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson();
+            Administrador administrador = gson.fromJson(reader, Administrador.class);
+            PrintWriter out = response.getWriter(); 
+            administrador = Model.instance().getAdministradorLogin(administrador);
+
+            s.setAttribute("Login_Administrador", administrador);
+            response.setContentType("application/json; charset=UTF-8"); 
+            out.write(gson.toJson(administrador));
             response.setStatus(200);
       }
       catch(Exception e){	

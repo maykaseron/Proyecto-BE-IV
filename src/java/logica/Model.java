@@ -6,6 +6,7 @@
 package logica;
 
 import dao.datos.Dao;
+import entidades.Administrador;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
@@ -213,5 +214,10 @@ public class Model {
         return dao.CaracteristicasOferentesNivelPuGet(listaN);
     }
     
-   
+    
+     /********************* ADMINISTRADOR  ---- ADMINISTRADOR ADMINISTRADOR                                     */
+    
+     public Administrador getAdministradorLogin( Administrador a ) throws Exception{
+        return dao.AdministradorLogin( a );
+    }
 }

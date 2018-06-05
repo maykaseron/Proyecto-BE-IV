@@ -5,6 +5,7 @@
  */
 package dao.datos;
 
+import entidades.Administrador;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
@@ -828,5 +829,24 @@ public class Dao {
         } catch (SQLException ex) {   }
        return listaO;
      }
+    
+    
+    private Administrador administrador(ResultSet rs) throws Exception{
+        Administrador ec= new Administrador();
+            ec.setCorreoAdministrador( rs.getString("correoAdministrador") );
+            ec.setNombreAdministrador( rs.getString("nombreAdministrador") );
+            ec.setCedulaAdministrador( rs.getString("cedulaAdministrador") );
+            ec.setContrasena( rs.getString("contrasena") );
+        return ec;
+    }
+    
+    public Administrador AdministradorLogin(Administrador a) throws SQLException, Exception {
+        String sql="select * from Administrador a where a.correoAdministrador='%s' and a.contrasena='%s'";
+        sql = String.format( sql,a.getCorreoAdministrador() , a.getContrasena());
+        System.out.println( sql );
+        ResultSet rs =  db.executeQuery(sql);
+        rs.next();
+        return administrador(rs); 
+    }
    
 }

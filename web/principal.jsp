@@ -117,6 +117,8 @@
                         <td><input type="radio" name="elegir" id="empresa" value="Empresa" required> </td> 
                         <td><label>Oferente </label> </td> 
                         <td><input type="radio" name="elegir" id="oferente" value="Oferente" required> </td> 
+                        <td><label>Administrador </label> </td> 
+                        <td><input type="radio" name="elegir" id="administrador" value="Administrador" required> </td> 
                     </tr>
                 </table>
                 <input type="submit" value="Iniciar sesión" >
@@ -173,9 +175,27 @@ function login () {
               }
          );
     }
+    if ( document.getElementById("administrador").checked ) {                
+        administrador = { correoAdministrador:document.getElementById("correo").value,
+                    contrasena:document.getElementById("contraseña").value  };
+         ajax ( { "method": "POST", 
+                 "url":"LoginAdministrador", 
+                 "data": administrador, 
+                 "success": 
+                    function(obj){
+                    document.getElementById("formulario").reset();
+                    redireccionar3();
+                    },
+                 "error": function(status) {
+                        redireccionarError ();
+                 }                    
+              }
+         );
+    }
 }
 function redireccionar () { this.window.location.replace ( "loginEmpresa.jsp" ); }
 function redireccionar2 () { this.window.location.replace ( "loginOferente.jsp" ); }
+function redireccionar3 () { this.window.location.replace ( "loginAdministrador.jsp" ); }
 function redireccionarError () { this.window.location.replace ( "Top5" ); }
 
 document.addEventListener("DOMContentLoaded",loaded);

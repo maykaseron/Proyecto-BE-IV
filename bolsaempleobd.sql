@@ -70,6 +70,18 @@ CREATE TABLE CARACTERISTICAS_OFERENTE (  /* CARACTERISTICAS_INCLUIDOS se llamaba
 
         CONSTRAINT PK_CARAC_PUESTOS PRIMARY KEY(idCO)
 );
+
+CREATE TABLE ADMINISTRADOR (  /* CARACTERISTICAS_INCLUIDOS se llamaba así */
+		correoAdministrador varchar (15),
+        nombreAdministrador varchar (15),
+		cedulaAdministrador varchar (15),
+        contrasena varchar(10) not null,
+
+        CONSTRAINT PK_ADMINISTRADOR PRIMARY KEY(cedulaAdministrador)
+);
+
+insert into ADMINISTRADOR (correoAdministrador,nombreAdministrador,cedulaAdministrador, contrasena )  value ('1', 'Anderson' ,'2', '2' );
+
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',4,90);
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',3,80);
 
