@@ -76,7 +76,7 @@
                         <tr>
                             <td> <%= e.getNombreEmp() %> </td>
                             <td> <%= e.getCorreoEmp()  %> </td>
-                            <td onclick="desactivar( <%= e.getAprobado() %>,<%= e.getIdEmp() %> )"> <%= e.getAprobado()  %> </td>
+                            <td onclick="aprobarEmp( <%= e.getAprobado() %>,<%= e.getIdEmp() %> )"> <%= e.getAprobado()  %> </td>
                             <td> <%= e.getTeléfono() %>  </td>
                         </tr>
                     <% } %>   
@@ -92,6 +92,26 @@ function aprobarOfe(apro, id) {
         $.ajax({type: "POST", 
                   url:"Admi_Aprobar_Oferente", 
                   data: JSON.stringify(ofer), 
+                  dataType:"json",
+                  success: 
+                    function(obj){
+                        show(obj); 
+                    },
+                  error: function(status){
+                         window.alert("Error");
+                    }                    
+                });   
+    }
+}
+
+function aprobarEmp(apro, id) {
+    empr = { aprobado:apro,
+        idEmp:id
+    };
+    if ( empr.aprobado === false ) {
+        $.ajax({type: "POST", 
+                  url:"Admi_Aprobar_Empresa", 
+                  data: JSON.stringify(empr), 
                   dataType:"json",
                   success: 
                     function(obj){

@@ -39,7 +39,8 @@ import javax.servlet.annotation.MultipartConfig;
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
                 "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add",
-                "/Listar_Carac_Candidatos", "/Buscar_Carac_Candidatos", "/Desactivar_Puesto", "/Admi_Aprobar_Oferente"} )
+                "/Listar_Carac_Candidatos", "/Buscar_Carac_Candidatos", "/Desactivar_Puesto", "/Admi_Aprobar_Oferente", 
+                "/Admi_Aprobar_Empresa"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -91,6 +92,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Admi_Aprobar_Oferente":  // busca Oferentes segun caracteris -Empresa 
                 this.doAdmi_Aprobar_Oferente  (request, response);
+                break;
+            case "/Admi_Aprobar_Empresa":  // busca Oferentes segun caracteris -Empresa 
+                this.doAdmi_Aprobar_Empresa  (request, response);
                 break;
         }
     }
@@ -438,11 +442,8 @@ public class Busqueda extends HttpServlet {
             Gson gson = new Gson(); 
             PrintWriter out = response.getWriter();  
             Oferente ofer  = gson.fromJson(reader, Oferente.class); 
-            System.out.println("11111111111");
             ofer = Model.instance().getOferente( ofer.getCedulaOferente() );
-            System.out.println("22222222222");
             ofer.setAprobado(true);
-             System.out.println("3333");
             Model.instance().updateOferente(ofer);
             
             
@@ -459,6 +460,32 @@ public class Busqueda extends HttpServlet {
         }	
     }
     
+    
+    private void doAdmi_Aprobar_Empresa(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  { // busca Oferentes segun caracteris -Empresa 
+        try{
+            HttpSession s =  request.getSession( true);
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            PrintWriter out = response.getWriter();  
+            Empresa empr  = gson.fromJson(reader, Empresa.class); 
+            empr = Model.instance().getEmpresa( empr.getIdEmp() );
+            empr.setAprobado(true);
+            Model.instance().updateEmpresa(empr);
+            
+            
+            Administrador admi = (Administrador) s.getAttribute("Login_Administrador");
+            admi.setListaEmpresaNuevos( Model.instance().getAllEmpresaAprobar() );
+            s.setAttribute("Login_Administrador_Empresa", admi.getListaEmpresaNuevos() );
+            
+            out.write(gson.toJson(empr));
+            
+            response.setStatus(200); // ok with content   
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

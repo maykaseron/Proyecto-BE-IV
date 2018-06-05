@@ -56,7 +56,7 @@ public class Dao {
      
     public void EmpresaUpdate(Empresa p) throws Exception{
         String sql="update bolsaempleo.empresa set nombreEmp='%s', ubicacionEmp='%s', descripcionEmp='%s', correoEmp='%s', "
-                + "telefono='%s' aprobado='%b' where idEmp=%d";
+                + "telefono='%s', aprobado=%b where idEmp=%d";
         sql=String.format(sql,p.getNombreEmp(),
                 p.getUbicacionEmp(),p.getDescripcionEmp(),p.getCorreoEmp(),  p.getTeléfono(),p.getAprobado(), p.getIdEmp() );
         System.out.println(sql);
@@ -65,7 +65,6 @@ public class Dao {
             throw new Exception("empresa no existe");
         }
     }
-              
               
     public void EmpresaDelete(Empresa p) throws Exception{
         String sql="delete from bolsaempleo.empresa where idEmp='%s'";
