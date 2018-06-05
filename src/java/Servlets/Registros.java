@@ -172,13 +172,18 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             HttpSession s =  request.getSession( true );
             BufferedReader reader = request.getReader();
             Gson gson = new Gson();
-            Administrador administrador = gson.fromJson(reader, Administrador.class);
+            Administrador admi = gson.fromJson(reader, Administrador.class);
             PrintWriter out = response.getWriter(); 
-            administrador = Model.instance().getAdministradorLogin(administrador);
-
-            s.setAttribute("Login_Administrador", administrador);
+            admi = Model.instance().getAdministradorLogin(admi);
+            
+            admi.setListaOferentesNuevos( Model.instance().getAllOferenteDesaprobados() );
+            admi.setListaEmpresaNuevos( Model.instance().getAllEmpresaAprobar() );
+            
+            s.setAttribute("Login_Administrador_Oferentes", admi.getListaOferentesNuevos() );
+            s.setAttribute("Login_Administrador_Empresa", admi.getListaEmpresaNuevos() );
+            s.setAttribute("Login_Administrador", admi);
             response.setContentType("application/json; charset=UTF-8"); 
-            out.write(gson.toJson(administrador));
+            out.write(gson.toJson(admi));
             response.setStatus(200);
       }
       catch(Exception e){	

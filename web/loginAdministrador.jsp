@@ -4,6 +4,8 @@
     Author     : anderson
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="entidades.Administrador"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,41 +29,63 @@
                 </ul>
             </div>
         </nav>
-    
+        
+        <jsp:useBean id="Login_Administrador_Oferentes" scope="session" type="List<Oferente>" class="java.util.List"/>        
         <div class="div_tabla_H" >
             <table class="Tabla_hab">
-                <caption> <i> PUESTOS </i> </caption>
+                <caption> <i> Oferentes Por Aprobar </i> </caption>
                 <thead> 
                     <tr> 
                         <td> Nombre </td>
-                        <td> Puesto </td>
+                        <td> Correo </td>
                         <td> Estado </td>
-                        <td> Caracteristica </td>
-                        <td> % </td>
+                        <td> Cedula </td>
+                        <td> Celular </td>
                     </tr>
                 </thead>
                 <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
-                    <% for (Puestos p: lista_Puestos) {  %>
-                    <% if (  p.getCaracteristicasPuestos().size() == 0 ) { %> 
+                    <% for (Oferente o: Login_Administrador_Oferentes) {  %>
                         <tr>
-                            <td> <%= p.getNombrePuesto() %> </td>
-                            <td> <%= p.getSalario()  %> </td>
-                            <td onclick="desactivar( <%= p.getActivo() %>,<%= p.getIdPuesto() %> )"> <%= p.getActivo()  %> </td>
-                            <td> Por agregar </td>
-                            <td> Por agregar </td>
+                            <td> <%= o.getNombreOferente() %> </td>
+                            <td> <%= o.getCorreoOferente()  %> </td>
+                            <td onclick="desactivar( <%= o.getAprobado() %>,<%= o.getContrasena() %> )"> <%= o.getAprobado()  %> </td>
+                            <td> <%= o.getCedulaOferente() %>  </td>
+                            <td> <%= o.getCelular() %>  </td>
                         </tr>
-                    <% } else %>
-                    <% for (CaracteristicasPuestos CP: p.getCaracteristicasPuestos()) { %>
-                        <tr> 
-                            <td> <%= p.getNombrePuesto() %> </td>
-                            <td> <%= p.getSalario()  %> </td>
-                            <td onclick="desactivar( <%= p.getActivo() %>,<%= p.getIdPuesto() %> )"> <%= p.getActivo()  %> </td>
-                            <td> <%= CP.getCaracteristicas().getHabilidad()  %> </td>
-                            <td> <%= CP.getValor()  %> </td>
-                        </tr> <% } %> <% } %>   
+                    <% } %>   
                 </tbody>
             </table>
         </div>        
+        
+                <br><br>
+        
+        <jsp:useBean id="Login_Administrador_Empresa" scope="session" type="List<Empresa>" class="java.util.List"/>        
+        <div class="div_tabla_H" >
+            <table class="Tabla_hab">
+                <caption> <i> Oferentes Por Aprobar </i> </caption>
+                <thead> 
+                    <tr> 
+                        <td> Nombre </td>
+                        <td> Correo </td>
+                        <td> Estado </td>
+                        <td> Cedula </td>
+                        <td> Celular </td>
+                    </tr>
+                </thead>
+                <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
+                    <% for (Oferente o: Login_Administrador_Oferentes) {  %>
+                        <tr>
+                            <td> <%= o.getNombreOferente() %> </td>
+                            <td> <%= o.getCorreoOferente()  %> </td>
+                            <td onclick="desactivar( <%= o.getAprobado() %>,<%= o.getContrasena() %> )"> <%= o.getAprobado()  %> </td>
+                            <td> <%= o.getCedulaOferente() %>  </td>
+                            <td> <%= o.getCelular() %>  </td>
+                        </tr>
+                    <% } %>   
+                </tbody>
+            </table>
+        </div>    
+                
                 
     </body>
 </html>

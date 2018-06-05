@@ -225,7 +225,7 @@ public class Model {
         return  dao.OferenteDesaprobadosGetAll(  );
     }
     
-    public List<Empresa>  getAllEmpresaDesaprobados ( )throws Exception{//trae todos los q tienen esa cedula
+    public List<Empresa>  getAllEmpresaAprobar ( )throws Exception{//trae todos los q tienen esa cedula
         return  dao.EmpresaDesaprobadosGetAll(  );
     }
 }
