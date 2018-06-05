@@ -28,7 +28,40 @@
             </div>
         </nav>
     
-                
+        <div class="div_tabla_H" >
+            <table class="Tabla_hab">
+                <caption> <i> PUESTOS </i> </caption>
+                <thead> 
+                    <tr> 
+                        <td> Nombre </td>
+                        <td> Puesto </td>
+                        <td> Estado </td>
+                        <td> Caracteristica </td>
+                        <td> % </td>
+                    </tr>
+                </thead>
+                <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
+                    <% for (Puestos p: lista_Puestos) {  %>
+                    <% if (  p.getCaracteristicasPuestos().size() == 0 ) { %> 
+                        <tr>
+                            <td> <%= p.getNombrePuesto() %> </td>
+                            <td> <%= p.getSalario()  %> </td>
+                            <td onclick="desactivar( <%= p.getActivo() %>,<%= p.getIdPuesto() %> )"> <%= p.getActivo()  %> </td>
+                            <td> Por agregar </td>
+                            <td> Por agregar </td>
+                        </tr>
+                    <% } else %>
+                    <% for (CaracteristicasPuestos CP: p.getCaracteristicasPuestos()) { %>
+                        <tr> 
+                            <td> <%= p.getNombrePuesto() %> </td>
+                            <td> <%= p.getSalario()  %> </td>
+                            <td onclick="desactivar( <%= p.getActivo() %>,<%= p.getIdPuesto() %> )"> <%= p.getActivo()  %> </td>
+                            <td> <%= CP.getCaracteristicas().getHabilidad()  %> </td>
+                            <td> <%= CP.getValor()  %> </td>
+                        </tr> <% } %> <% } %>   
+                </tbody>
+            </table>
+        </div>        
                 
     </body>
 </html>

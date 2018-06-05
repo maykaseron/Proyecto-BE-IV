@@ -123,14 +123,16 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Empresa empresa = gson.fromJson(reader, Empresa.class);
             PrintWriter out = response.getWriter(); 
             empresa = Model.instance().getEmpresaLogin( empresa );
-            List<Puestos> listaPuestos = Model.instance().getAllPuestosIDEmpresa ( empresa.getIdEmp() );
-            for ( Puestos p : listaPuestos ) {
-                p.setCaracteristicasPuestos( Model.instance().getALLPuestoCaracteristicasPuestos(p.getIdPuesto()) );
-            }
-            s.setAttribute("Login_Empresa", empresa);
-            s.setAttribute("lista_Puestos", listaPuestos);
-            response.setContentType("application/json; charset=UTF-8");
-            out.write(gson.toJson(empresa)); 
+            if ( empresa.getAprobado() == true ) { 
+                 List<Puestos> listaPuestos = Model.instance().getAllPuestosIDEmpresa ( empresa.getIdEmp() );
+                for ( Puestos p : listaPuestos ) {
+                    p.setCaracteristicasPuestos( Model.instance().getALLPuestoCaracteristicasPuestos(p.getIdPuesto()) );
+                }
+                s.setAttribute("Login_Empresa", empresa);
+                s.setAttribute("lista_Puestos", listaPuestos);
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(empresa)); 
+            } 
             response.setStatus(200);
       }
       catch(Exception e){	
@@ -147,12 +149,14 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
             Oferente oferente = gson.fromJson(reader, Oferente.class);
             PrintWriter out = response.getWriter(); 
             oferente = Model.instance().getOferenteLogin(oferente);
-            List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( oferente.getCedulaOferente() );
-            oferente.setListaCaracteristicasOferente( listaHabili );
-            s.setAttribute("Login_Oferente", oferente);
-            s.setAttribute("lista_habilidad", listaHabili);
-            response.setContentType("application/json; charset=UTF-8"); 
-            out.write(gson.toJson(oferente)); 
+            if ( oferente.getAprobado() == true ) {
+                List<CaracteristicasOferente> listaHabili = Model.instance().getAllCaracteristicasOferenteCed( oferente.getCedulaOferente() );
+                oferente.setListaCaracteristicasOferente( listaHabili );
+                s.setAttribute("Login_Oferente", oferente);
+                s.setAttribute("lista_habilidad", listaHabili);
+                response.setContentType("application/json; charset=UTF-8"); 
+                out.write(gson.toJson(oferente)); 
+            }
             response.setStatus(200);
       }
       catch(Exception e){	

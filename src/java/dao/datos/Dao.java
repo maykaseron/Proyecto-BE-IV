@@ -859,6 +859,28 @@ public class Dao {
         rs.next();
         return administrador(rs); 
     }
+
+    public List<Oferente> OferenteDesaprobadosGetAll()  throws Exception {
+        Vector<Oferente> estados=new Vector<Oferente>();
+        try {
+            String sql="select * from oferente where aprobado=false";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                estados.add(oferente(rs));
+            }
+        } catch (SQLException ex) { }
+        return estados;        
+    }
     
-    
+    public List<Empresa> EmpresaDesaprobadosGetAll()  throws Exception {
+        Vector<Empresa> estados=new Vector<Empresa>();
+        try {
+            String sql="select * from oferente where aprobado=false";
+            ResultSet rs =  db.executeQuery(sql);
+            while (rs.next()) {
+                estados.add(empresa(rs));
+            }
+        } catch (SQLException ex) { }
+        return estados;        
+    }
 }

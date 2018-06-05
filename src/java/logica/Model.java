@@ -217,7 +217,15 @@ public class Model {
     
      /********************* ADMINISTRADOR  ---- ADMINISTRADOR ADMINISTRADOR                                     */
     
-     public Administrador getAdministradorLogin( Administrador a ) throws Exception{
+    public Administrador getAdministradorLogin( Administrador a ) throws Exception{
         return dao.AdministradorLogin( a );
+    }
+     
+    public List<Oferente>  getAllOferenteDesaprobados ( )throws Exception{//trae todos los q tienen esa cedula
+        return  dao.OferenteDesaprobadosGetAll(  );
+    }
+    
+    public List<Empresa>  getAllEmpresaDesaprobados ( )throws Exception{//trae todos los q tienen esa cedula
+        return  dao.EmpresaDesaprobadosGetAll(  );
     }
 }
