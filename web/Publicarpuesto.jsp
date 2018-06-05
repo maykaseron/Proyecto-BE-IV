@@ -4,6 +4,8 @@
     Author     : anderson
 --%>
 
+<%@page import="entidades.CaracteristicasPuestos"%>
+<%@page import="entidades.Puestos"%>
 <%@page import="entidades.Caracteristicas"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -14,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel = "stylesheet" href = "css/Login.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
-        <title>Publicar Puesto</title>
+        <title>Agregar Caracteristicas a un Puesto</title>
     </head>
     <body>
         
@@ -28,29 +30,6 @@
                 </ul>
             </div>
         </nav> 
-    <form id="Form_add_Puestos" action="javascript:addPuestos();" method="POST">     
-        <div class="Conte_AddPuestos">
-            <div class="Conte_Form_AddPuestos">
-                
-                    <br>
-                    <label> Nombre Puesto </label> <input type="text" value="" required="" id="NombreP"> <br><br>
-                    <label> Salario </label> <input type="text" value="" required="" id="SalarioP"> <br><br>
-                    <label> Descripcion Puesto </label> <input type="text" value="" required="" id="DescP"> <br><br>
-                    
-                    <table id="TipoPues"> 
-                        <tr> 
-                            <td> <label> Tipo Puesto </label> <td>
-                            <td><label>Publico </label> </td> 
-                            <td><input type="radio" name="elegir" id="empresa" value="Empresa" required> </td> 
-                            <td><label>Privado </label> </td> 
-                            <td><input type="radio" name="elegir" id="oferente" value="Oferente" required> </td> 
-                        </tr>
-                    </table>
-                    <br>
-                    <input id="BuscaHabiPadre"  type="submit" value="Agregar">
-               
-            </div>
-        </div>
                 
         <!-- copiar el documento busca caracte_puestos.txt dq esta en: C:\Users\anderson\Documents\Cursos Actuales\Progra IV\Proyecto-BE-IV -->
         <ol id="lista3">
@@ -63,7 +42,37 @@
                     </li>
             <% } %> 
         </ol>
-     </form>      
+        
+        <jsp:useBean id="lista_Puestos" scope="session" type="List<Puestos>" class="java.util.List"/>                  
+        <div class="div_tabla_H" >
+            <table class="Tabla_hab">
+                <caption> <i> PUESTOS </i> </caption>
+                <thead> 
+                    <tr> 
+                        <td> Nombre </td>
+                        <td> Puesto </td>
+                    </tr>
+                </thead>
+                <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
+                    <% for (Puestos p: lista_Puestos) {  %>
+                    <% if (  p.getCaracteristicasPuestos().size() == 0 ) { %> 
+                        <tr onclick="yyy( <%= p.getIdPuesto() %> )">
+                            <td> <%= p.getNombrePuesto() %> </td>
+                            <td> <%= p.getSalario()  %> </td>
+                            
+                        </tr>
+                    <% } else %>
+                    <% for (CaracteristicasPuestos CP: p.getCaracteristicasPuestos()) { %>
+                        <tr> 
+                            <td> <%= p.getNombrePuesto() %> </td>
+                            <td> <%= p.getSalario()  %> </td>
+                            <td> <%= CP.getCaracteristicas().getHabilidad()  %> </td>
+                            <td> <%= CP.getValor()  %> </td>
+                        </tr> <% } %> <% } %>   
+                </tbody>
+            </table>
+        </div>
+     
 <script>
 function loaded(event){
 }
@@ -110,20 +119,31 @@ function nivel(id,elmt) { // DOBLE CLICK para escribir el nivel a a buscar
     listado.removeAttribute("ondblclick");
 }
 
-function addHabilidades () {
+function yyy ( id ) {
+    C_O = {idCaracteristica:id
+		};
+                C_O;
     var obj = $( ".HabilidadHoja" );
     var lista = new Array();
     for (i=0; i<obj.length; i++) { 
         ID = { idCaracteristica:obj[i].id};
         car = { valor:obj[i].value,
-            caracteristicas:ID,
+            caracteristicas:ID
         };
         lista.push(car);
     }
+    puesto = { nombrePuesto:$("#PersonaP").val(),
+               salario:$("#SalarioP").val(),
+               descripcionPuesto:$("#DescP").val()
+        };
+    data=new FormData();
+    data.append("listaPuestos",JSON.stringify(lista));
+    data.append("puesto",JSON.stringify(puesto));
     $.ajax ({ type: "POST", 
-            url:"Habilidades_Add", 
-            data: JSON.stringify(lista), 
-            dataType:"json",
+            url:"Puestos_Add", 
+            data: data,
+            processData: false,
+            contentType: false,      
             "success": 
                     function(obj2){
                     prueba(obj2); 

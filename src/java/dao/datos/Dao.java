@@ -412,24 +412,26 @@ public class Dao {
                 ec.setSalario(rs.getFloat("salario"));
                 ec.setDescripcionPuesto(rs.getString("descripcionPuesto"));
                 ec.setTipoPublicacion( rs.getBoolean("tipoPublicacion") );
+                ec.setActivo( rs.getBoolean("activo") );
             return ec;
         } catch (SQLException ex) {
             return null;
         }
     }
-     
+   
     public void PuestosUpdate(Puestos p) throws Exception {
+        System.out.print("PuestosUpdate");
         String sql="update bolsaempleo.puestos set nombrePuesto='%s', idEmp='%s', salario='%s' , descripcionPuesto='%s', "
-                + "tipoPublicacion=%b where idPuesto='%s'";
+                + "tipoPublicacion=%b, activo=%b where idPuesto='%s'";
         sql=String.format(sql,p.getNombrePuesto(), p.getEmpresa().getIdEmp(),
-                p.getSalario(),p.getDescripcionPuesto(), p.getIdPuesto(), p.getTipoPublicacion() );
-        
+                p.getSalario(),p.getDescripcionPuesto(), p.getTipoPublicacion(), p.getActivo(),p.getIdPuesto() );
+        System.out.println(sql);
         int count=db.executeUpdate(sql);
         if (count==0){
             throw new Exception("puestos no existe");
         }
     }
-              
+    
     public void PuestosDelete(Puestos p) throws Exception {
         String sql="delete from bolsaempleo.puestos where idPuesto='%s'";
         sql = String.format(sql,p.getIdPuesto());
@@ -440,8 +442,9 @@ public class Dao {
     }
         
     public void PuestosAdd(Puestos p) throws Exception {
-        String sql="insert into bolsaempleo.puestos (nombrePuesto, idEmp, salario, descripcionPuesto, tipoPublicacion ) "+
-                "values(?, ?, ?, ?, ?)";
+        p.setActivo(true);
+        String sql="insert into bolsaempleo.puestos (nombrePuesto, idEmp, salario, descripcionPuesto, tipoPublicacion, activo ) "+
+                "values(?, ?, ?, ?, ?, ?)";
         //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
         db.getConnection();
         PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
@@ -450,6 +453,7 @@ public class Dao {
         preparedStmt.setFloat (3, p.getSalario());
         preparedStmt.setString (4, p.getDescripcionPuesto());
         preparedStmt.setBoolean(5, p.getTipoPublicacion() );
+        preparedStmt.setBoolean(6, p.getActivo() );
         
        preparedStmt.execute();
     }

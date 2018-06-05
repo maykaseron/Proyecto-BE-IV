@@ -48,6 +48,7 @@ CREATE TABLE PUESTOS (
         salario float,
         descripcionPuesto varchar(10) , 
         tipoPublicacion boolean,
+        activo boolean,
 
         CONSTRAINT PK_PUESTO PRIMARY KEY(idPuesto)
 );
@@ -78,11 +79,11 @@ insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,co
 insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVista','8888','Nicaragua','a','PriCrater','1');
 insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('555','Chilango','Del Monte','85211107','Marte','1','PriCrater','1');
 
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Progra', 100, 'desa pro', true, 1);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Desa Web ', 200, 'Cretividad', true, 1);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Pro Apli', 300, 'Social', true, 1);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Pro Web' , 200, 'progra', true, 2);
-insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp) values ('Miner Dts', 50, 'progra', true, 2);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Progra', 100, 'desa pro', true, 1, true);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Desa Web ', 200, 'Cretividad', true, 1, true);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Pro Apli', 300, 'Social', true, 1, true);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Pro Web' , 200, 'progra', true, 2, true);
+insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Miner Dts', 50, 'progra', true, 2, true);
 
 /* antes 
 insert into CARACTERISTICAS (areaTrabajo, especializacion) values ('Programacion','Java');

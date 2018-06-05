@@ -17,10 +17,8 @@ public class Puestos  implements java.io.Serializable {
     private Float salario;
     private String descripcionPuesto;
     private Boolean tipoPublicacion; // true = publico. por el momento todos son publicos, 
-                                    //  cambiar en el dao (todo lo relacionado a esta clase), Cuando 
-                                    //  tengamos q dar la opcion de escoger entre privado o publico
-    
 //    private String ubicacion; HACE FALTA???
+    private Boolean activo; // true =  esta activo cuando se agrega es activo automaticamente
     private List<CaracteristicasPuestos> caracteristicasPuestos = new ArrayList();
 
     public Puestos() {
@@ -91,6 +89,14 @@ public class Puestos  implements java.io.Serializable {
 
     public void setTipoPublicacion(Boolean tipoPublicacion) {
         this.tipoPublicacion = tipoPublicacion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
     
     public List<CaracteristicasPuestos> getCaracteristicasPuestos() {

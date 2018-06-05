@@ -43,8 +43,12 @@
                     <label> Cédula </label> <input type="text" disabled="" value=<%= oferente2.getCedulaOferente() %> > 
                     <label> Celular </label> <input type="text" disabled="" value=<%= oferente2.getCelular() %> > <br><br>
                     <label class="Label_correo"> Correo </label> <input class="Label_correo" type="text" disabled="" value=<%= oferente2.getCorreoOferente() %> > 
-                     <input type="file" id="PDF" accept="application/pdf">
-                    <input class="boton" type="submit" value="Registrar">
+                    <table>
+                        <tr>
+                            <td> <input type="file" id="PDF" accept="application/pdf"> </td>
+                            <td> <input class="boton" type="submit" value="Registrar"> </td>
+                        </tr>
+                    </table>
                 </form> 
                 <%/* <img id="pdf" src="imagenes/iconPDFsubir.png"> */%>
             </div>
