@@ -49,15 +49,17 @@ public class Dao {
             ec.setTeléfono( rs.getString("telefono") );
             ec.setContrasena( rs.getString("contrasena") );
             ec.setIdEmp(rs.getInt("idEmp"));
+            ec.setAprobado( rs.getBoolean( "aprobado" ) );
+            
         return ec;
     }
      
     public void EmpresaUpdate(Empresa p) throws Exception{
         String sql="update bolsaempleo.empresa set nombreEmp='%s', ubicacionEmp='%s', descripcionEmp='%s', correoEmp='%s', "
-                + "telefono='%s' where idEmp=%d";
+                + "telefono='%s' aprobado='%b' where idEmp=%d";
         sql=String.format(sql,p.getNombreEmp(),
-                p.getUbicacionEmp(),p.getDescripcionEmp(),p.getCorreoEmp(), p.getIdEmp(), p.getTeléfono() );
-        
+                p.getUbicacionEmp(),p.getDescripcionEmp(),p.getCorreoEmp(),  p.getTeléfono(),p.getAprobado(), p.getIdEmp() );
+        System.out.println(sql);
         int count=db.executeUpdate(sql);
         if (count==0){
             throw new Exception("empresa no existe");
@@ -68,6 +70,7 @@ public class Dao {
     public void EmpresaDelete(Empresa p) throws Exception{
         String sql="delete from bolsaempleo.empresa where idEmp='%s'";
         sql = String.format(sql,p.getIdEmp());
+        System.out.println(sql);
         int count=db.executeUpdate(sql);
         if (count==0){
             throw new Exception("empresa no existe");
@@ -84,16 +87,21 @@ public class Dao {
         */
         if ( this.compararEmpresaVacio(p) ) {//  add si no hay espacios vacios agrega
             if ( this.EmpresaGetNombre( p.getNombreEmp() ) == null ) {  // add si no hay empresa cn el mismo nombre
-                String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono ) "+
-                "values(? ,? ,? ,? ,?)";
+                p.setAprobado(false);
+                String sql="insert into bolsaempleo.empresa (nombreEmp , ubicacionEmp, descripcionEmp, correoEmp, telefono,contrasena, aprobado ) "+
+                "values(? ,? ,? ,? ,?, ?, ?)";
                 //db.cnx = DriverManager.getConnection("jdbc:mysql://localhost/"+"bolsaempleo" , "root" , "root");
+                System.out.println(sql);
                 db.getConnection();
+                
                 PreparedStatement preparedStmt = db.cnx.prepareStatement(sql);
                 preparedStmt.setString(1, p.getNombreEmp());
                 preparedStmt.setString (2, p.getUbicacionEmp());
                 preparedStmt.setString (3, p.getDescripcionEmp());
                 preparedStmt.setString (4, p.getCorreoEmp());
                 preparedStmt.setString (5, p.getTeléfono() );
+                preparedStmt.setString (6, p.getContrasena() );
+                preparedStmt.setBoolean(7, p.getAprobado() );
 
                 preparedStmt.execute();
             }
@@ -160,7 +168,8 @@ public class Dao {
             ec.setCorreoOferente(rs.getString("correoOferente"));
             ec.setUbicacion(rs.getString("ubicacion"));
             ec.setContrasena( rs.getString("contrasena") );
-
+            ec.setAprobado( rs.getBoolean( "aprobado" ) );
+            
         return ec;
     }
     
@@ -190,10 +199,12 @@ public class Dao {
     }
     public void OferenteAdd(Oferente p) throws Exception {
         if ( this.compararOferenteVacio(p) ) { // add si no hay espacios vacios
-            String sql= "insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion) "
-                + "values ('%s','%s','%s','%s','%s','%s','%s'); ";
+            p.setAprobado(false);
+            String sql= "insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena, aprobado) "
+                + "values ('%s','%s','%s','%s','%s','%s','%s','%s', %b); ";
             sql=String.format( sql, p.getCedulaOferente(), p.getNombreOferente(), p.getPrimerApellido(), p.getCelular(), p.getNacionalidad(),
-                    p.getCorreoOferente(), p.getUbicacion() );
+                    p.getCorreoOferente(), p.getUbicacion(),p.getContrasena(), p.getAprobado() );
+            System.out.println(sql);
             int count=db.executeUpdate(sql);
             if (count ==0 ){ // 0 == existe
                 throw new Exception("Existe una cuenta con la misma cédula");
@@ -228,11 +239,11 @@ public class Dao {
     }
          
     public void OferenteUpdate(Oferente p) throws Exception {
-        String sql="update bolsaempleo.oferente set  nombreOferente='%s', primerApellido='%s' , segundoApellido='%s' , celular='%s', nacionalidad='%s' , correoOferente='%s' , ubicacion='%s'"   +
-                "where cedulaOferente='%s'";
-        sql=String.format(sql,p.getNombreOferente(),
-                p.getPrimerApellido(),p.getCelular() , p.getNacionalidad(), p.getCorreoOferente(), p.getUbicacion(), p.getCedulaOferente());
-        
+        String sql="update bolsaempleo.oferente set  nombreOferente='%s', primerApellido='%s', celular='%s', nacionalidad='%s' , correoOferente='%s' , ubicacion='%s'"   +
+                "aprobado=%b where cedulaOferente='%s'";
+        sql=String.format(sql,p.getNombreOferente(),p.getPrimerApellido(),p.getCelular() , p.getNacionalidad(), p.getCorreoOferente(),
+                p.getUbicacion(), p.getAprobado(), p.getCedulaOferente());
+        System.out.println(sql);
         int count=db.executeUpdate(sql);
         if (count==0){
             throw new Exception("Oferente no existe");
@@ -848,5 +859,6 @@ public class Dao {
         rs.next();
         return administrador(rs); 
     }
-   
+    
+    
 }

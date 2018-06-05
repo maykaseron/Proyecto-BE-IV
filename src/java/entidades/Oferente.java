@@ -16,6 +16,8 @@ public class Oferente  implements java.io.Serializable {
     private String correoOferente;
     private String ubicacion;
     private String contrasena;
+    private Boolean aprobado; // false aun no aprobado
+                               // true aporbado
     private List<CaracteristicasOferente> listaCaracteristicasOferente;
 
     
@@ -109,6 +111,15 @@ public class Oferente  implements java.io.Serializable {
     public void setListaCaracteristicasOferente(List<CaracteristicasOferente> listaCaracteristicasOferente) {
         this.listaCaracteristicasOferente = listaCaracteristicasOferente;
     }
+
+    public Boolean getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(Boolean aprobado) {
+        this.aprobado = aprobado;
+    }
+    
 }
 
 

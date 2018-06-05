@@ -11,6 +11,7 @@ CREATE TABLE EMPRESA (
         telefono varchar(20)not null,
 		contrasena varchar(10) not null,
         idEmp  int AUTO_INCREMENT,
+		aprobado boolean,
         CONSTRAINT PK_EMP PRIMARY KEY (idEmp,nombreEmp)
 		
 );
@@ -24,7 +25,8 @@ CREATE TABLE OFERENTE (
         correoOferente varchar(15),
         ubicacion varchar(60),
 		contrasena varchar(10) not null,
- 
+		aprobado boolean,
+		
   CONSTRAINT PK_OFERENTE PRIMARY KEY (cedulaOferente)
 );
 
@@ -85,11 +87,11 @@ insert into ADMINISTRADOR (correoAdministrador,nombreAdministrador,cedulaAdminis
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',4,90);
 insert into CARACTERISTICAS_OFERENTE (cedulaOferente,idCaracteristica, valor ) values ('111',3,80);
 
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('amazon','San jose','Oportunidades','1','86546','1');
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1');
-insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena) values ('Pali','San jose','Oportunidades','pp','86546','1');
-insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('111','Jacinto','BuenaVista','8888','Nicaragua','a','PriCrater','1');
-insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena) values ('555','Chilango','Del Monte','85211107','Marte','1','PriCrater','1');
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena, aprobado) values ('amazon','San jose','Oportunidades','1','86546','1', true);
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena, aprobado) values ('dhl','San jose','Nada Particular','dhl@gm.com','5789','1', true);
+insert into EMPRESA (nombreEmp,ubicacionEmp,descripcionEmp,correoEmp,telefono,contrasena, aprobado) values ('Pali','San jose','Oportunidades','pp','86546','1', true);
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena, aprobado) values ('111','Jacinto','BuenaVista','8888','Nicaragua','a','PriCrater','1', true);
+insert into OFERENTE (cedulaOferente,nombreOferente ,primerApellido ,celular,nacionalidad,correoOferente,ubicacion,contrasena, aprobado) values ('555','Chilango','Del Monte','85211107','Marte','1','PriCrater','1', true);
 
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Progra', 100, 'desa pro', true, 1, true);
 insert into PUESTOS (nombrePuesto, salario, descripcionPuesto,tipoPublicacion,idEmp, activo) values ('Desa Web ', 200, 'Cretividad', true, 1, true);

@@ -103,8 +103,10 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
         ofe.setCelular(celular);
         ofe.setNacionalidad(nacionalidad);
         ofe.setUbicacion(ubicacion);
+        ofe.setContrasena(contrasena);
         request.setAttribute("Ofe", ofe);
         Model.instance().addOferente(ofe);
+        request.setAttribute("error", "Gracias por usar el sistema ImaJobs");
         request.getRequestDispatcher("registrooferente.jsp").forward( request, response);
     }
     catch(Exception e){

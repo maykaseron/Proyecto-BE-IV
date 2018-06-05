@@ -19,6 +19,9 @@ public class Empresa  implements java.io.Serializable {
     private String correoEmp;
     private String telefono;
     private String contrasena;
+    private Boolean aprobado; // false aun no aprobado
+                               // true aporbado
+
 
     public Empresa() {
         this.nombreEmp = "";
@@ -106,6 +109,14 @@ public class Empresa  implements java.io.Serializable {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Boolean getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(Boolean aprobado) {
+        this.aprobado = aprobado;
     }
     
 }
