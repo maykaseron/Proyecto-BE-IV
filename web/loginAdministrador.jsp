@@ -48,7 +48,7 @@
                         <tr>
                             <td> <%= o.getNombreOferente() %> </td>
                             <td> <%= o.getCorreoOferente()  %> </td>
-                            <td onclick="desactivar( <%= o.getAprobado() %>,<%= o.getContrasena() %> )"> <%= o.getAprobado()  %> </td>
+                            <td onclick="aprobarOfe( <%= o.getAprobado() %>,<%= o.getCedulaOferente() %> )"> <%= o.getAprobado()  %> </td>
                             <td> <%= o.getCedulaOferente() %>  </td>
                             <td> <%= o.getCelular() %>  </td>
                         </tr>
@@ -68,24 +68,46 @@
                         <td> Nombre </td>
                         <td> Correo </td>
                         <td> Estado </td>
-                        <td> Cedula </td>
-                        <td> Celular </td>
+                        <td> Teléfono </td>
                     </tr>
                 </thead>
                 <tbody id="prueba"> <% /* la lista es traida se sesion  */%>
-                    <% for (Oferente o: Login_Administrador_Oferentes) {  %>
+                    <% for (Empresa e: Login_Administrador_Empresa) {  %>
                         <tr>
-                            <td> <%= o.getNombreOferente() %> </td>
-                            <td> <%= o.getCorreoOferente()  %> </td>
-                            <td onclick="desactivar( <%= o.getAprobado() %>,<%= o.getContrasena() %> )"> <%= o.getAprobado()  %> </td>
-                            <td> <%= o.getCedulaOferente() %>  </td>
-                            <td> <%= o.getCelular() %>  </td>
+                            <td> <%= e.getNombreEmp() %> </td>
+                            <td> <%= e.getCorreoEmp()  %> </td>
+                            <td onclick="desactivar( <%= e.getAprobado() %>,<%= e.getIdEmp() %> )"> <%= e.getAprobado()  %> </td>
+                            <td> <%= e.getTeléfono() %>  </td>
                         </tr>
                     <% } %>   
                 </tbody>
             </table>
         </div>    
-                
+<script>
+function aprobarOfe(apro, id) {
+    ofer = { aprobado:apro,
+        cedulaOferente:id
+    };
+    if ( ofer.aprobado === false ) {
+        $.ajax({type: "POST", 
+                  url:"Admi_Aprobar_Oferente", 
+                  data: JSON.stringify(ofer), 
+                  dataType:"json",
+                  success: 
+                    function(obj){
+                        show(obj); 
+                    },
+                  error: function(status){
+                         window.alert("Error");
+                    }                    
+                });   
+    }
+}
+
+function show(per){
+	per;
+  } 
+</script>               
                 
     </body>
 </html>

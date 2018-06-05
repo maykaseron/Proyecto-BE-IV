@@ -239,7 +239,7 @@ public class Dao {
     }
          
     public void OferenteUpdate(Oferente p) throws Exception {
-        String sql="update bolsaempleo.oferente set  nombreOferente='%s', primerApellido='%s', celular='%s', nacionalidad='%s' , correoOferente='%s' , ubicacion='%s'"   +
+        String sql="update bolsaempleo.oferente set  nombreOferente='%s', primerApellido='%s', celular='%s', nacionalidad='%s' , correoOferente='%s' , ubicacion='%s',"   +
                 "aprobado=%b where cedulaOferente='%s'";
         sql=String.format(sql,p.getNombreOferente(),p.getPrimerApellido(),p.getCelular() , p.getNacionalidad(), p.getCorreoOferente(),
                 p.getUbicacion(), p.getAprobado(), p.getCedulaOferente());
@@ -875,7 +875,7 @@ public class Dao {
     public List<Empresa> EmpresaDesaprobadosGetAll()  throws Exception {
         Vector<Empresa> estados=new Vector<Empresa>();
         try {
-            String sql="select * from oferente where aprobado=false";
+            String sql="select * from empresa where aprobado=false";
             ResultSet rs =  db.executeQuery(sql);
             while (rs.next()) {
                 estados.add(empresa(rs));

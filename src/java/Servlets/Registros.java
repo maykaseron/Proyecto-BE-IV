@@ -168,7 +168,6 @@ protected void doAddOferente(HttpServletRequest request, HttpServletResponse res
     
     private void doLoginAdministrador(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            System.out.println( "asdadss" );
             HttpSession s =  request.getSession( true );
             BufferedReader reader = request.getReader();
             Gson gson = new Gson();

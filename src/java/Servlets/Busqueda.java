@@ -6,6 +6,7 @@
 package Servlets;
 
 import com.google.gson.Gson;
+import entidades.Administrador;
 import entidades.Caracteristicas;
 import entidades.CaracteristicasOferente;
 import entidades.CaracteristicasPuestos;
@@ -38,7 +39,7 @@ import javax.servlet.annotation.MultipartConfig;
 @WebServlet(name = "Busqueda", urlPatterns = {"/Top5","/ListarCaracteristicasPadre","/BuscarCarac","/Busc_caracteristicas",
                 "/Habilida_Oferente", "/Busc_puestos_X_caracteristicas", "/Habilidad_edit", "/Actualizar_Habilidad", "/PDF_Add",
                 "/Lista_Habilidades_Add", "/Habilidades_Add", "/Elminar_Habilidad", "/Listar_Carac_Empresa", "/Puestos_Add",
-                "/Listar_Carac_Candidatos", "/Buscar_Carac_Candidatos", "/Desactivar_Puesto"} )
+                "/Listar_Carac_Candidatos", "/Buscar_Carac_Candidatos", "/Desactivar_Puesto", "/Admi_Aprobar_Oferente"} )
 public class Busqueda extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -87,6 +88,9 @@ public class Busqueda extends HttpServlet {
                 break;
             case "/Desactivar_Puesto":  // busca Oferentes segun caracteris -Empresa 
                 this.doDesactivar_Puesto  (request, response);
+                break;
+            case "/Admi_Aprobar_Oferente":  // busca Oferentes segun caracteris -Empresa 
+                this.doAdmi_Aprobar_Oferente  (request, response);
                 break;
         }
     }
@@ -419,6 +423,35 @@ public class Busqueda extends HttpServlet {
             
             
             out.write(gson.toJson(puesto));
+            response.setStatus(200); // ok with content   
+        }
+        catch(Exception e){
+            response.setStatus(401); //Bad request
+        }	
+    }
+    
+    private void doAdmi_Aprobar_Oferente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException  { // busca Oferentes segun caracteris -Empresa 
+        try{
+            HttpSession s =  request.getSession( true);
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson(); 
+            PrintWriter out = response.getWriter();  
+            Oferente ofer  = gson.fromJson(reader, Oferente.class); 
+            System.out.println("11111111111");
+            ofer = Model.instance().getOferente( ofer.getCedulaOferente() );
+            System.out.println("22222222222");
+            ofer.setAprobado(true);
+             System.out.println("3333");
+            Model.instance().updateOferente(ofer);
+            
+            
+            Administrador admi = (Administrador) s.getAttribute("Login_Administrador");
+            admi.setListaOferentesNuevos( Model.instance().getAllOferenteDesaprobados() );
+            s.setAttribute("Login_Administrador_Oferentes", admi.getListaOferentesNuevos() );
+            
+            out.write(gson.toJson(ofer));
+            
             response.setStatus(200); // ok with content   
         }
         catch(Exception e){
